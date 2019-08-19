@@ -28,7 +28,7 @@ public class SignUpUI extends JFrame implements ActionListener{
 		// 패널 초기화 
 		
 		frame = new JFrame("회원가입");
-		frame.setPreferredSize(new Dimension(800,600));
+		frame.setPreferredSize(new Dimension(1000,1000));
 		frame.setLocation(500,400);
 		contentPane = frame.getContentPane();
 		

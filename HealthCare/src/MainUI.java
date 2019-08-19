@@ -39,7 +39,8 @@ public class MainUI extends JFrame implements ActionListener{
 		btnLogin = new JButton("로그인");
 		btnCreate = new JButton("회원가입");
 		
-		
+
+		p_main.setLayout(null);
 
 		lid = new JLabel("ID : ");
 		tfId = new JTextField(20);
@@ -68,8 +69,9 @@ public class MainUI extends JFrame implements ActionListener{
 		p_main.add(p_btn);		
 		
 		
-		getContentPane().add(p_main, BorderLayout.CENTER);
-		setSize(800,600);
+		getContentPane().add(p_main);
+		
+		setSize(1000,1000);
 //		jp_num.setSize(600, 400);
 		jp_num.setBounds(200,200,350,200);
 		setLocation(300, 200);
