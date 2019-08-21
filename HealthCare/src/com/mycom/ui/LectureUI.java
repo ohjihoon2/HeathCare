@@ -1,3 +1,4 @@
+package com.mycom.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,9 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GX_UI extends JFrame{
-
+public class LectureUI extends JFrame{
+	
     //field
+	JFrame jf;
     JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_right, p_gx_pn4, p_gx_l_gx_info, p_gx_name, p_gx_lecture, p_gx_l_gx_times, p_gx_l_gx_limit, p_gx_blank;
     JLabel l_gx_uno, l_gx_info, l_gx_uname, l_gx_lecture, l_gx_times, l_gx_limit;
     JButton b_gx_extension;
@@ -21,9 +23,13 @@ public class GX_UI extends JFrame{
     ImageIcon ic_gx_uimg, ic_gx_topimg;
     JLabel ic_gx_uimgBox, ic_gx_topimgBox;
     
+
     //constructor
-    public GX_UI() {
-       
+    public LectureUI(JFrame jf) {
+    	MainScreenUI.status = MainScreenUI.LECTURE;
+    	System.out.println("LectureStatus = "+MainScreenUI.status);
+    	this.jf =jf;
+    	
         p_gx_main = new JPanel();
         p_gx_main.setLayout(new BorderLayout());
         p_gx_top = new JPanel();    
@@ -85,17 +91,20 @@ public class GX_UI extends JFrame{
         p_gx_right.add(p_gx_pn4, BorderLayout.SOUTH);
         p_gx_pn4.add(b_gx_extension, BorderLayout.EAST);
         
+        p_gx_main.setSize(1000,600);
+        p_gx_main.setVisible(true);
 
-        getContentPane().add(p_gx_main, BorderLayout.CENTER);
+        jf.getContentPane().add(p_gx_main, BorderLayout.CENTER);
         
         setTitle("수강"); 
-        setSize(1000,900);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-     
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
      
     } 
     
-
+    public void turnoff() {
+		System.out.println("Lecture 화면 turnoff");
+		p_gx_main.setVisible(false);
+	}
+    
    
 }
