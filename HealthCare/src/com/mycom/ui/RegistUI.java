@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class RegistUI extends JFrame implements ActionListener{
-	StrartUI Login_class = null;
+	StartUI Login_class = null;
 	
 	
 	static int status =1;
@@ -28,8 +28,8 @@ public class RegistUI extends JFrame implements ActionListener{
 	
 	//Constructor
 	public RegistUI(JFrame jf){
-		StrartUI.status = StrartUI.REGIST;
-		System.out.println("RegistStatus = "+StrartUI.status);
+		StartUI.status = StartUI.REGIST;
+		System.out.println("RegistStatus = "+StartUI.status);
 		this.jf = jf;
 	
 		//1. 화면구성
@@ -140,12 +140,12 @@ public class RegistUI extends JFrame implements ActionListener{
 		if(obj == b_RegCancel) {
 			System.out.println("취소 클릭");
 			switchingPanel(getStatus());
-			Login_class = new StrartUI();
+			Login_class = new StartUI();
 		}else if(obj == b_RegNext) {
 			//회원가입 - 다음 버튼
 			System.out.println("다음 클릭");
 			switchingPanel(getStatus());
-			Login_class =new StrartUI();
+			Login_class =new StartUI();
 		}
 		
 	}

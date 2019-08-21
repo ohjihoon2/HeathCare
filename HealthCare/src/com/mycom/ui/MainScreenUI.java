@@ -45,8 +45,8 @@ public class MainScreenUI implements ActionListener {
 		//  Like this yo      @@@@@@@@@@@@@@@@@@@@@@
 	//constructor
 	public MainScreenUI(JFrame jf) {
-		StrartUI.status = StrartUI.MAIN;
-		System.out.println("MainStatus = "+StrartUI.status);
+		StartUI.status = StartUI.MAIN;
+		System.out.println("MainStatus = "+StartUI.status);
 		this.jf = jf;
 		//       @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		//1.메인 화면 구성

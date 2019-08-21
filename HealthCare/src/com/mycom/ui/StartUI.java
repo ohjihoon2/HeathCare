@@ -24,7 +24,7 @@ import javax.swing.border.LineBorder;
 import copy_.Regist;
 import copy_.StuMgmSystemUI2;
 
-public class StrartUI extends JFrame implements ActionListener{
+public class StartUI extends JFrame implements ActionListener{
 	
 	/**
 	 * 메인페이지
@@ -60,7 +60,7 @@ public class StrartUI extends JFrame implements ActionListener{
 	 * 로그인 
 	 */
 	//Constructor
-    public StrartUI() {
+    public StartUI() {
     	jf = new JFrame();
 		setStatus(LOGIN);
 		System.out.println("logStatus = "+status);
