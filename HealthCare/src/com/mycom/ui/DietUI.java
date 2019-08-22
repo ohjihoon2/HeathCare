@@ -190,7 +190,5 @@ public class DietUI extends JFrame implements ActionListener {
 	//이벤트 처리
 	public void actionPerformed(ActionEvent ae) {
 		
-			
-			
 	}
 }

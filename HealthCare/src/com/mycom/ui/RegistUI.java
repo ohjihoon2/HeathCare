@@ -15,33 +15,30 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class RegistUI extends JFrame implements ActionListener{
-	StartUI Login_class = null;
-	
-	
-	static int status =1;
+	StartUI startui;
+
 	//Field
 	JFrame jf;
 	JPanel p_RegMain, p_RegTitle, p_RegBoard, p_RegBtn; 
 	JLabel l_RegTitle, l_RegName, l_RegAddress, l_RegContact, l_RegRole, l_RegCreated_date, l_RegBirth, l_RegTerm, l_RegEvent, l_RegStart_date, l_RegEnd_date;
 	JTextField tf_RegName, tf_RegAddress, tf_RegContact, tf_RegRole, tf_RegCreated_date, tf_RegBirth, tf_RegTerm, tf_RegEvent, tf_RegStart_date, tf_RegEnd_date;
-	JButton b_RegNext, b_RegCancel;
+	JButton b_RegSave, b_RegCancel, b_RegExit;
 	
 	//Constructor
-	public RegistUI(JFrame jf){
-		StartUI.status = StartUI.REGIST;
-		System.out.println("RegistStatus = "+StartUI.status);
-		this.jf = jf;
-	
+	public RegistUI(StartUI startui){	
 		//1. 화면구성
 		// 패널 초기화 
+		this.startui = startui;
+		
 		p_RegMain = new JPanel(new GridLayout(3,1));
 		
 		p_RegTitle = new JPanel();
 		p_RegBoard = new JPanel(new GridLayout(10,2));
 		p_RegBtn = new JPanel();
 		
-		b_RegNext = new JButton("다음");
-		b_RegCancel = new JButton("취소");
+		b_RegSave = new JButton("완료");
+		b_RegCancel = new JButton("다시쓰기");
+		b_RegExit = new JButton("나가기");
 		
 		l_RegTitle = new JLabel("회원가입");
 		
@@ -82,8 +79,9 @@ public class RegistUI extends JFrame implements ActionListener{
 		p_RegBoard.add(l_RegStart_date); p_RegBoard.add(tf_RegStart_date);
 		p_RegBoard.add(l_RegEnd_date); p_RegBoard.add(tf_RegEnd_date);
 		
-		p_RegBtn.add(b_RegNext);
+		p_RegBtn.add(b_RegSave);
 		p_RegBtn.add(b_RegCancel);
+		p_RegBtn.add(b_RegExit);
 		
 		
 		p_RegMain.add(p_RegTitle);		
@@ -98,54 +96,28 @@ public class RegistUI extends JFrame implements ActionListener{
 //			setLocation(300, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-//			jpReg.setVisible(true);
-//				
-		jf.getContentPane().add(p_RegMain, BorderLayout.CENTER);
+		startui.jf.getContentPane().add(p_RegMain, BorderLayout.CENTER);
 		
 		//2. 이벤트 핸들러 정의
-		b_RegNext.addActionListener(this);
+		b_RegSave.addActionListener(this);
 		b_RegCancel.addActionListener(this);
+		b_RegExit.addActionListener(this);
 	}
-	
-	public void turnoff() {
-		System.out.println("REGIST 화면 turnoff");
-		p_RegMain.setVisible(false);
-	}
-	
-	//Method
 
-	/**
-	 * 화면 status setter, getter
-	 */
-	public void setStatus(int status) {
-		this.status = status;
-	}
-	
-	public int getStatus() {
-		return status;
-	}
-		
-	public void switchingPanel(int status) {
-		System.out.println("status=" + status);
-		switch(status) {
-		case 1 :
-			turnoff();
-			break;
-		}
-	}
-	
+	//Method
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
-		if(obj == b_RegCancel) {
-			System.out.println("취소 클릭");
-			switchingPanel(getStatus());
-			Login_class = new StartUI();
-		}else if(obj == b_RegNext) {
-			//회원가입 - 다음 버튼
-			System.out.println("다음 클릭");
-			switchingPanel(getStatus());
-			Login_class =new StartUI();
+		
+		if(obj == b_RegSave) {	//회원가입 완료
+			//회원정보 --> VO 생성 --> DAO ---> DB 
+			
+		}else if(obj == b_RegCancel) { //다시쓰기
+			//필드 초기화
+		}else if(obj == b_RegExit) {  //나가기
+			//회원가입 - 다음 버튼		
+			p_RegMain.setVisible(false);
+			startui.p_LogMain.setVisible(true);
 		}
 		
 	}

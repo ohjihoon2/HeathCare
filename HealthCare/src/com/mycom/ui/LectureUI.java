@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -11,24 +13,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class LectureUI extends JFrame{
+public class LectureUI extends JFrame implements ActionListener{
 	
     //field
+	MainScreenUI mainui;
+	StartUI startui;
 	JFrame jf;
+	
     JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_right, p_gx_pn4, p_gx_l_gx_info, p_gx_name, p_gx_lecture, p_gx_l_gx_times, p_gx_l_gx_limit, p_gx_blank;
     JLabel l_gx_uno, l_gx_info, l_gx_uname, l_gx_lecture, l_gx_times, l_gx_limit;
-    JButton b_gx_extension;
+    JButton b_gx_extension, b_test;
     JTextField jtf_gx_uname, jtf2, jtf_gx_times, jtf_gx_limit;
     
     ImageIcon ic_gx_uimg, ic_gx_topimg;
     JLabel ic_gx_uimgBox, ic_gx_topimgBox;
     
-
     //constructor
-    public LectureUI(JFrame jf) {
-    	MainScreenUI.status = MainScreenUI.LECTURE;
-    	System.out.println("LectureStatus = "+MainScreenUI.status);
-    	this.jf =jf;
+    public LectureUI(MainScreenUI mainui, StartUI startui) {
+    	this.mainui = mainui;
+    	this.startui = startui;
     	
         p_gx_main = new JPanel();
         p_gx_main.setLayout(new BorderLayout());
@@ -56,6 +59,7 @@ public class LectureUI extends JFrame{
         l_gx_times = new JLabel("남은 수강 횟수");
         l_gx_limit = new JLabel("유효 기간");
         b_gx_extension = new JButton("연장 신청");
+        b_test = new JButton("돌아가기");
              
         l_gx_uno.setBackground(Color.black);
         l_gx_uno.setFont(new Font("돋움", Font.BOLD, 50));
@@ -89,21 +93,26 @@ public class LectureUI extends JFrame{
         p_gx_right.add(p_gx_l_gx_info); p_gx_right.add(p_gx_name); p_gx_right.add(p_gx_lecture);
         p_gx_right.add(p_gx_l_gx_times); p_gx_right.add(p_gx_l_gx_limit);
         p_gx_right.add(p_gx_pn4, BorderLayout.SOUTH);
-        p_gx_pn4.add(b_gx_extension, BorderLayout.EAST);
+        p_gx_pn4.add(b_gx_extension);
+        p_gx_pn4.add(b_test);
         
         p_gx_main.setSize(1000,600);
         p_gx_main.setVisible(true);
-
-        jf.getContentPane().add(p_gx_main, BorderLayout.CENTER);
         
-        setTitle("수강"); 
-//        setDefaultCloseOperation(EXIT_ON_CLOSE);
-     
+        startui.jf.getContentPane().add(p_gx_main, BorderLayout.CENTER);
+        
+        b_test.addActionListener(this);     
     } 
     
-    public void turnoff() {
-		System.out.println("Lecture 화면 turnoff");
-		p_gx_main.setVisible(false);
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		
+		if(obj == b_test) {	//회원가입 완료
+			p_gx_main.setVisible(false);
+			mainui.p_sc_total.setVisible(true);
+		}
+		
 	}
     
    
