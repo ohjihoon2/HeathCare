@@ -3,61 +3,74 @@ package com.mycom.vo;
 public class ClientVO {
 
 	
-	String sno, sname;
-	int rno, skor, seng, smath;
-	double stot,savg;
-	
-	
-	
-	
-	public int getRno() {
-		return rno;
-	}
-	public void setRno(int rno) {
-		this.rno = rno;
-	}
-	
+	String sno, name, address, phone, created_date, birth_date, event_name, start_date, end_date ;
+	int sex, division;
 	public String getSno() {
 		return sno;
 	}
 	public void setSno(String sno) {
 		this.sno = sno;
 	}
-	public String getSname() {
-		return sname;
+	public String getName() {
+		return name;
 	}
-	public void setSname(String sname) {
-		this.sname = sname;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public int getSkor() {
-		return skor;
+	public String getAddress() {
+		return address;
 	}
-	public void setSkor(int skor) {
-		this.skor = skor;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public int getSeng() {
-		return seng;
+	public String getPhone() {
+		return phone;
 	}
-	public void setSeng(int seng) {
-		this.seng = seng;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	public int getSmath() {
-		return smath;
+	public String getCreated_date() {
+		return created_date;
 	}
-	public void setSmath(int smath) {
-		this.smath = smath;
+	public void setCreated_date(String created_date) {
+		this.created_date = created_date;
 	}
-	public double getStot() {
-		return (double)skor+seng+smath;
+	public String getBirth_date() {
+		return birth_date;
 	}
-	public void setStot(double stot) {
-		this.stot = stot;
+	public void setBirth_date(String birth_date) {
+		this.birth_date = birth_date;
 	}
-	public double getSavg() {
-		return  getStot()/3.0;
+	public String getEvent_name() {
+		return event_name;
 	}
-	public void setSavg(double savg) {
-		this.savg = savg;
+	public void setEvent_name(String event_name) {
+		this.event_name = event_name;
 	}
+	public String getStart_date() {
+		return start_date;
+	}
+	public void setStart_date(String start_date) {
+		this.start_date = start_date;
+	}
+	public String getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(String end_date) {
+		this.end_date = end_date;
+	}
+	public int getSex() {
+		return sex;
+	}
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+	public int getDivision() {
+		return division;
+	}
+	public void setDivision(int division) {
+		this.division = division;
+	}
+
 	
 }
