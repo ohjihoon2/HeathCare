@@ -7,7 +7,7 @@ INCREMENT BY 1;
 desc emp;
 
 create table CLIENT(
-    
+    seq seq,
     NAME VARCHAR2(20),
     SEX number(2),
     ADDRESS VARCHAR(40),

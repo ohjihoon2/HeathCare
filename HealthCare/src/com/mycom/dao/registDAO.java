@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import com.mycom.vo.ClientVO;
 
-public class StuDAO {
+public class registDAO {
 
 	//Field
 	Connection conn;
@@ -20,7 +20,7 @@ public class StuDAO {
 	String pass ="tiger";
 	
 	//Constructor
-	public StuDAO() {
+	public registDAO() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("1단계 성공~");
