@@ -21,8 +21,8 @@ public class RegistUI extends JFrame implements ActionListener{
 	//Field
 	JFrame jf;
 	JPanel p_RegMain, p_RegTitle, p_RegBoard, p_RegBtn; 
-	JLabel l_RegTitle, l_RegName, l_RegSex, l_RegAddress, l_RegPhone, l_RegDivision, l_RegCreated_date, l_RegBirth_date, l_RegEvent_name,  l_RegStart_date, l_RegEnd_date;
-	JTextField tf_RegName, tf_RegSex, tf_RegAddress, tf_RegPhone, tf_RegDivision, tf_RegCreated_date, tf_RegBirth_date, tf_RegEvent_name,  tf_RegStart_date, tf_RegEnd_date;
+	JLabel l_RegTitle, l_RegName, l_RegGender, l_RegAddress, l_RegPhone, l_RegDivision, l_RegCreated_date, l_RegBirth_date, l_RegEvent_name,  l_RegStart_date, l_RegEnd_date;
+	JTextField tf_RegName, tf_RegGender, tf_RegAddress, tf_RegPhone, tf_RegDivision, tf_RegCreated_date, tf_RegBirth_date, tf_RegEvent_name,  tf_RegStart_date, tf_RegEnd_date;
 	JButton b_RegSave, b_RegCancel, b_RegExit;
 	
 	//Constructor
@@ -44,7 +44,7 @@ public class RegistUI extends JFrame implements ActionListener{
 		l_RegTitle = new JLabel("회원가입");
 		
 		l_RegName = new JLabel("회원명");
-		l_RegSex = new JLabel("성별");
+		l_RegGender = new JLabel("성별");
 		l_RegAddress = new JLabel("주소");
 		l_RegPhone = new JLabel("연락처");
 		l_RegDivision = new JLabel("구분");
@@ -56,7 +56,7 @@ public class RegistUI extends JFrame implements ActionListener{
 		
 	
 		tf_RegName = new JTextField(10);
-		tf_RegSex = new JTextField(10);
+		tf_RegGender = new JTextField(10);
 		tf_RegAddress = new JTextField(10);
 		tf_RegPhone = new JTextField(10);
 		tf_RegDivision = new JTextField(10);
@@ -70,7 +70,7 @@ public class RegistUI extends JFrame implements ActionListener{
 		p_RegTitle.add(l_RegTitle);
 		
 		p_RegBoard.add(l_RegName); p_RegBoard.add(tf_RegName);
-		p_RegBoard.add(l_RegSex); p_RegBoard.add(tf_RegSex);
+		p_RegBoard.add(l_RegGender); p_RegBoard.add(tf_RegGender);
 		p_RegBoard.add(l_RegAddress); p_RegBoard.add(tf_RegAddress);
 		p_RegBoard.add(l_RegPhone); p_RegBoard.add(tf_RegPhone);
 		p_RegBoard.add(l_RegDivision); p_RegBoard.add(tf_RegDivision);
@@ -135,7 +135,7 @@ public class RegistUI extends JFrame implements ActionListener{
 				//2. StuVO 객체에 입력한 데이터를 담아서 -- 등록요청
 				ClientVO vo = new ClientVO();
 				vo.setName(tf_RegName.getText());
-				vo.setSex(Integer.parseInt(tf_RegSex.getText()));
+				vo.setGender(Integer.parseInt(tf_RegGender.getText()));
 				vo.setAddress(tf_RegAddress.getText());
 				vo.setPhone(tf_RegPhone.getText());
 				vo.setDivision(Integer.parseInt(tf_RegDivision.getText()));

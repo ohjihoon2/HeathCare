@@ -4,7 +4,8 @@ public class ClientVO {
 
 	
 	String sno, name, address, phone, created_date, birth_date, event_name, start_date, end_date ;
-	int sex, division;
+	int gender, division;
+	
 	public String getSno() {
 		return sno;
 	}
@@ -59,11 +60,11 @@ public class ClientVO {
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
 	}
-	public int getSex() {
-		return sex;
+	public int getGender() {
+		return gender;
 	}
-	public void setSex(int sex) {
-		this.sex = sex;
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 	public int getDivision() {
 		return division;
@@ -71,6 +72,6 @@ public class ClientVO {
 	public void setDivision(int division) {
 		this.division = division;
 	}
-
+	
 	
 }

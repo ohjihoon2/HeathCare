@@ -7,10 +7,10 @@ drop table client;
 create table CLIENT(
     sno number(10),
     NAME VARCHAR2(20),
-    SEX number(2),
+    GENDER number(2),
     ADDRESS VARCHAR(40),
     PHONE   VARCHAR(20),
-    division num  ber(2),
+    division number(2),
     created_date date,
     birth_date date,
     event_name varchar2(40),

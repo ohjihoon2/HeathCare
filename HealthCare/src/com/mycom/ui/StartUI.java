@@ -1,12 +1,14 @@
 package com.mycom.ui;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,8 +28,8 @@ public class StartUI extends JFrame implements ActionListener{
 	JPanel p_LogMain, p_LogLogin , p_LogBtn, p_LogNum; 
 	JLabel l_Logid;
 	JTextField tf_LogId;
-	JButton b_LogLogin, b_LogCreate, b_Log1, b_Log2, b_Log3, b_Log4, b_Log5, b_Log6, b_Log7, b_Log8, b_Log9;
-	
+	JButton b_LogLogin, b_LogCreate, b_Log0, b_Log1, b_Log2, b_Log3, b_Log4, b_Log5, b_Log6, b_Log7, b_Log8, b_Log9, b_LogStar, b_LogRe;
+	StringBuffer sb;
 	
 	//회원가입 Field
 	JPanel p_RegMain, p_RegTitle, p_RegBoard, p_RegBtn; 
@@ -43,12 +45,14 @@ public class StartUI extends JFrame implements ActionListener{
 		//1. 화면구성
 		// 패널 초기화 
     	jf = new JFrame();
+    	
 		p_LogMain = new JPanel(new GridLayout(3,1));
 		
 		p_LogLogin = new JPanel();
 		p_LogBtn = new JPanel();
 		p_LogNum = new JPanel(); 
 		
+ 
 		b_Log1 = new JButton("1"); 
 		b_Log2 = new JButton("2"); 
 		b_Log3 = new JButton("3");
@@ -58,20 +62,28 @@ public class StartUI extends JFrame implements ActionListener{
 		b_Log7 = new JButton("7");
 		b_Log8 = new JButton("8");
 		b_Log9 = new JButton("9");
+		b_LogStar = new JButton("*"); 
+		b_Log0 = new JButton("0");
+		b_LogRe = new JButton("수정"); 
 
 		b_LogLogin = new JButton("로그인");
 		b_LogCreate = new JButton("회원가입");
 
 //		p_LogMain.setLayout(null);
 
+		sb = new StringBuffer();
+		
 		l_Logid = new JLabel("ID : ");
 		tf_LogId = new JTextField(20);
+		
+		tf_LogId.setText(sb.toString());
 		
 		p_LogLogin.add(l_Logid);
 		p_LogLogin.add(tf_LogId);
 		
-		p_LogNum.setLayout(new GridLayout(4,3));
+		p_LogNum.setLayout(new GridLayout(5,3));
 
+		
 		p_LogNum.add(b_Log1);
 		p_LogNum.add(b_Log2);
 		p_LogNum.add(b_Log3);
@@ -81,6 +93,9 @@ public class StartUI extends JFrame implements ActionListener{
 		p_LogNum.add(b_Log7);
 		p_LogNum.add(b_Log8);
 		p_LogNum.add(b_Log9);
+		p_LogNum.add(b_LogStar);
+		p_LogNum.add(b_Log0);
+		p_LogNum.add(b_LogRe);
 		
 		p_LogBtn.add(b_LogLogin);
 		p_LogBtn.add(b_LogCreate);
@@ -105,6 +120,19 @@ public class StartUI extends JFrame implements ActionListener{
 		//2. 이벤트 핸들러 정의
 		b_LogLogin.addActionListener(this);
 		b_LogCreate.addActionListener(this);
+		b_Log1.addActionListener(this);
+		b_Log2.addActionListener(this);
+		b_Log3.addActionListener(this);
+		b_Log4.addActionListener(this);
+		b_Log5.addActionListener(this);
+		b_Log6.addActionListener(this);
+		b_Log7.addActionListener(this);
+		b_Log8.addActionListener(this);
+		b_Log9.addActionListener(this);
+		b_Log0.addActionListener(this);
+		b_LogStar.addActionListener(this);
+		b_LogRe.addActionListener(this);
+		
     }
       	
 	//Method	
@@ -117,6 +145,39 @@ public class StartUI extends JFrame implements ActionListener{
 		}else if (obj == b_LogLogin) {
 			p_LogMain.setVisible(false);
 			new MainScreenUI(this);
+		}else if(obj == b_Log0) {
+			sb.append(0);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log1) {
+			sb.append(1);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log2) {
+			sb.append(2);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log3) {
+			sb.append(3);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log4) {
+			sb.append(4);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log5) {
+			sb.append(5);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log6) {
+			sb.append(6);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log7) {
+			sb.append(7);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log8) {
+			sb.append(8);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_Log9) {
+			sb.append(9);
+			tf_LogId.setText(sb.toString());
+		}else if(obj == b_LogRe) {
+			tf_LogId.setText("");
+			sb.delete(0, sb.length());
 		}
 	}
 }

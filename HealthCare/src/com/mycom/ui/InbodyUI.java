@@ -52,7 +52,7 @@ public class InbodyUI extends JFrame implements ActionListener {
 
       setLocation(400, 100);
       setLayout(new GridLayout(1, 2));
-      icon = new ImageIcon("C:\\Users\\SIST\\git\\HeathCare\\HealthCare\\image\\ht18.jpg");
+      icon = new ImageIcon("image/ht18.jpg");
 
       p_InbMain = new JPanel() {
          public void paintComponent(Graphics g) {

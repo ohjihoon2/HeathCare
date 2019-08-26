@@ -12,7 +12,6 @@ public class RegistDAO {
 
 	//Field
 	Connection conn;
-	Statement stmt;
 	PreparedStatement pstmt;
 	ResultSet rs;
 	String url="jdbc:oracle:thin:@127.0.0.1:1521";
@@ -55,9 +54,10 @@ public class RegistDAO {
 		System.out.println("3단계 성공~");
 		
 		try {
+			
 			//쿼리를 실행하기전에 물음표 자리에 하나하나 넣어주는 매핑이 필요하다.
 			pstmt.setString(1, vo.getName());
-			pstmt.setInt(2, vo.getSex());	
+			pstmt.setInt(2, vo.getGender());	
 			pstmt.setString(3, vo.getAddress());
 			pstmt.setString(4, vo.getPhone());
 			pstmt.setInt(5, vo.getDivision());
@@ -127,7 +127,7 @@ public class RegistDAO {
 	public void close() {
 		try{
 			if(rs != null) rs.close();
-			if(stmt != null) stmt.close();
+			if(pstmt != null) pstmt.close();
 			if(conn != null) conn.close();
 		}catch(Exception e) {
 			e.printStackTrace();
