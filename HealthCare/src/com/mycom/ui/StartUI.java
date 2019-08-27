@@ -1,7 +1,6 @@
 package com.mycom.ui;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.mycom.system.LoginSystem;
+
 
 public class StartUI extends JFrame implements ActionListener{
 	
@@ -134,17 +136,48 @@ public class StartUI extends JFrame implements ActionListener{
 		b_LogRe.addActionListener(this);
 		
     }
-      	
+    
 	//Method	
+    public boolean regFormCheck() {
+		boolean result = false;
+		
+		if(tf_LogId.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "아이디 번호를 입력해주세요");
+			tf_RegName.requestFocus();
+		}else {
+			result = true;
+		}
+		
+		return result;
+	}    
+    
+    
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
 		if(obj == b_LogCreate) {
+			//회원가입
 			p_LogMain.setVisible(false); 
 			new RegistUI(this);
 		}else if (obj == b_LogLogin) {
-			p_LogMain.setVisible(false);
-			new MainScreenUI(this);
+			//로그인
+			//회원정보 DB ->>DAO
+			LoginSystem system = new LoginSystem();
+			boolean result = system.loginCheck(tf_LogId.getText().trim());
+			
+			System.out.println("result = "+result);
+			if(regFormCheck()) {
+				if(result) {
+					JOptionPane.showMessageDialog(null, "로그인 성공");
+					p_LogMain.setVisible(false);
+					new MainScreenUI(this);
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "로그인 실패");
+				}
+				
+			}
+			
 		}else if(obj == b_Log0) {
 			sb.append(0);
 			tf_LogId.setText(sb.toString());

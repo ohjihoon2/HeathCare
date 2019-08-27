@@ -1,11 +1,13 @@
 CREATE SEQUENCE SEQ_member
-START WITH 1 
+START WITH 1000
 INCREMENT BY 1; 
+
+
 
 drop table client;
 
 create table CLIENT(
-    sno number(10),
+    cno number(10),
     NAME VARCHAR2(20),
     GENDER number(2),
     ADDRESS VARCHAR(40),

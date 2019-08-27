@@ -59,14 +59,12 @@ public class LoginUI extends JFrame implements ActionListener{
 		btnReset.addActionListener(this);
 	}
 	
-	
 	//3. 이벤트 처리
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("로그인")) {
 			//StuMgmSystem 생성
 			StuMgmSystem system = new StuMgmSystem();
 			boolean result = system.loginCheck(jtfId.getText(), jtfPass.getText());
-			
 			if(result) {
 				JOptionPane.showMessageDialog(null, "로그인 성공");
 				new StuMgmSystemUI2();
@@ -83,42 +81,6 @@ public class LoginUI extends JFrame implements ActionListener{
 		}
 	}
 	
-	//로그인 체크
-	public void loginCheck() {
-		//System.out.println("로그인");
-		if(!jtfId.getText().equals("")) {
-			//로그인처리->아이디 체크
-			if(jtfId.getText().equals("test") ) {
-				
-				if(!jtfPass.getText().equals("")) {
-					//패스워드 처리 --> 패스워드 체크
-					if(jtfPass.getText().equals("1234")) {
-						//로그인 성공!!
-						JOptionPane.showMessageDialog(null,"로그인 성공!!!");
-						//수행로직 호출~~
-												
-					}else {
-						//패스워드 다름
-						JOptionPane.showMessageDialog(null,"패스워드가 다릅니다. 다시입력해주세요");
-						jtfPass.setText("");
-						jtfPass.requestFocus();
-					}
-				}else {
-					JOptionPane.showMessageDialog(null,"패스워드를 입력해주세요");
-					jtfPass.requestFocus();
-				}
-			}else {
-				//아이디가 다름
-				JOptionPane.showMessageDialog(null,"아이디가 다릅니다. 다시입력해주세요");
-				jtfId.setText("");
-				jtfId.requestFocus();
-			}
-		}else {
-			//아이디 입력 메시지 출력
-			JOptionPane.showMessageDialog(null,"아이디를 입력해주세요");
-			jtfId.requestFocus();
-		}
-	}
 	
 	
 }

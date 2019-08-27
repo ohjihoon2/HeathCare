@@ -198,7 +198,7 @@ System.out.println("2단계 성공~");
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}				
-			
+			System.out.println("result =" + result);
 		}catch(Exception e) {e.printStackTrace();}
 		
 		return result;

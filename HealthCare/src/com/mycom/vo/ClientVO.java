@@ -3,14 +3,13 @@ package com.mycom.vo;
 public class ClientVO {
 
 	
-	String sno, name, address, phone, created_date, birth_date, event_name, start_date, end_date ;
+	String cno, name, address, phone, created_date, birth_date, event_name, start_date, end_date ;
 	int gender, division;
-	
-	public String getSno() {
-		return sno;
+	public String getCno() {
+		return cno;
 	}
-	public void setSno(String sno) {
-		this.sno = sno;
+	public void setCno(String cno) {
+		this.cno = cno;
 	}
 	public String getName() {
 		return name;
@@ -72,6 +71,7 @@ public class ClientVO {
 	public void setDivision(int division) {
 		this.division = division;
 	}
+	
 	
 	
 }

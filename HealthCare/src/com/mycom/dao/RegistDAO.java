@@ -85,14 +85,14 @@ public class RegistDAO {
 //	 */
 //	public int getUpdate(ClientVO vo) {
 //		int result = 0;
-//		String sql = "update stu set skor = ?, seng = ?, smath =? where sno = ?";
+//		String sql = "update stu set skor = ?, seng = ?, smath =? where cno = ?";
 //		getPreparedStatement(sql);
 //		System.out.println("3단계 성공~");
 //		try {
 //			pstmt.setInt(1, vo.getSkor());
 //			pstmt.setInt(2, vo.getSeng());
 //			pstmt.setInt(3, vo.getSmath());
-//			pstmt.setString(4, vo.getSno());
+//			pstmt.setString(4, vo.getcno());
 //			result = pstmt.executeUpdate();
 //		}catch(Exception e) {
 //			e.printStackTrace();
@@ -104,14 +104,14 @@ public class RegistDAO {
 //	/**
 //	 * 4~5단계 : 데이터 삭제 
 //	 */
-//	public int getDelete(String sno) {
+//	public int getDelete(String cno) {
 //		int result = 0;
-//		String sql = "delete from stu where sno =upper(?)";
+//		String sql = "delete from stu where cno =upper(?)";
 //		getPreparedStatement(sql);
 //		System.out.println("3단계 성공");
 //
 //		try {
-//			pstmt.setString(1, sno);
+//			pstmt.setString(1, cno);
 //			result = pstmt.executeUpdate();
 //		}catch(Exception e) {
 //			e.printStackTrace();

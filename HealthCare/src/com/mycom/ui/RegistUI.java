@@ -113,12 +113,9 @@ public class RegistUI extends JFrame implements ActionListener{
 		
 		if(tf_RegName.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
-			result = true;
 			tf_RegName.requestFocus();
-		}else if(tf_RegAddress.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
+		}else {
 			result = true;
-			tf_RegAddress.requestFocus();
 		}
 		
 		return result;
@@ -146,9 +143,11 @@ public class RegistUI extends JFrame implements ActionListener{
 				vo.setEnd_date(tf_RegEnd_date.getText());
 				
 				boolean regResult = system.regist(vo);
+				System.out.println(regResult);
 				if(regResult) {
 					JOptionPane.showMessageDialog(null, "등록완료");
-					
+					p_RegMain.setVisible(false);
+					startui.p_LogMain.setVisible(true);
 				}else {
 					JOptionPane.showMessageDialog(null, "등록실패");
 				}
