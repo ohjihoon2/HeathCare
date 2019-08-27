@@ -1,13 +1,13 @@
 package com.mycom.system;
 
 import com.mycom.dao.RegistDAO;
-import com.mycom.vo.ClientVO;
+import com.mycom.vo.MemberVO;
 
 public class RegistSystem {
 	
 	//Filed
 	RegistDAO dao;
-	ClientVO vo;
+	MemberVO vo;
 	
 	//Constructor
 	public RegistSystem() {
@@ -20,7 +20,7 @@ public class RegistSystem {
 	 * @param vo
 	 * @return
 	 */
-	public boolean regist(ClientVO vo) {
+	public boolean regist(MemberVO vo) {
 		boolean result = false;
 		
 		int val= dao.getClientInsert(vo);

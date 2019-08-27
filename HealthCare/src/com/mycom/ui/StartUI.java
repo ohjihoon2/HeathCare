@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.mycom.system.LoginSystem;
+import com.mycom.vo.MemberVO;
 
 
 public class StartUI extends JFrame implements ActionListener{
@@ -164,6 +165,7 @@ public class StartUI extends JFrame implements ActionListener{
 			//회원정보 DB ->>DAO
 			LoginSystem system = new LoginSystem();
 			boolean result = system.loginCheck(tf_LogId.getText().trim());
+			MemberVO vo = new MemberVO();
 			
 			System.out.println("result = "+result);
 			if(regFormCheck()) {

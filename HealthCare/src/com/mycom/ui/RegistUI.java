@@ -1,28 +1,27 @@
 package com.mycom.ui;
 import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.mycom.system.RegistSystem;
-import com.mycom.vo.ClientVO;
-
 public class RegistUI extends JFrame implements ActionListener{
-	RegistSystem system = new RegistSystem();
 	StartUI startui;
-	
+
 	//Field
 	JFrame jf;
 	JPanel p_RegMain, p_RegTitle, p_RegBoard, p_RegBtn; 
-	JLabel l_RegTitle, l_RegName, l_RegGender, l_RegAddress, l_RegPhone, l_RegDivision, l_RegCreated_date, l_RegBirth_date, l_RegEvent_name,  l_RegStart_date, l_RegEnd_date;
-	JTextField tf_RegName, tf_RegGender, tf_RegAddress, tf_RegPhone, tf_RegDivision, tf_RegCreated_date, tf_RegBirth_date, tf_RegEvent_name,  tf_RegStart_date, tf_RegEnd_date;
+	JLabel l_RegTitle, l_RegName, l_RegAddress, l_RegContact, l_RegRole, l_RegCreated_date, l_RegBirth, l_RegTerm, l_RegEvent, l_RegStart_date, l_RegEnd_date;
+	JTextField tf_RegName, tf_RegAddress, tf_RegContact, tf_RegRole, tf_RegCreated_date, tf_RegBirth, tf_RegTerm, tf_RegEvent, tf_RegStart_date, tf_RegEnd_date;
 	JButton b_RegSave, b_RegCancel, b_RegExit;
 	
 	//Constructor
@@ -44,25 +43,25 @@ public class RegistUI extends JFrame implements ActionListener{
 		l_RegTitle = new JLabel("회원가입");
 		
 		l_RegName = new JLabel("회원명");
-		l_RegGender = new JLabel("성별");
 		l_RegAddress = new JLabel("주소");
-		l_RegPhone = new JLabel("연락처");
-		l_RegDivision = new JLabel("구분");
+		l_RegContact = new JLabel("연락처");
+		l_RegRole = new JLabel("구분");
 		l_RegCreated_date = new JLabel("회원가입일");
-		l_RegBirth_date = new JLabel("생년월일");
-		l_RegEvent_name = new JLabel("종목");
+		l_RegBirth = new JLabel("생년월일");
+		l_RegTerm = new JLabel("신청기간");
+		l_RegEvent = new JLabel("종목");
 		l_RegStart_date = new JLabel("시작일");
 		l_RegEnd_date = new JLabel("마지막일");
 		
-	
+		
 		tf_RegName = new JTextField(10);
-		tf_RegGender = new JTextField(10);
 		tf_RegAddress = new JTextField(10);
-		tf_RegPhone = new JTextField(10);
-		tf_RegDivision = new JTextField(10);
+		tf_RegContact = new JTextField(10);
+		tf_RegRole = new JTextField(10);
 		tf_RegCreated_date = new JTextField(10);
-		tf_RegBirth_date = new JTextField(10);
-		tf_RegEvent_name = new JTextField(10);
+		tf_RegBirth = new JTextField(10);
+		tf_RegTerm = new JTextField(10);
+		tf_RegEvent = new JTextField(10);
 		tf_RegStart_date = new JTextField(10);
 		tf_RegEnd_date = new JTextField(10);
 		
@@ -70,16 +69,15 @@ public class RegistUI extends JFrame implements ActionListener{
 		p_RegTitle.add(l_RegTitle);
 		
 		p_RegBoard.add(l_RegName); p_RegBoard.add(tf_RegName);
-		p_RegBoard.add(l_RegGender); p_RegBoard.add(tf_RegGender);
 		p_RegBoard.add(l_RegAddress); p_RegBoard.add(tf_RegAddress);
-		p_RegBoard.add(l_RegPhone); p_RegBoard.add(tf_RegPhone);
-		p_RegBoard.add(l_RegDivision); p_RegBoard.add(tf_RegDivision);
+		p_RegBoard.add(l_RegContact); p_RegBoard.add(tf_RegContact);
+		p_RegBoard.add(l_RegRole); p_RegBoard.add(tf_RegRole);
 		p_RegBoard.add(l_RegCreated_date); p_RegBoard.add(tf_RegCreated_date);
-		p_RegBoard.add(l_RegBirth_date); p_RegBoard.add(tf_RegBirth_date);
-		p_RegBoard.add(l_RegEvent_name); p_RegBoard.add(tf_RegEvent_name);
+		p_RegBoard.add(l_RegBirth); p_RegBoard.add(tf_RegBirth);
+		p_RegBoard.add(l_RegTerm); p_RegBoard.add(tf_RegTerm);
+		p_RegBoard.add(l_RegEvent); p_RegBoard.add(tf_RegEvent);
 		p_RegBoard.add(l_RegStart_date); p_RegBoard.add(tf_RegStart_date);
 		p_RegBoard.add(l_RegEnd_date); p_RegBoard.add(tf_RegEnd_date);
-		
 		
 		p_RegBtn.add(b_RegSave);
 		p_RegBtn.add(b_RegCancel);
@@ -105,54 +103,15 @@ public class RegistUI extends JFrame implements ActionListener{
 		b_RegCancel.addActionListener(this);
 		b_RegExit.addActionListener(this);
 	}
-	
-	
+
 	//Method
-	public boolean regFormCheck() {
-		boolean result = false;
-		
-		if(tf_RegName.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
-			tf_RegName.requestFocus();
-		}else {
-			result = true;
-		}
-		
-		return result;
-	}
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
 		
 		if(obj == b_RegSave) {	//회원가입 완료
 			//회원정보 --> VO 생성 --> DAO ---> DB 
-			if(regFormCheck()) {
-				//2. StuVO 객체에 입력한 데이터를 담아서 -- 등록요청
-				ClientVO vo = new ClientVO();
-				vo.setName(tf_RegName.getText());
-				vo.setGender(Integer.parseInt(tf_RegGender.getText()));
-				vo.setAddress(tf_RegAddress.getText());
-				vo.setPhone(tf_RegPhone.getText());
-				vo.setDivision(Integer.parseInt(tf_RegDivision.getText()));
-				vo.setCreated_date(tf_RegCreated_date.getText());
-				vo.setBirth_date(tf_RegBirth_date.getText());
-				vo.setEvent_name(tf_RegEvent_name.getText());
-				vo.setStart_date(tf_RegStart_date.getText());
-				vo.setEnd_date(tf_RegEnd_date.getText());
-				
-				boolean regResult = system.regist(vo);
-				System.out.println(regResult);
-				if(regResult) {
-					JOptionPane.showMessageDialog(null, "등록완료");
-					p_RegMain.setVisible(false);
-					startui.p_LogMain.setVisible(true);
-				}else {
-					JOptionPane.showMessageDialog(null, "등록실패");
-				}
-			}
-				
+			
 		}else if(obj == b_RegCancel) { //다시쓰기
 			//필드 초기화
 		}else if(obj == b_RegExit) {  //나가기

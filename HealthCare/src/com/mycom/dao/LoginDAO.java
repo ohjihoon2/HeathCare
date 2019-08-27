@@ -3,10 +3,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-
-import com.mycom.vo.ClientVO;
 
 
 public class LoginDAO {
@@ -49,7 +45,7 @@ public class LoginDAO {
 	public int  getResultLogin(String cno) {
 		System.out.println("dao cno = "+cno);
 		int result = 0;
-		String sql = "select count(*) from client where cno=?";
+		String sql = "select count(*) from member where cno=?";
 		getPreparedStatement(sql);	//3단계 호출
 		
 		try {
@@ -81,35 +77,4 @@ public class LoginDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * 로그인 체크
-	 * @param sid
-	 * @param spass
-	 * @return
-	 */
-	public int getResultLogin(String sid, String spass) {
-		int result = 0;
-		
-		String sql = "SELECT COUNT(*) FROM STU_MEMBER WHERE SID=? AND SPASS=?";
-		
-		getPreparedStatement(sql);
-		
-		try {
-			pstmt.setString(1, sid);
-			pstmt.setString(2, spass);
-			
-			// query가 select 이기 때문에 resultSet으로 받아야 함 
-			
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				result = rs.getInt(1);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	
 }

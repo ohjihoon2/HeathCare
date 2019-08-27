@@ -1,11 +1,13 @@
-select * from client;
-drop table client;
+
+
+drop table MEMBER;
+
 
 CREATE SEQUENCE SEQ_member
 START WITH 1000
 INCREMENT BY 1; 
 
-create table CLIENT(
+create table MEMBER(
     cno number(10)
        CONSTRAINT PK_CLIENT_CNO PRIMARY KEY,
     NAME VARCHAR2(20)
@@ -25,11 +27,12 @@ create table CLIENT(
 );
 
 -- 회원가입 하기
-insert into client values(seq_member.nextval, 'test', UPPER('f'), 'test123', '010000000', 1, sysdate, sysdate, '헬스', sysdate,add_months(sysdate, 1));
+insert into MEMBER values(seq_member.nextval, 'test', UPPER('f'), 'test123', '010000000', 1, sysdate, sysdate, '헬스', sysdate,add_months(sysdate, 1));
 
-select * from client;
+select * from MEMBER;
 desc client;
+
 -- 로그인 하기
-select * from client where cno = 1021;
-select count(*) from client where cno=1021;
+select * from MEMBER where cno = 1021;
+select count(*) from MEMBER where cno=1021;
 commit;

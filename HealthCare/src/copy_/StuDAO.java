@@ -185,8 +185,7 @@ System.out.println("2단계 성공~");
 	/** 로그인 체크 **/
 	public int getResultLogin(String sid, String spass) {
 		int result = 0;
-		String sql = "SELECT COUNT(*) FROM STU_MEMBER " 
-				+ " WHERE SID=? AND SPASS=?";
+		String sql = "SELECT COUNT(*) FROM STU_MEMBER WHERE SID=? AND SPASS=?";
 		getPreparedStatement(sql);
 		
 		try {

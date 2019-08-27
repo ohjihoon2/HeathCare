@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.mycom.vo.ClientVO;
+import com.mycom.vo.MemberVO;
 
 public class RegistDAO {
 
@@ -46,10 +46,10 @@ public class RegistDAO {
 	/**
 	 * 4~5단계 : 데이터 추가 
 	 */
-	public int getClientInsert(ClientVO vo) {
+	public int getClientInsert(MemberVO vo) {
 		int result =0;
 //		getStatement();
-		String sql = "INSERT INTO client VALUES(seq_member.nextval,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO client VALUES(seq_member.nextval,?,UPPER(?),?,?,?,SYSDATE,?,?,?,?)";
 		getPreparedStatement(sql);
 		System.out.println("3단계 성공~");
 		
@@ -57,15 +57,14 @@ public class RegistDAO {
 			
 			//쿼리를 실행하기전에 물음표 자리에 하나하나 넣어주는 매핑이 필요하다.
 			pstmt.setString(1, vo.getName());
-			pstmt.setInt(2, vo.getGender());	
+			pstmt.setString(2, vo.getGender());	
 			pstmt.setString(3, vo.getAddress());
 			pstmt.setString(4, vo.getPhone());
 			pstmt.setInt(5, vo.getDivision());
-			pstmt.setString(6, vo.getCreated_date());
-			pstmt.setString(7, vo.getBirth_date());
-			pstmt.setString(8, vo.getEvent_name());
-			pstmt.setString(9, vo.getStart_date());
-			pstmt.setString(10, vo.getEnd_date());
+			pstmt.setString(6, vo.getBirth_date());
+			pstmt.setString(7, vo.getEvent_name());
+			pstmt.setString(8, vo.getStart_date());
+			pstmt.setString(9, vo.getEnd_date());
 			
 			
 			
@@ -133,34 +132,4 @@ public class RegistDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * 로그인 체크
-	 * @param sid
-	 * @param spass
-	 * @return
-	 */
-	public int getResultLogin(String sid, String spass) {
-		int result = 0;
-		String sql = "SELECT COUNT(*) FROM STU_MEMBER WHERE SID=? AND SPASS=?";
-		
-		getPreparedStatement(sql);
-		
-		try {
-			pstmt.setString(1, sid);
-			pstmt.setString(2, spass);
-			
-			// query가 select 이기 때문에 resultSet으로 받아야 함 
-			
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				result = rs.getInt(1);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	
 }

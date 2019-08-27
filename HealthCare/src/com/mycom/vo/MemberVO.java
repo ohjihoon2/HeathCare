@@ -1,10 +1,11 @@
 package com.mycom.vo;
 
-public class ClientVO {
+public class MemberVO {
 
 	
-	String cno, name, address, phone, created_date, birth_date, event_name, start_date, end_date ;
-	int gender, division;
+	String cno, name, gender, address, phone, created_date, birth_date, event_name, start_date, end_date;
+	int division;
+	
 	public String getCno() {
 		return cno;
 	}
@@ -16,6 +17,12 @@ public class ClientVO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	public String getAddress() {
 		return address;
@@ -59,18 +66,13 @@ public class ClientVO {
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
 	}
-	public int getGender() {
-		return gender;
-	}
-	public void setGender(int gender) {
-		this.gender = gender;
-	}
 	public int getDivision() {
 		return division;
 	}
 	public void setDivision(int division) {
 		this.division = division;
 	}
+	
 	
 	
 	

@@ -1,14 +1,13 @@
 package com.mycom.system;
 
 import com.mycom.dao.LoginDAO;
-import com.mycom.dao.RegistDAO;
-import com.mycom.vo.ClientVO;
+import com.mycom.vo.MemberVO;
 
 public class LoginSystem {
 	
 	//Filed
 	LoginDAO dao;
-	ClientVO vo;
+	MemberVO vo;
 	
 	//Constructor
 	public LoginSystem() {

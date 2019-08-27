@@ -1,26 +1,20 @@
 package com.mycom.ui;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import copy_.StuMgmSystemUI2;
+import com.mycom.dao.MainDAO;
+import com.mycom.vo.MainVO;
+
 
 
 public class MainScreenUI implements ActionListener {
@@ -32,7 +26,7 @@ public class MainScreenUI implements ActionListener {
 	JPanel p_sc_total, p_sc_top, p_sc_infobox,p_sc_btnbox,p_sc_uno,p_sc_time,p_sc_picture,p_sc_l_sc_locker,p_sc_sysdate;
 	JButton b_sc_lecture, b_sc_inbody, b_sc_personal,b_sc_chatting;
 	JLabel l_sc_topimgbox, l_sc_uno, l_sc_time, l_sc_ubox, l_sc_locker,l_sc_sysdate;
-	JTextArea jta_sc_uno, jta_sc_limit, jta_sc_locker; 
+	JTextArea jta_sc_uno, jta_sc_limit, jta_sc_limit2 , jta_sc_locker; 
 	ImageIcon ic_sc_timg, ic_sc_uimg;
 	
 	//constructor
@@ -74,17 +68,21 @@ public class MainScreenUI implements ActionListener {
 		l_sc_uno = new JLabel("회원번호");
 		l_sc_uno.setFont(new Font("돋움", Font.BOLD, 30));
 		jta_sc_uno = new JTextArea(8,25);
+		jta_sc_uno.setFont(new Font("돋움", Font.BOLD, 20));
 
 		l_sc_time = new JLabel("헬스장 이용기간");
 		l_sc_time.setFont(new Font("돋움", Font.BOLD, 30));
-		jta_sc_limit = new JTextArea(8,25);
+		jta_sc_limit = new JTextArea(4,25);
+		jta_sc_limit.setFont(new Font("돋움", Font.BOLD, 15));
+		jta_sc_limit2 = new JTextArea(4,25);
+		jta_sc_limit2.setFont(new Font("돋움", Font.BOLD, 15));
 
 
-		l_sc_locker = new JLabel("락커 이용기간");
+		l_sc_locker = new JLabel("수강종목");
 		l_sc_locker.setFont(new Font("돋움", Font.BOLD, 30));
-		jta_sc_locker = new JTextArea(8,25);
+		jta_sc_locker = new JTextArea(8,25); //수강종목 or 헬스 
+		jta_sc_locker.setFont(new Font("돋움", Font.BOLD, 15));
 
-		l_sc_sysdate = new JLabel("2019-08-20");
 
 		p_sc_top.add(l_sc_topimgbox);
 		p_sc_infobox.add(p_sc_uno); p_sc_infobox.add(p_sc_time); p_sc_infobox.add(p_sc_picture); p_sc_infobox.add(p_sc_l_sc_locker);
@@ -101,7 +99,7 @@ public class MainScreenUI implements ActionListener {
 
 		p_sc_uno.add(l_sc_uno); p_sc_uno.add(jta_sc_uno);
 		p_sc_uno.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		p_sc_time.add(l_sc_time); p_sc_time.add(jta_sc_limit);
+		p_sc_time.add(l_sc_time); p_sc_time.add(jta_sc_limit); p_sc_time.add(jta_sc_limit2);
 		p_sc_time.setBorder(BorderFactory.createEmptyBorder(15, 10, 10, 10));
 		p_sc_picture.add(l_sc_ubox);
 		p_sc_picture.setBorder(BorderFactory.createEmptyBorder(15, 10, 10, 10));
@@ -118,13 +116,30 @@ public class MainScreenUI implements ActionListener {
 		p_sc_total.setSize(1000,600);
 		p_sc_total.setVisible(true);
 		
+		
 //		//2. 이벤트 핸들러 정의
 		b_sc_lecture.addActionListener(this);
 		b_sc_inbody.addActionListener(this);
 		b_sc_personal.addActionListener(this);
 		b_sc_chatting.addActionListener(this);
+	
+		//화면에 회원정보 띄워주기
+		MainSystem system = new MainSystem();		
+		MainVO vo = system.getListMainVO(startui.tf_LogId.getText().trim());
+		
+		if(vo != null) {
+			jta_sc_uno.append(String.valueOf(vo.getCno()));
+			jta_sc_limit.append(vo.getStart_date());
+			jta_sc_limit2.append(vo.getEnd_date());
+			if( vo.getEvent_name() != null && vo.getEvent_name() != "")
+				jta_sc_locker.append(vo.getEvent_name());
+			else 
+				jta_sc_locker.append("헬스장만 이용 중");
+		}
+		
 		
 	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -140,11 +155,33 @@ public class MainScreenUI implements ActionListener {
 			new DietUI();
 		}else if(obj == b_sc_chatting) {
 			System.out.println("채팅 클릭");
-	//		switchingPanel(getStatus());
-	//		StartUI();
+
 		}
 		
 	}
 	
+
+	
+}
+
+class MainSystem{
+	//Field
+	MainDAO dao;
+	
+	//Constructor
+	public MainSystem() {
+		try {
+			dao = new MainDAO();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//화면 정보 띄우기
+	public MainVO getListMainVO(String seq) {
+		MainVO mvo = dao.getListMainVO(seq);
+		
+		return mvo;
+	}
 	
 }
