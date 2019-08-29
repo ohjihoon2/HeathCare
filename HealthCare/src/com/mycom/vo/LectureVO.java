@@ -5,9 +5,15 @@ public class LectureVO {
 	int cno, count;
 	String event_name, validity, name;
 	
-	
+	//method
 	public int getCno() {
 		return cno;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public void setCno(int cno) {
 		this.cno = cno;
@@ -30,15 +36,5 @@ public class LectureVO {
 	public void setValidity(String validity) {
 		this.validity = validity;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-
-	
-	
 	
 }

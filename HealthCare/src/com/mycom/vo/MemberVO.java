@@ -3,13 +3,14 @@ package com.mycom.vo;
 public class MemberVO {
 
 	
-	String cno, name, gender, address, phone, created_date, birth_date, event_name, start_date, end_date;
-	int division;
+	String  name, gender, address, phone, created_date, birth_date, event_name, start_date, end_date;
+	int cno, division;
 	
-	public String getCno() {
+	
+	public int getCno() {
 		return cno;
 	}
-	public void setCno(String cno) {
+	public void setCno(int cno) {
 		this.cno = cno;
 	}
 	public String getName() {

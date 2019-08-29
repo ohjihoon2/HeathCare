@@ -7,7 +7,6 @@ public class LoginSystem {
 	
 	//Filed
 	LoginDAO dao;
-	MemberVO vo;
 	
 	//Constructor
 	public LoginSystem() {
@@ -20,12 +19,17 @@ public class LoginSystem {
 	 * @param vo
 	 * @return
 	 */
-	public boolean loginCheck(String cno) {
+	public boolean loginCheck(int cno) {
 		System.out.println("system cno = "+cno);
 		boolean result = false;
 		int val =dao.getResultLogin(cno);
 		System.out.println("val = " + val);
-		if(val != 0) result = true;
+		if(val != 0) {
+			//cno로 로그인 한 MemberVO 저장
+			dao.setVO(cno);
+			result = true;
+		}
+		
 		return result;
 	}
 	

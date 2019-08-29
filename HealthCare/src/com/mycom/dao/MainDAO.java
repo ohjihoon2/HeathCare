@@ -16,7 +16,7 @@ public class MainDAO {
 	
 	String url= "jdbc:oracle:thin:@127.0.0.1:1521";
 	String user= "HealthCare";
-	String pass= "1234";
+	String pass="1234";
 	
 	//constructor
 	public MainDAO() {
@@ -57,6 +57,7 @@ public class MainDAO {
 				vo.setStart_date(rs.getString(3));
 				vo.setEnd_date(rs.getString(4));
 				vo.setEvent_name(rs.getString(5));
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

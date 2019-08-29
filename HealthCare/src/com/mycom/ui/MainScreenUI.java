@@ -1,4 +1,5 @@
 package com.mycom.ui;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -12,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import com.mycom.dao.MainDAO;
+import com.mycom.system.MainSystem;
 import com.mycom.vo.MainVO;
 
 
@@ -124,20 +125,16 @@ public class MainScreenUI implements ActionListener {
 		b_sc_chatting.addActionListener(this);
 	
 		//화면에 회원정보 띄워주기
-		MainSystem system = new MainSystem();		
-		MainVO vo = system.getListMainVO(startui.tf_LogId.getText().trim());
 		
-		if(vo != null) {
-			jta_sc_uno.append(String.valueOf(vo.getCno()));
-			jta_sc_limit.append(vo.getStart_date());
-			jta_sc_limit2.append(vo.getEnd_date());
-			if( vo.getEvent_name() != null && vo.getEvent_name() != "")
-				jta_sc_locker.append(vo.getEvent_name());
+		if(StartUI.vo != null) {
+			jta_sc_uno.append(String.valueOf(StartUI.vo.getCno()));
+			jta_sc_limit.append(StartUI.vo.getStart_date());
+			jta_sc_limit2.append(StartUI.vo.getEnd_date());
+			if( StartUI.vo.getEvent_name() != null && StartUI.vo.getEvent_name() != "")
+				jta_sc_locker.append(StartUI.vo.getEvent_name());
 			else 
 				jta_sc_locker.append("헬스장만 이용 중");
 		}
-		
-		
 	}
 
 
@@ -164,24 +161,5 @@ public class MainScreenUI implements ActionListener {
 	
 }
 
-class MainSystem{
-	//Field
-	MainDAO dao;
+
 	
-	//Constructor
-	public MainSystem() {
-		try {
-			dao = new MainDAO();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//화면 정보 띄우기
-	public MainVO getListMainVO(String seq) {
-		MainVO mvo = dao.getListMainVO(seq);
-		
-		return mvo;
-	}
-	
-}

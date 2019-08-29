@@ -7,5 +7,4 @@ public class HealthCareTest {
 		StartUI test = new StartUI();
 		
 	}
-
 }

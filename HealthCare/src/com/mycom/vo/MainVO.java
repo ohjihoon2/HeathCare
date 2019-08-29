@@ -3,10 +3,10 @@ package com.mycom.vo;
 public class MainVO {
 	//field
 	int cno;
-	String name, start_date, end_date, event_name;
+	String name, start_date, end_date, event_name;	
 	
 	
-	
+	//method
 	public int getCno() {
 		return cno;
 	}
@@ -38,6 +38,7 @@ public class MainVO {
 		this.event_name = event_name;
 	}
 	
+
 
 	
 

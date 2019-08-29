@@ -22,6 +22,7 @@ public class StartUI extends JFrame implements ActionListener{
 	 */
 	MainScreenUI main_calss = null;
 	DietUI diet_class = null;
+	public static MemberVO vo = new MemberVO();
 	
 	//Field
 	boolean result = false;
@@ -163,12 +164,10 @@ public class StartUI extends JFrame implements ActionListener{
 		}else if (obj == b_LogLogin) {
 			//로그인
 			//회원정보 DB ->>DAO
-			LoginSystem system = new LoginSystem();
-			boolean result = system.loginCheck(tf_LogId.getText().trim());
-			MemberVO vo = new MemberVO();
-			
-			System.out.println("result = "+result);
 			if(regFormCheck()) {
+				LoginSystem system = new LoginSystem();
+				boolean result = system.loginCheck(Integer.parseInt(tf_LogId.getText().trim()));
+				
 				if(result) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 					p_LogMain.setVisible(false);

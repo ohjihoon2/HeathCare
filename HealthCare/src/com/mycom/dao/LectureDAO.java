@@ -52,18 +52,19 @@ public class LectureDAO {
 	public LectureVO getListLectureVO(String seq) {
 		LectureVO vo = new LectureVO();
 		
-		String sql = "select * from main where cno = ?";
+		String sql = "select * from lecture where cno = ?";
 		getPreparedStatement(sql);
 		
 		try {
-			pstmt.setString(1,seq);
+			pstmt.setInt(1,Integer.parseInt(seq));
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				vo.setName(rs.getString(1));
-				vo.setEvent_name(rs.getString(2));
-				vo.setCount(rs.getInt(3));
-				vo.setValidity(rs.getString(4));
+				vo.setCno(rs.getInt(1));
+				vo.setName(rs.getString(2));
+				vo.setEvent_name(rs.getString(3));
+				vo.setCount(rs.getInt(4));
+				vo.setValidity(rs.getString(5));
 				
 			}
 		} catch (Exception e) {
@@ -98,7 +99,7 @@ public class LectureDAO {
 	//data Update
 	public int getResultUpdate(LectureVO vo) {
 		int result = 0;
-		String sql = "update member set event_name=?, count=? where cno=?";		
+		String sql = "update lecture set envent_name=?, count=? where cno=?";		
 		getPreparedStatement(sql);
 		
 		try {

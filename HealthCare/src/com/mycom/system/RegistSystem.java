@@ -8,7 +8,7 @@ public class RegistSystem {
 	//Filed
 	RegistDAO dao;
 	MemberVO vo;
-	
+	int sno;
 	//Constructor
 	public RegistSystem() {
 		dao = new RegistDAO();
@@ -25,9 +25,17 @@ public class RegistSystem {
 		
 		int val= dao.getClientInsert(vo);
 		if(val != 0) {
+			
+			System.out.println("sno="+ sno);
 			result = true;
 		}
 		return result;
+	}
+	public int searchSno() {
+		sno = dao.searchCno();
+		System.out.println("system.searchSno() = " +sno);
+		
+		return sno;
 	}
 	
 	
