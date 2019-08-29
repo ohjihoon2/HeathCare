@@ -20,7 +20,6 @@ public class LoginSystem {
 	 * @return
 	 */
 	public boolean loginCheck(int cno) {
-		System.out.println("system cno = "+cno);
 		boolean result = false;
 		int val =dao.getResultLogin(cno);
 		System.out.println("val = " + val);

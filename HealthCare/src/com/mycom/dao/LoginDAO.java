@@ -5,9 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.mycom.ui.StartUI;
-import com.mycom.vo.MemberVO;
-
-import oracle.sql.DATE;
 
 
 public class LoginDAO {
@@ -70,7 +67,6 @@ public class LoginDAO {
 	/** 4~5 단계 : 로그인 정보 vo에 값 넣기 **/
 	public void  setVO(int cno) {
 		
-		System.out.println("dao cno = "+cno);
 		String sql = "select cno, name, gender, address, phone, division, created_date, "
 				+ "birth_date, event_name, start_date, end_date from member where cno=?";
 		getPreparedStatement(sql);	//3단계 호출

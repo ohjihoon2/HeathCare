@@ -4,11 +4,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.mycom.system.LoginSystem;
@@ -29,8 +31,9 @@ public class StartUI extends JFrame implements ActionListener{
 	
 	//로그인 Field
 	JFrame jf;
-	JPanel p_LogMain, p_LogLogin , p_LogBtn, p_LogNum; 
+	JPanel p_LogMain, p_LogLogin , p_LogBtn, p_LogNum, p_LogChoice; 
 	JLabel l_Logid;
+	JRadioButton rb_LogMember, rb_LogAdmin;
 	JTextField tf_LogId;
 	JButton b_LogLogin, b_LogCreate, b_Log0, b_Log1, b_Log2, b_Log3, b_Log4, b_Log5, b_Log6, b_Log7, b_Log8, b_Log9, b_LogStar, b_LogRe;
 	StringBuffer sb;
@@ -50,12 +53,15 @@ public class StartUI extends JFrame implements ActionListener{
 		// 패널 초기화 
     	jf = new JFrame();
     	
-		p_LogMain = new JPanel(new GridLayout(3,1));
+		p_LogMain = new JPanel(new GridLayout(4,1));
 		
+		p_LogChoice = new JPanel();
 		p_LogLogin = new JPanel();
 		p_LogBtn = new JPanel();
 		p_LogNum = new JPanel(); 
 		
+		rb_LogMember = new JRadioButton("회원");
+		rb_LogAdmin = new JRadioButton("관리자");
  
 		b_Log1 = new JButton("1"); 
 		b_Log2 = new JButton("2"); 
@@ -82,6 +88,13 @@ public class StartUI extends JFrame implements ActionListener{
 		
 		tf_LogId.setText(sb.toString());
 		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rb_LogMember);
+		group.add(rb_LogAdmin);
+		
+		p_LogChoice.add(rb_LogMember);
+		p_LogChoice.add(rb_LogAdmin);
+		
 		p_LogLogin.add(l_Logid);
 		p_LogLogin.add(tf_LogId);
 		
@@ -104,13 +117,11 @@ public class StartUI extends JFrame implements ActionListener{
 		p_LogBtn.add(b_LogLogin);
 		p_LogBtn.add(b_LogCreate);
 		
+		p_LogMain.add(p_LogChoice);		
 		p_LogMain.add(p_LogLogin);		
 		p_LogMain.add(p_LogNum);		
 		p_LogMain.add(p_LogBtn);		
 		
-//		jf.getContentPane().add(title, BorderLayout.NORTH);
-//		jf.getContentPane().add(p_RegBtn, BorderLayout.WEST);
-//		jf.getContentPane().add(msgPanel, BorderLayout.CENTER);
 		jf.getContentPane().add(p_LogMain, BorderLayout.CENTER);
 		
 		jf.setSize(1000,600);
@@ -163,11 +174,23 @@ public class StartUI extends JFrame implements ActionListener{
 			new RegistUI(this);
 		}else if (obj == b_LogLogin) {
 			//로그인
+			
+			/**
+			 * *********** ************************************************************************************************************************************
+			 */
+			if(rb_LogMember.isSelected()) {
+				//회원 클릭
+				
+			}else {
+				// 관리자 클릭
+				
+			}
+			
+			
 			//회원정보 DB ->>DAO
 			if(regFormCheck()) {
 				LoginSystem system = new LoginSystem();
 				boolean result = system.loginCheck(Integer.parseInt(tf_LogId.getText().trim()));
-				
 				if(result) {
 					JOptionPane.showMessageDialog(null, "로그인 성공");
 					p_LogMain.setVisible(false);
