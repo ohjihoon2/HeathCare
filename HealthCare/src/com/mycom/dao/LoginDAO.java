@@ -67,8 +67,7 @@ public class LoginDAO {
 	/** 4~5 단계 : 로그인 정보 vo에 값 넣기 **/
 	public void  setVO(int cno) {
 		
-		String sql = "select cno, name, gender, address, phone, division, created_date, "
-				+ "birth_date, event_name, start_date, end_date from member where cno=?";
+		String sql = "select cno, name, gender, address, phone, division, birth_date, start_date, end_date from member where cno=?";
 		getPreparedStatement(sql);	//3단계 호출
 		
 		try {
@@ -83,11 +82,9 @@ public class LoginDAO {
 				StartUI.vo.setAddress(rs.getString(4));
 				StartUI.vo.setPhone(rs.getString(5));
 				StartUI.vo.setDivision(rs.getInt(6));
-				StartUI.vo.setCreated_date(rs.getString(7));
-				StartUI.vo.setBirth_date(rs.getString(8));
-				StartUI.vo.setEvent_name(rs.getString(9));
-				StartUI.vo.setStart_date(rs.getString(10));
-				StartUI.vo.setEnd_date(rs.getString(11));
+				StartUI.vo.setBirth_date(rs.getString(7));
+				StartUI.vo.setStart_date(rs.getString(8));
+				StartUI.vo.setEnd_date(rs.getString(9));
 				
 			}
 		}catch(Exception e) {		

@@ -39,11 +39,6 @@ public class StartUI extends JFrame implements ActionListener{
 	StringBuffer sb;
 	
 	//회원가입 Field
-	JPanel p_RegMain, p_RegTitle, p_RegBoard, p_RegBtn; 
-	JLabel l_RegTitle, l_RegName, l_RegAddress, l_RegContact, l_RegRole, l_RegCreated_date, l_RegBirth, l_RegTerm, l_RegEvent, l_RegStart_date, l_RegEnd_date;
-	JTextField tf_RegName, tf_RegAddress, tf_RegContact, tf_RegRole, tf_RegCreated_date, tf_RegBirth, tf_RegTerm, tf_RegEvent, tf_RegStart_date, tf_RegEnd_date;
-	JButton b_RegNext, b_RegCancel;
-	
 	/**
 	 * 로그인 
 	 */
@@ -156,13 +151,47 @@ public class StartUI extends JFrame implements ActionListener{
 		
 		if(tf_LogId.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "아이디 번호를 입력해주세요");
-			tf_RegName.requestFocus();
+			tf_LogId.requestFocus();
 		}else {
 			result = true;
 		}
 		
 		return result;
 	}    
+    
+    
+    /**
+     * 로그인
+     */
+    public void login() {
+    	
+    	if(regFormCheck()) {
+    		LoginSystem system = new LoginSystem();
+    		int result = system.loginCheck(Integer.parseInt(tf_LogId.getText().trim()));
+    		System.out.println("result = "+ result);
+    		if(result == 1 && !rb_LogAdmin.isSelected()) {
+    			
+    			JOptionPane.showMessageDialog(null, "로그인 성공");
+    			p_LogMain.setVisible(false);
+    			System.out.println("div = " +vo.getDivision());
+    			new MainScreenUI(this);
+    			
+    		}else if(result == 2 && rb_LogAdmin.isSelected()) {
+    			JOptionPane.showMessageDialog(null, "로그인 성공");
+//    			p_LogMain.setVisible(false);
+    			System.out.println("div = " +vo.getDivision());
+    			new AdminUI();
+    			
+    		}else if(result ==0){
+    			JOptionPane.showMessageDialog(null, "로그인 실패");
+    			tf_LogId.setText("");
+    			sb.delete(0, sb.length());
+    			tf_LogId.requestFocus();
+    		}
+    		
+    	}
+    }
+    
     
     
 	@Override
@@ -174,34 +203,7 @@ public class StartUI extends JFrame implements ActionListener{
 			new RegistUI(this);
 		}else if (obj == b_LogLogin) {
 			//로그인
-			
-			/**
-			 * *********** ************************************************************************************************************************************
-			 */
-			if(rb_LogMember.isSelected()) {
-				//회원 클릭
-				
-			}else {
-				// 관리자 클릭
-				
-			}
-			
-			
-			//회원정보 DB ->>DAO
-			if(regFormCheck()) {
-				LoginSystem system = new LoginSystem();
-				boolean result = system.loginCheck(Integer.parseInt(tf_LogId.getText().trim()));
-				if(result) {
-					JOptionPane.showMessageDialog(null, "로그인 성공");
-					p_LogMain.setVisible(false);
-					new MainScreenUI(this);
-					
-				}else {
-					JOptionPane.showMessageDialog(null, "로그인 실패");
-				}
-				
-			}
-			
+				login();
 		}else if(obj == b_Log0) {
 			sb.append(0);
 			tf_LogId.setText(sb.toString());

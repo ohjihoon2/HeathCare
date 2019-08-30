@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import com.mycom.system.RegistSystem;
@@ -23,6 +24,7 @@ public class RegistUI extends JFrame implements ActionListener{
 	JPanel p_RegMain, p_RegTitle, p_RegBoard, p_RegBtn; 
 	JLabel l_RegTitle, l_RegName, l_RegGender, l_RegAddress, l_RegPhone, l_RegBirth_date, l_RegEvent_name,  l_RegStart_date, l_RegEnd_date;
 	JTextField tf_RegName, tf_RegGender, tf_RegAddress, tf_RegPhone, tf_RegBirth_date, tf_RegEvent_name,  tf_RegStart_date, tf_RegEnd_date;
+	JRadioButton rd_RegEnd_date;
 	JButton b_RegSave, b_RegCancel, b_RegExit;
 	
 	//Constructor
