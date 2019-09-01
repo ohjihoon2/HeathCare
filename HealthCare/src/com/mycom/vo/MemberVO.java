@@ -3,16 +3,8 @@ package com.mycom.vo;
 public class MemberVO {
 
 	
-	String  name, gender, address, phone, created_date, birth_date, event_name, start_date, end_date;
-	int cno, division;
-	
-	
-	public int getCno() {
-		return cno;
-	}
-	public void setCno(int cno) {
-		this.cno = cno;
-	}
+	String  name, gender, address, phone, created_date, birth_date, gx_code, start_date, end_date, gx_validity, bmi, fat, pdf, whr;
+	int cno, division, gx_price, gx_count;
 	public String getName() {
 		return name;
 	}
@@ -49,11 +41,11 @@ public class MemberVO {
 	public void setBirth_date(String birth_date) {
 		this.birth_date = birth_date;
 	}
-	public String getEvent_name() {
-		return event_name;
+	public String getGx_code() {
+		return gx_code;
 	}
-	public void setEvent_name(String event_name) {
-		this.event_name = event_name;
+	public void setGx_code(String gx_code) {
+		this.gx_code = gx_code;
 	}
 	public String getStart_date() {
 		return start_date;
@@ -67,13 +59,60 @@ public class MemberVO {
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
 	}
+	public String getGx_validity() {
+		return gx_validity;
+	}
+	public void setGx_validity(String gx_validity) {
+		this.gx_validity = gx_validity;
+	}
+	public String getBmi() {
+		return bmi;
+	}
+	public void setBmi(String bmi) {
+		this.bmi = bmi;
+	}
+	public String getFat() {
+		return fat;
+	}
+	public void setFat(String fat) {
+		this.fat = fat;
+	}
+	public String getPdf() {
+		return pdf;
+	}
+	public void setPdf(String pdf) {
+		this.pdf = pdf;
+	}
+	public String getWhr() {
+		return whr;
+	}
+	public void setWhr(String whr) {
+		this.whr = whr;
+	}
+	public int getCno() {
+		return cno;
+	}
+	public void setCno(int cno) {
+		this.cno = cno;
+	}
 	public int getDivision() {
 		return division;
 	}
 	public void setDivision(int division) {
 		this.division = division;
 	}
-	
+	public int getGx_price() {
+		return gx_price;
+	}
+	public void setGx_price(int gx_price) {
+		this.gx_price = gx_price;
+	}
+	public int getGx_count() {
+		return gx_count;
+	}
+	public void setGx_count(int gx_count) {
+		this.gx_count = gx_count;
+	}
 	
 	
 	

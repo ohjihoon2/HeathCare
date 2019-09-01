@@ -130,8 +130,8 @@ public class MainScreenUI implements ActionListener {
 			jta_sc_uno.append(String.valueOf(StartUI.vo.getCno()));
 			jta_sc_limit.append(StartUI.vo.getStart_date());
 			jta_sc_limit2.append(StartUI.vo.getEnd_date());
-			if( StartUI.vo.getEvent_name() != null && StartUI.vo.getEvent_name() != "")
-				jta_sc_locker.append(StartUI.vo.getEvent_name());
+			if( StartUI.vo.getGx_code() != null && StartUI.vo.getGx_code() != "")
+				jta_sc_locker.append(StartUI.vo.getGx_code());
 			else 
 				jta_sc_locker.append("헬스장만 이용 중");
 		}

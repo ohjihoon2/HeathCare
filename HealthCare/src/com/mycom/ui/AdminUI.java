@@ -14,17 +14,18 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.mycom.system.AdminSystem;
 
-
 public class AdminUI extends JFrame implements ActionListener{
-
+	StartUI startui;
 	AdminSystem system = new AdminSystem();
 	
 	public static final int MAIN = 0;   //msgPanel
 	public static final int MEMBER = 1; //jpReg
 	public static final int LECTURE = 2;	//outputPanel
+	
 	
 	int status = 0;
 	
@@ -40,29 +41,31 @@ public class AdminUI extends JFrame implements ActionListener{
 	JPanel p_MemMain, p_MemSearch, p_MemResult, p_MemBtn;
 	JLabel l_MemCno;
 	JTextField tf_MemCno;
-	JButton b_MemUpdate, b_MemDelete;
+	JButton b_Search, b_Update, b_Delete;
 	JScrollPane scroll_Mem;
+	TableRowSorter sorter;
 
 	DefaultTableModel dtm_Mem;
 	JTable t_Mem;
 	String[] memInfo = {"회원번호", "이름"," 성별", "전화번호", "생일", "시작일", "마지막일", "GX코드", "GX가격", "GX횟수", "GX유효기간", "BMI", "FAT", "PBF", "WHR"};
-	
 	//Lecture 관리 폼
 	JPanel p_LecMain, p_LecResult, p_LecBtn;
-	JButton b_LecUpdate, b_LecDelete;
+//	JButton b_LecUpdate, b_LecDelete;
 	JScrollPane scroll_Lec;
 	DefaultTableModel dtm_Lec;
 	JTable t_Lec;
 	String[] lecInfo = {"종목코드", "종목명"," 금액"};
 	
-	public AdminUI() {		
+	public AdminUI(StartUI startui) {		
 		//setStatus(MAIN);
-		 status = AdminUI.MAIN;
-System.out.println("Status=" + getStatus());		
+		this.startui = startui;
+//		status = AdminUI.MAIN;
+		System.out.println("Status=" + getStatus());		
 		//1. 화면구성
 		jf = new JFrame();
 		p_AdmMain = new JPanel();
 		p_AdmMenu = new JPanel();
+		p_AdmTitle = new JPanel();
 		
 		l_AdmTitle = new JLabel("**********   HealthCare 관리자 페이지      **********");
 		
@@ -72,7 +75,7 @@ System.out.println("Status=" + getStatus());
 		ta_AdmMain = new JTextArea("xx 관리자님 반갑습니다.",28, 80);
 		
 		l_AdmTitle.setHorizontalAlignment((int) CENTER_ALIGNMENT);
-//		p_AdmTitle.add(l_AdmTitle);
+		p_AdmTitle.add(l_AdmTitle);
 		
 
 		//menu패널 
@@ -85,14 +88,14 @@ System.out.println("Status=" + getStatus());
 		//메인패널
 		p_AdmMain.add(ta_AdmMain);
 		
-		jf.getContentPane().add(l_AdmTitle,BorderLayout.NORTH);
-		jf.getContentPane().add(p_AdmMenu,BorderLayout.WEST);
-		jf.getContentPane().add(p_AdmMain,BorderLayout.CENTER);
+		startui.jf.getContentPane().add(p_AdmTitle,BorderLayout.NORTH);
+		startui.jf.getContentPane().add(p_AdmMenu,BorderLayout.WEST);
+		startui.jf.getContentPane().add(p_AdmMain,BorderLayout.CENTER);
 		
-		jf.setSize(1000,600);
-		jf.setVisible(true);
+		startui.jf.setSize(1000,600);
+		startui.jf.setVisible(true);
 		
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		startui.jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//2. 이벤트 위임
 		b_AdmMember.addActionListener(this);
@@ -115,7 +118,7 @@ System.out.println("Status=" + getStatus());
 		case 0 :
 			p_AdmMain.setVisible(false);
 			break;
-		case 1 :
+		case 1: 
 			p_MemMain.setVisible(false);
 			break;
 		case 2: 
@@ -125,6 +128,7 @@ System.out.println("Status=" + getStatus());
 	}
 	
 	public void memberManageForm() {
+		
 		System.out.println("MEMBER1="+getStatus());
 		//setStatus(MEMBER);
 		status = AdminUI.MEMBER;
@@ -137,28 +141,30 @@ System.out.println("Status=" + getStatus());
 		
 		l_MemCno = new JLabel("검색할 회원번호를 입력해주세요");
 		tf_MemCno = new JTextField(10);		
-		b_MemUpdate = new JButton("수    정");
-		b_MemDelete = new JButton("삭    제");
+		b_Search = new JButton("검    색");
+		b_Update = new JButton("수    정");
+		b_Delete = new JButton("삭    제");
 		
 		dtm_Mem = new DefaultTableModel(memInfo, 0);
 		t_Mem= new JTable(dtm_Mem); 
         scroll_Mem= new JScrollPane(t_Mem, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
+
+        
         //스크롤 크기
         scroll_Mem.setBounds(0,30,800,200);
         
-        p_MemResult.setBounds(0,0,1000,1000);
         
+        p_MemResult.setBounds(0,0,1000,1000);
         p_MemResult.setLayout(null);
 //        p_AdmMemberMain.setLayout(null);
         
-		p_MemSearch.add(l_MemCno);
 		p_MemSearch.add(tf_MemCno);
+		p_MemSearch.add(b_Search);
 		
 		p_MemResult.add(scroll_Mem);
 		
-		p_MemBtn.add(b_MemUpdate);
-		p_MemBtn.add(b_MemDelete);
+		p_MemBtn.add(b_Update);
+		p_MemBtn.add(b_Delete);
 		
 		p_MemMain.add(p_MemSearch);
 		p_MemMain.add(p_MemResult);
@@ -167,29 +173,37 @@ System.out.println("Status=" + getStatus());
 //		p_AdmSearch.setSize(600,300);
 		p_MemMain.setVisible(true);
 		
-		jf.getContentPane().add(p_MemMain,BorderLayout.CENTER);
+		startui.jf.getContentPane().add(p_MemMain,BorderLayout.CENTER);
+		system.getMember(dtm_Mem);
 		
-		//모든레코드를 검색하여 DefaultTableModle에 올리기
-        system.getMember(dtm_Mem);
 		
+//		if(tf_MemCno.getText() == "") {
+//			system.getMember(dtm_Mem);
+//		}else {
+//			if(tf_MemCno.getText() == "") {
+//				JOptionPane.showMessageDialog(null,"없는 데이터 입니다.");
+//			}else {
+//				int cno = Integer.parseInt(tf_MemCno.getText());
+//				system.searchData(dtm_Mem, cno);
+//			}
+//		}
+		//모든레코드를 검색하여 DefaultTableModle에 올리기 or 검색테이블 올리기
+	
+        
 		//검색 이벤트 위임
-		tf_MemCno.addActionListener(this);
-//		tf_AdmCno.requestFocus();
-		b_MemUpdate.addActionListener(this);
-		b_MemDelete.addActionListener(this);
+		b_Search.addActionListener(this);
+		b_Update.addActionListener(this);
+		b_Delete.addActionListener(this);
 	}
 
 	public void lectureManageForm() {
-		System.out.println("lecture 1= "+getState());
-//		setStatus(LECTURE);
 		status = AdminUI.LECTURE;
-		System.out.println("lecture 2= "+getState());
 		p_LecMain = new JPanel(new GridLayout(2,1));
 		p_LecResult = new JPanel();
 		p_LecBtn = new JPanel();
 		
-		b_LecUpdate = new JButton("수    정");
-		b_LecDelete = new JButton("삭    제");
+		b_Update = new JButton("수    정");
+		b_Delete = new JButton("삭    제");
 		
 		dtm_Lec = new DefaultTableModel(lecInfo, 0);
 		t_Lec= new JTable(dtm_Lec); 
@@ -205,8 +219,8 @@ System.out.println("Status=" + getStatus());
         
 		p_LecResult.add(scroll_Lec);
 		
-		p_LecBtn.add(b_LecUpdate);
-		p_LecBtn.add(b_LecDelete);
+		p_LecBtn.add(b_Update);
+		p_LecBtn.add(b_Delete);
 		
 		p_LecMain.add(p_LecResult);
 		p_LecMain.add(p_LecBtn);
@@ -214,13 +228,22 @@ System.out.println("Status=" + getStatus());
 //		p_AdmSearch.setSize(600,300);
 		p_LecMain.setVisible(true);
 		
-		jf.getContentPane().add(p_LecMain,BorderLayout.CENTER);
+		startui.jf.getContentPane().add(p_LecMain,BorderLayout.CENTER);
 		
 		//모든레코드를 검색하여 DefaultTableModle에 올리기
         system.getLecture(dtm_Lec);
 		
-		b_LecUpdate.addActionListener(this);
-		b_LecDelete.addActionListener(this);
+        
+		b_Update.addActionListener(this);
+		b_Delete.addActionListener(this);
+	}
+	
+	/**
+	 * 업데이트
+	 * @param sno
+	 */
+	public void updateForm(String sno) {
+	
 	}
 	
 	@Override
@@ -238,6 +261,26 @@ System.out.println("Status=" + getStatus());
 //			p_AdmMain.setVisible(false);
 //			p_MemMain.setVisible(false);
 			lectureManageForm();
+		}else if(obj == b_Search){
+			if(tf_MemCno.getText().trim().length()>0) {
+				system.searchData(dtm_Lec, Integer.parseInt(tf_MemCno.getText().trim()));
+				tf_MemCno.setText("");
+				tf_MemCno.requestFocus();
+				if (dtm_Lec.getRowCount() > 0) {
+					t_Mem.setRowSelectionInterval(0, 0);
+				}
+			}
+//			JOptionPane.showInternalMessageDialog(null, "검색");
+//			sorter.setRowFilter(RowFilter.regexFilter(tf_MemCno.getText().trim()));
+//			system.searchData(dtm_Lec, Integer.parseInt(tf_MemCno.getText().trim()));
+//			tf_MemCno.setText("");
+			
+		}else if(obj == b_Update) {
+			system.searchData(dtm_Lec,Integer.parseInt(tf_MemCno.getText().trim()));
+			System.out.println("b_Update");
+		}else if(obj == b_Delete) {
+			System.out.println("b_Delete");
+			
 		}
 		
 	}

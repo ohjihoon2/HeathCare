@@ -22,8 +22,8 @@ public class RegistUI extends JFrame implements ActionListener{
 	//Field
 	JFrame jf;
 	JPanel p_RegMain, p_RegTitle, p_RegBoard, p_RegBtn; 
-	JLabel l_RegTitle, l_RegName, l_RegGender, l_RegAddress, l_RegPhone, l_RegBirth_date, l_RegEvent_name,  l_RegStart_date, l_RegEnd_date;
-	JTextField tf_RegName, tf_RegGender, tf_RegAddress, tf_RegPhone, tf_RegBirth_date, tf_RegEvent_name,  tf_RegStart_date, tf_RegEnd_date;
+	JLabel l_RegTitle, l_RegName, l_RegGender, l_RegAddress, l_RegPhone, l_RegBirth_date, l_RegGx_code,  l_RegStart_date, l_RegEnd_date;
+	JTextField tf_RegName, tf_RegGender, tf_RegAddress, tf_RegPhone, tf_RegBirth_date, tf_RegGx_code,  tf_RegStart_date, tf_RegEnd_date;
 	JRadioButton rd_RegEnd_date;
 	JButton b_RegSave, b_RegCancel, b_RegExit;
 	
@@ -50,7 +50,7 @@ public class RegistUI extends JFrame implements ActionListener{
 		l_RegAddress = new JLabel("주소");
 		l_RegPhone = new JLabel("연락처");
 		l_RegBirth_date = new JLabel("생년월일");
-		l_RegEvent_name = new JLabel("종목");
+		l_RegGx_code = new JLabel("종목");
 		l_RegStart_date = new JLabel("시작일");
 		l_RegEnd_date = new JLabel("마지막일");
 		
@@ -60,7 +60,7 @@ public class RegistUI extends JFrame implements ActionListener{
 		tf_RegAddress = new JTextField(10);
 		tf_RegPhone = new JTextField(10);
 		tf_RegBirth_date = new JTextField(10);
-		tf_RegEvent_name = new JTextField(10);
+		tf_RegGx_code = new JTextField(10);
 		tf_RegStart_date = new JTextField(10);
 		tf_RegEnd_date = new JTextField(10);
 		
@@ -72,7 +72,7 @@ public class RegistUI extends JFrame implements ActionListener{
 		p_RegBoard.add(l_RegAddress); p_RegBoard.add(tf_RegAddress);
 		p_RegBoard.add(l_RegPhone); p_RegBoard.add(tf_RegPhone);
 		p_RegBoard.add(l_RegBirth_date); p_RegBoard.add(tf_RegBirth_date);
-		p_RegBoard.add(l_RegEvent_name); p_RegBoard.add(tf_RegEvent_name);
+		p_RegBoard.add(l_RegGx_code); p_RegBoard.add(tf_RegGx_code);
 		p_RegBoard.add(l_RegStart_date); p_RegBoard.add(tf_RegStart_date);
 		p_RegBoard.add(l_RegEnd_date); p_RegBoard.add(tf_RegEnd_date);
 		
@@ -132,7 +132,7 @@ public class RegistUI extends JFrame implements ActionListener{
 				vo.setAddress(tf_RegAddress.getText());
 				vo.setPhone(tf_RegPhone.getText());
 				vo.setBirth_date(tf_RegBirth_date.getText());
-				vo.setEvent_name(tf_RegEvent_name.getText());
+				vo.setGx_code(tf_RegGx_code.getText());
 				vo.setStart_date(tf_RegStart_date.getText());
 				vo.setEnd_date(tf_RegEnd_date.getText());
 				
@@ -154,7 +154,7 @@ public class RegistUI extends JFrame implements ActionListener{
 			tf_RegAddress.setText("");
 			tf_RegPhone.setText("");
 			tf_RegBirth_date.setText("");
-			tf_RegEvent_name.setText("");
+			tf_RegGx_code.setText("");
 			tf_RegStart_date.setText("");
 			tf_RegEnd_date.setText("");
 			

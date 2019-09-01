@@ -15,7 +15,7 @@ public class RegistDAO {
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
-	String url="jdbc:oracle:thin:@127.0.0.1:1521";
+	String url="jdbc:oracle:thin:@127.0.0.1:1521:orcl";
 	String user= "HealthCare";
 	String pass ="1234";
 	
@@ -51,7 +51,7 @@ public class RegistDAO {
 	public int getClientInsert(MemberVO vo) {
 		int result =0;
 //		getStatement();
-		String sql = "INSERT INTO MEMBER VALUES(seq_member.nextval,?,UPPER(?),?,?,1,SYSDATE,?,?,?,?)";
+		String sql = "INSERT INTO member(cno, name, gender, address, phone, division, birth_date, gx_code, start_date, end_date) VALUES(seq_member.nextval,?,UPPER(?),?,?,1,?,?,?,?)";
 		getPreparedStatement(sql);
 		System.out.println("3단계 성공~");
 		
@@ -63,7 +63,7 @@ public class RegistDAO {
 			pstmt.setString(3, vo.getAddress());
 			pstmt.setString(4, vo.getPhone());
 			pstmt.setString(5, vo.getBirth_date());
-			pstmt.setString(6, vo.getEvent_name());
+			pstmt.setString(6, vo.getGx_code());
 			pstmt.setString(7, vo.getStart_date());
 			pstmt.setString(8, vo.getEnd_date());
 			

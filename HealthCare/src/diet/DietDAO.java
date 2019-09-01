@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import javax.swing.table.*;
 
-public class DietDAO2 {
+public class DietDAO {
 	
 	//Field
 	Connection conn;
@@ -20,7 +20,7 @@ public class DietDAO2 {
 	String pass = "tiger";
 	
 	//Constructor
-	public DietDAO2() {
+	public DietDAO() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("1단계 성공~");

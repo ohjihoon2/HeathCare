@@ -22,7 +22,7 @@ public class RegistSystem {
 	 */
 	public boolean regist(MemberVO vo) {
 		boolean result = false;
-		
+		System.out.println("regist ¿‘º∫");
 		int val= dao.getClientInsert(vo);
 		if(val != 0) {
 			

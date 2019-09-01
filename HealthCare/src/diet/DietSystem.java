@@ -2,13 +2,13 @@ package diet;
 
 import javax.swing.table.DefaultTableModel;
 
-public class DietSystem2 {
+public class DietSystem {
 	//Field
-	DietDAO2 dao;
+	DietDAO dao;
 	
 	//Constructor
-	public DietSystem2() {
-		dao = new DietDAO2();
+	public DietSystem() {
+		dao = new DietDAO();
 	}
 	
 	//Method

@@ -29,13 +29,15 @@ CREATE TABLE MEMBER  (
 );
 
 
--- 회원가입 하기
-insert into MEMBER values(seq_member.nextval, 'test', UPPER('f'), 'test123', '010000000', 1, sysdate, sysdate, '헬스', sysdate,add_months(sysdate, 1));
-
-select * from MEMBER;
-desc client;
-
 -- 로그인 하기
 select * from MEMBER where cno = 1021;
+
+-- 로그인 validation
 select count(*) from MEMBER where cno=1021;
+
+-- 회원가입 하기
+INSERT INTO member(cno, name, gender, address, phone, division, birth_date, gx_code, start_date, end_date)  VALUES(seq_member.nextval,'test2',UPPER('f'),'성남','010',1,SYSDATE,'101',sysdate,sysdate);
+
+select * from member;
+desc member;
 commit;

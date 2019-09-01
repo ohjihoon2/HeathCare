@@ -180,7 +180,8 @@ public class StartUI extends JFrame implements ActionListener{
     			JOptionPane.showMessageDialog(null, "로그인 성공");
 //    			p_LogMain.setVisible(false);
     			System.out.println("div = " +vo.getDivision());
-    			new AdminUI();
+    			p_LogMain.setVisible(false); 
+    			new AdminUI(this);
     			
     		}else if(result ==0){
     			JOptionPane.showMessageDialog(null, "로그인 실패");

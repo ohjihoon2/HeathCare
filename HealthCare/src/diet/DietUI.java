@@ -23,20 +23,20 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 
-public class DietUI3 extends JFrame implements ActionListener {
+public class DietUI extends JFrame implements ActionListener {
 	//Field
 	JFrame jf;
 	JPanel p_Dietall, p_Dieta2;
 	JScrollPane s_Dietscroll;
 
-	DietSystem2 system = new DietSystem2();
+	DietSystem system = new DietSystem();
 	DefaultTableModel d_Dietdt;
 	JTable j_DIettable;
 	// 스크롤 페널 생성
 	String[] name = {"번호","식품이름","1회제공량(g)",	"열량(kcal)",	"탄수화물(g)","단백질(g)","지방(g)","당류(g)","나트륨(mg)","선택"};
 	
 	//Constructor
-	public DietUI3() {
+	public DietUI() {
 		jf = new JFrame();
 		p_Dietall = new JPanel();
 		p_Dieta2 = new JPanel();

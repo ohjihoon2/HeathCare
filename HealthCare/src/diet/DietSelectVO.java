@@ -1,6 +1,6 @@
 package diet;
 
-public class DietSelectVO2 {
+public class DietSelectVO {
 	//Field
 	int DS_NO,DSF_NO,DSF_CALORIE,DSF_TOT;
 	String DSF_NAME, DS_DATE;
