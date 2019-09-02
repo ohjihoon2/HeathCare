@@ -41,7 +41,7 @@ public class AdminUI extends JFrame implements ActionListener{
 	JPanel p_MemMain, p_MemSearch, p_MemResult, p_MemBtn;
 	JLabel l_MemCno;
 	JTextField tf_MemCno;
-	JButton b_Search, b_Update, b_Delete;
+	JButton b_Search, b_SearchAll, b_Update, b_Delete;
 	JScrollPane scroll_Mem;
 	TableRowSorter sorter;
 
@@ -142,6 +142,7 @@ public class AdminUI extends JFrame implements ActionListener{
 		l_MemCno = new JLabel("검색할 회원번호를 입력해주세요");
 		tf_MemCno = new JTextField(10);		
 		b_Search = new JButton("검    색");
+		b_SearchAll = new JButton("전 체 보 기");
 		b_Update = new JButton("수    정");
 		b_Delete = new JButton("삭    제");
 		
@@ -160,6 +161,7 @@ public class AdminUI extends JFrame implements ActionListener{
         
 		p_MemSearch.add(tf_MemCno);
 		p_MemSearch.add(b_Search);
+		p_MemSearch.add(b_SearchAll);
 		
 		p_MemResult.add(scroll_Mem);
 		
@@ -192,6 +194,7 @@ public class AdminUI extends JFrame implements ActionListener{
         
 		//검색 이벤트 위임
 		b_Search.addActionListener(this);
+		b_SearchAll.addActionListener(this);
 		b_Update.addActionListener(this);
 		b_Delete.addActionListener(this);
 	}
@@ -263,10 +266,11 @@ public class AdminUI extends JFrame implements ActionListener{
 			lectureManageForm();
 		}else if(obj == b_Search){
 			if(tf_MemCno.getText().trim().length()>0) {
-				system.searchData(dtm_Lec, Integer.parseInt(tf_MemCno.getText().trim()));
+				system.searchData(dtm_Mem, Integer.parseInt(tf_MemCno.getText().trim()));
 				tf_MemCno.setText("");
 				tf_MemCno.requestFocus();
-				if (dtm_Lec.getRowCount() > 0) {
+				//첫행 선택
+				if (dtm_Mem.getRowCount() > 0) {
 					t_Mem.setRowSelectionInterval(0, 0);
 				}
 			}
@@ -275,7 +279,10 @@ public class AdminUI extends JFrame implements ActionListener{
 //			system.searchData(dtm_Lec, Integer.parseInt(tf_MemCno.getText().trim()));
 //			tf_MemCno.setText("");
 			
-		}else if(obj == b_Update) {
+		}else if(obj == b_SearchAll) {
+			system.getMember(dtm_Mem);
+		}
+		else if(obj == b_Update) {
 			system.searchData(dtm_Lec,Integer.parseInt(tf_MemCno.getText().trim()));
 			System.out.println("b_Update");
 		}else if(obj == b_Delete) {

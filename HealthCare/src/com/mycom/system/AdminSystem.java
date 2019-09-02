@@ -16,22 +16,28 @@ public class AdminSystem {
 		dao = new AdminDAO();
 	}
 	
-
+	/**
+	 * 멤버 전체 검색
+	 * @param dtm_Adm
+	 */
 	public void getMember(DefaultTableModel dtm_Adm) {
 		dao.getMember(dtm_Adm);
 	}
-	
+	/**
+	 * 강의 정보 검색
+	 * @param dtm_Adm
+	 */
 	public void getLecture(DefaultTableModel dtm_Adm) {
 		dao.getLecture(dtm_Adm);
 	}
 	
-	//searchData
+	/**
+	 * 멤버 검색
+	 * @param dtm_Adm
+	 * @param cno
+	 */
 	public void searchData(DefaultTableModel dtm_Adm, int cno) {	
 		dao.getMember(dtm_Adm, cno);		
 	}
-//	//searchData
-//	public void searchData(DefaultTableModel dtm_Adm, String cno) {		
-//		dao.getMember(dtm_Adm, cno);		
-//	}
 
 }

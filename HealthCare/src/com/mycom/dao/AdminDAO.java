@@ -15,7 +15,7 @@ public class AdminDAO {
 	Statement stmt;
 	PreparedStatement pstmt;
 	ResultSet rs;
-	String url = "jdbc:oracle:thin:@127.0.0.1:1521:orcl";
+	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
 	String user = "HealthCare";
 	String pass = "1234";
 	
