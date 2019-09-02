@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.mycom.vo.LectureVO;
 
@@ -13,9 +14,9 @@ public class LectureDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	String url = "jdbc.oracle.thin:@127.0.0.1:1521";
+	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
 	String user = "HealthCare";
-	String pass = "1234";
+	String pass ="1234";
 	
 	//constructor
 	public LectureDAO() {
@@ -39,73 +40,91 @@ public class LectureDAO {
 		}
 		
 	}
-	//4단계
-	public void getResultSet() {
-		try {
-			rs = pstmt.executeQuery();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
-	//4,5 단계 : 리스트 출력
-	public LectureVO getListLectureVO(String seq) {
-		LectureVO vo = new LectureVO();
-		
-		String sql = "select * from lecture where cno = ?";
+	//회원vo리스트
+	public LectureVO getResultVO(int cno) {
+		LectureVO vo = new LectureVO();		
+		String sql= "select cno, name, gx_code, gx_count, gx_price, gx_validity from member where cno=?";
 		getPreparedStatement(sql);
 		
 		try {
-			pstmt.setInt(1,Integer.parseInt(seq));
+			pstmt.setInt(1, cno);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				vo.setCno(rs.getInt(1));
-				vo.setName(rs.getString(2));
-				vo.setEvent_name(rs.getString(3));
-				vo.setCount(rs.getInt(4));
-				vo.setValidity(rs.getString(5));
-				
+				vo.setCname(rs.getString(2));
+				vo.setGx_code(rs.getString(3));
+				vo.setGx_count(rs.getInt(4));
+				vo.setGx_price(rs.getInt(5));
+				vo.setGx_validity(rs.getString(6));
+
 			}
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		
-		return vo;
-	}
-	//data insert
-	public int getResultInsert(LectureVO vo) {
-		int result = 0;
-		
-		String sql = "insert into lecture values(?,?,?,add_month(sysdate,6),?)";
-		getPreparedStatement(sql);
-		
-		try {
-			pstmt.setInt(1, vo.getCno());
-			pstmt.setString(2, vo.getEvent_name());
-			pstmt.setInt(3, vo.getCount());
-			pstmt.setString(4,  vo.getName());
-			
-			result = pstmt.executeUpdate();
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return vo;
+	}
+
+	
+//	//data insert
+//	public int getResultInsert(LectureVO vo) {
+//		int result = 0;
+//		
+//		String sql = "insert into lecture values(?,?,?,add_month(sysdate,6),?)";
+//		getPreparedStatement(sql);
+//		
+//		try {
+//			pstmt.setInt(1, vo.getCno());
+//			pstmt.setString(2, vo.getEvent_name());
+//			pstmt.setInt(3, vo.getCount());
+//			pstmt.setString(4,  vo.getName());
+//			
+//			result = pstmt.executeUpdate();
+//			
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return result;
+//	}
+	//수강리스트 출력
+	public ArrayList<LectureVO> getGXList() {
+		ArrayList<LectureVO> list = new ArrayList<LectureVO>();
+		String sql="select gx_code, gx_name, gx_price from lecture";
+		getPreparedStatement(sql);	
 		
-		return result;
+		try {
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				LectureVO vo = new LectureVO();
+				vo.setGx_code(rs.getString(1));
+				vo.setGx_name(rs.getString(2));
+				vo.setGx_price(rs.getInt(3));
+				
+				list.add(vo);
+			}
+			System.out.println(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	//data Update
 	public int getResultUpdate(LectureVO vo) {
 		int result = 0;
-		String sql = "update lecture set envent_name=?, count=? where cno=?";		
+		String sql = "update member set gx_code=?, gx_count=?, gx_price=? where cno=?";		
 		getPreparedStatement(sql);
 		
 		try {
-			pstmt.setString(1, vo.getEvent_name());
-			pstmt.setInt(2, vo.getCount());
-			pstmt.setInt(3, vo.getCno());
+			pstmt.setString(1, vo.getGx_code());
+			pstmt.setInt(2, vo.getGx_count());
+			pstmt.setInt(3, vo.getGx_price());
+			pstmt.setInt(4, vo.getCno());
 			
 			result = pstmt.executeUpdate();
 			

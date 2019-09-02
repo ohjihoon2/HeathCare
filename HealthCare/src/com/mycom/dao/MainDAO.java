@@ -14,9 +14,9 @@ public class MainDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	String url= "jdbc:oracle:thin:@127.0.0.1";
-	String user= "HealthCare";
-	String pass="1234";
+	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
+	String user = "HealthCare";
+	String pass ="1234";
 	
 	//constructor
 	public MainDAO() {
@@ -44,7 +44,7 @@ public class MainDAO {
 	//4,5 단계 : 리스트 출력  - Equi Join 사용.
 	public MainVO getListMainVO(String cno) {
 		MainVO vo = new MainVO();
-		String sql = "select m.cno, m.name, start_date, end_date, l.event_name from member m, lecture l where m.cno = l.cno and m.cno = ?";
+		String sql = "select cno, name, start_date, end_date, gx_code from member where cno = ?";
 		getPreparedStatement(sql);
 		
 		try {
@@ -56,7 +56,7 @@ public class MainDAO {
 				vo.setName(rs.getString(2));
 				vo.setStart_date(rs.getString(3));
 				vo.setEnd_date(rs.getString(4));
-				vo.setEvent_name(rs.getString(5));
+				vo.setGx_code(rs.getString(5));
 				
 			}
 		} catch (Exception e) {

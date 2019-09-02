@@ -1,10 +1,12 @@
 package com.mycom.ui;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -14,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.mycom.dao.LectureDAO;
@@ -28,14 +31,16 @@ public class LectureUI extends JFrame implements ActionListener{
 	StartUI startui;
 	JFrame jf;
 	
-    JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_right, p_gx_pn4, p_gx_l_gx_info,
-    		p_gx_name, p_gx_lecture, p_gx_l_gx_times, p_gx_l_gx_limit, p_gx_blank, p_gx_leftup;
-    JLabel l_gx_uno, l_gx_info, l_gx_uname, l_gx_lecture, l_gx_times, l_gx_limit;
-    JButton b_gx_extension, b_back;
-    JTextField jtf_gx_cno, jtf_gx_uname, jtf_lecture_name, jtf_gx_times, jtf_gx_limit;
-    
+    JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_right, p_gx_btn, p_gx_cno,
+    		p_gx_info, p_gx_cname, p_gx_gxname, p_gx_count, p_gx_validity, p_gx_blank;
+    JLabel l_gx_cno, l_gx_info, l_gx_cname, l_gx_gxname, l_gx_count, l_gx_validity;
+    JButton b_gx_regist, b_back;
+    JTextField jtf_gx_cno, jtf_gx_cname, jtf_gx_gxname, jtf_gx_validity;
+    static JTextField jtf_gx_count;
     ImageIcon ic_gx_uimg, ic_gx_topimg;
     JLabel ic_gx_uimgBox, ic_gx_topimgBox;
+ //, l_gx_uname , jtf_gx_uname
+   
     
     //constructor
     public LectureUI(MainScreenUI mainui, StartUI startui) {
@@ -47,33 +52,33 @@ public class LectureUI extends JFrame implements ActionListener{
         p_gx_top = new JPanel();    
         p_gx_main2 = new JPanel(new GridLayout(1,2));
         p_gx_left = new JPanel(new GridLayout(2,1));
-        p_gx_leftup = new JPanel();
+        p_gx_cno = new JPanel();
         p_gx_right = new JPanel();
-        p_gx_pn4 = new JPanel();
-        p_gx_l_gx_info = new JPanel();
-        p_gx_name = new JPanel();
-        p_gx_lecture = new JPanel();
-        p_gx_l_gx_times = new JPanel();
-        p_gx_l_gx_limit = new JPanel();
+        p_gx_btn = new JPanel();
+        p_gx_info = new JPanel();
+        p_gx_cname = new JPanel();
+        p_gx_gxname = new JPanel();
+        p_gx_count = new JPanel();
+        p_gx_validity = new JPanel();
         p_gx_blank = new JPanel();
         
-
-        jtf_gx_uname = new JTextField(30);
-        jtf_lecture_name = new JTextField(30);
-        jtf_gx_times = new JTextField(30);
-        jtf_gx_limit = new JTextField(30);
-        l_gx_uno = new JLabel("회원번호 ");
-        jtf_gx_cno = new JTextField(20);
+        
         l_gx_info = new JLabel("[  수 강  정 보  ]") ;
-        l_gx_uname = new JLabel("회원 이름");
-        l_gx_lecture = new JLabel("수강명");
-        l_gx_times = new JLabel("남은 수강 횟수");
-        l_gx_limit = new JLabel("유효 기간");
-        b_gx_extension = new JButton("연장 신청");
+        l_gx_cno = new JLabel("회원번호 ");
+        jtf_gx_cno = new JTextField(20);
+        l_gx_cname = new JLabel("회원이름 ");
+        jtf_gx_cname = new JTextField(20);
+        l_gx_gxname = new JLabel("수강명");
+        jtf_gx_gxname = new JTextField(30);
+        l_gx_count = new JLabel("남은 수강 횟수");
+        jtf_gx_count = new JTextField(30);
+        l_gx_validity = new JLabel("유효 기간");
+        jtf_gx_validity = new JTextField(30);
+        b_gx_regist = new JButton("수강 신청");
         b_back = new JButton("돌아가기");
              
-        l_gx_uno.setBackground(Color.black);
-        l_gx_uno.setFont(new Font("돋움", Font.BOLD, 50));
+        l_gx_cno.setBackground(Color.black);
+        l_gx_cno.setFont(new Font("돋움", Font.BOLD, 50));
         l_gx_info.setFont(new Font("돋움", Font.BOLD, 20));
         
         ic_gx_topimg = new ImageIcon("image/top.png");
@@ -90,42 +95,44 @@ public class LectureUI extends JFrame implements ActionListener{
         
         p_gx_top.add(ic_gx_topimgBox);
         p_gx_main2.add(p_gx_left); p_gx_main2.add(p_gx_right);
-        p_gx_leftup.add(l_gx_uno);  p_gx_leftup.add(jtf_gx_cno);
-        p_gx_left.add(p_gx_leftup);  
+        p_gx_cno.add(l_gx_cno);  p_gx_cno.add(jtf_gx_cno);
+        p_gx_left.add(p_gx_cno);  
         p_gx_left.add(ic_gx_uimgBox);
    
-        p_gx_l_gx_info.add(l_gx_info);
-        p_gx_name.add(l_gx_uname); p_gx_name.add(jtf_gx_uname);
-        p_gx_lecture.add(l_gx_lecture); p_gx_lecture.add(jtf_lecture_name);
-        p_gx_l_gx_times.add(l_gx_times); p_gx_l_gx_times.add(jtf_gx_times);
-        p_gx_l_gx_limit.add(l_gx_limit); p_gx_l_gx_limit.add(jtf_gx_limit);
+        p_gx_info.add(l_gx_info);
+        p_gx_cname.add(l_gx_cname); p_gx_cname.add(jtf_gx_cname);
+        p_gx_gxname.add(l_gx_gxname); p_gx_gxname.add(jtf_gx_gxname);
+        p_gx_count.add(l_gx_count); p_gx_count.add(jtf_gx_count);
+        p_gx_validity.add(l_gx_validity); p_gx_validity.add(jtf_gx_validity);
         
         p_gx_right.setLayout(new GridLayout(7,1));      
         p_gx_right.add(p_gx_blank);
-        p_gx_right.add(p_gx_l_gx_info); p_gx_right.add(p_gx_name); p_gx_right.add(p_gx_lecture);
-        p_gx_right.add(p_gx_l_gx_times); p_gx_right.add(p_gx_l_gx_limit);
-        p_gx_right.add(p_gx_pn4, BorderLayout.SOUTH);
-        p_gx_pn4.add(b_gx_extension);
-        p_gx_pn4.add(b_back);
+        p_gx_right.add(p_gx_info); p_gx_right.add(p_gx_cname); p_gx_right.add(p_gx_gxname);
+        p_gx_right.add(p_gx_count); p_gx_right.add(p_gx_validity);
+        p_gx_right.add(p_gx_btn, BorderLayout.SOUTH);
+        p_gx_btn.add(b_gx_regist);
+        p_gx_btn.add(b_back);
         
         p_gx_main.setSize(1000,600);
         p_gx_main.setVisible(true);
         
         startui.jf.getContentPane().add(p_gx_main, BorderLayout.CENTER);
         
-        b_gx_extension.addActionListener(this);
+        b_gx_regist.addActionListener(this);
         b_back.addActionListener(this);  
         
+        
         //화면에 회원정보 띄워주기
-        LectureSystem system = new LectureSystem();
-        LectureVO vo = system.uplistVO(startui.tf_LogId.getText().trim());
+        LectureSystem system = new LectureSystem();        
+        LectureVO vo = system.getListVO(Integer.parseInt(startui.tf_LogId.getText().trim()));
         
         if(vo != null) {
         	jtf_gx_cno.setText(String.valueOf(vo.getCno()));
-        	jtf_gx_uname.setText(vo.getName());
-        	jtf_lecture_name.setText(vo.getEvent_name());
-        	jtf_gx_times.setText(String.valueOf(vo.getCount()));
-        	jtf_gx_limit.setText(vo.getValidity());
+        	jtf_gx_cname.setText(vo.getCname());
+        	jtf_gx_gxname.setText(vo.getGx_name());
+        	jtf_gx_count.setText(String.valueOf(vo.getGx_count()));
+        	jtf_gx_validity.setText(String.valueOf(vo.getGx_validity()));
+        	
         }
         
     } 
@@ -139,8 +146,9 @@ public class LectureUI extends JFrame implements ActionListener{
 			p_gx_main.setVisible(false);
 			mainui.p_sc_total.setVisible(true);
 			
-		}else if(obj == b_gx_extension) {//수강등록
-			new RegistLecture(jtf_gx_cno.getText());
+		}else if(obj == b_gx_regist) {//수강등록
+			//new RegistLecture(Integer.parseInt(jtf_gx_cno.getText()));
+			new RegistLecture(StartUI.vo.getCno());
 		
 		}
 		
@@ -153,108 +161,194 @@ public class LectureUI extends JFrame implements ActionListener{
 class RegistLecture extends JFrame implements ActionListener{
 	//field
 		JPanel jp;
-		JLabel jl_cno, jl_name, jl_event_name, jl_count;
-		JTextField jtf_cno, jtf_name, jtf_event_name, jtf_count;
-		JButton btn_reg, btn_cancel;
-		JComboBox jcb_event_name, jcb_count;//->vector데이터로 들어감
+		JLabel jl_gx_cno, jl_gx_list, jl_gx_name, jl_gx_excount, jl_gx_totprice;
+		JTextField jtf_gx_cno, jtf_gx_list,jtf_gx_name, jtf_gx_excount, jtf_gx_totprice;
+		JTextArea jta_gx_list;
+		JButton btn_reg, btn_calprice;
+		JComboBox jcb_gxname, jcb_excount;//->vector데이터로 들어감
 		
 		LectureSystem system;
 		
 		//constructor
-		public RegistLecture(String cno) {			
-			jp= new JPanel(new GridLayout(5,2));
-			jl_cno=new JLabel("회원번호");
-			jl_name = new JLabel("회 원 명");
-			jl_event_name = new JLabel("수 강 명");
-			jl_count = new JLabel("수강연장");
+		public RegistLecture(int cno) {			
+			jp = new JPanel(new GridLayout(6,2));
+			jl_gx_cno=new JLabel("회원번호");
+			jtf_gx_cno = new JTextField(20);
+			jtf_gx_cno.setText(Integer.toString(cno));
 			
-			jtf_cno = new JTextField(20);
-			jtf_name = new JTextField(20);
-			jtf_event_name = new JTextField(20);
-			jtf_count = new JTextField(20);
+			jta_gx_list = new JTextArea(1,1);
+			jl_gx_list = new JLabel("수강리스트");
+			jtf_gx_list = new JTextField(20);
 			
-			btn_reg = new JButton("등    록");
-			btn_cancel = new JButton("취    소");
+			jl_gx_name = new JLabel("수 강 명");
+			jtf_gx_name = new JTextField(20);
+			
+			jl_gx_excount = new JLabel("선택 횟수");
+			jtf_gx_excount = new JTextField(20);
+			
+			jl_gx_totprice = new JLabel("총 금액");
+			jtf_gx_totprice = new JTextField(20);
+			
+			
+			btn_reg = new JButton("  등    록  ");
+			btn_calprice = new JButton("금액 계산 확인");
 			
 			Vector lecturenameList = new Vector();
 			lecturenameList.add("선택하세요");
-			lecturenameList.add("요가");
-			lecturenameList.add("줌바");
-			lecturenameList.add("스피닝");
-			jcb_event_name = new JComboBox(lecturenameList);
+			lecturenameList.add("요가(101)");
+			lecturenameList.add("줌바(102)");
+			lecturenameList.add("스피닝(103)");
+			jcb_gxname = new JComboBox(lecturenameList);
 			
 			Vector extensionList = new Vector();
 			extensionList.add("선택하세요");
+			extensionList.add("5회");
 			extensionList.add("10회");
 			extensionList.add("20회");
-			jcb_count = new JComboBox(extensionList);
+			jcb_excount = new JComboBox(extensionList);
 			
-			jp.add(jl_cno); jp.add(jtf_cno);
-			jp.add(jl_name); jp.add(jtf_name);
-			jp.add(jl_event_name); jp.add(jcb_event_name);
-			jp.add(jl_count); jp.add(jcb_count);
-			jp.add(btn_reg); jp.add(btn_cancel);
+			jp.add(jl_gx_cno); jp.add(jtf_gx_cno);
+			jp.add(jl_gx_list);jp.add(jta_gx_list);
+//			jp.add(jl_gx_list);jp.add(jtf_gx_list);
+			jp.add(jl_gx_name); jp.add(jcb_gxname);
+			jp.add(jl_gx_excount); jp.add(jcb_excount);
+			jp.add(jl_gx_totprice); jp.add(jtf_gx_totprice);
+			jp.add(btn_reg); jp.add(btn_calprice);
+			
 			
 			getContentPane().add(jp);
 			setSize(500,500);
 			setVisible(true);
 			
-			//회원번호와 회원명 리스트 업
-			system = new LectureSystem();
-			LectureVO vo = system.uplistVO(cno);
 			
-			if(vo != null) {
-				jtf_cno.setText(String.valueOf(vo.getCno()));
-				jtf_name.setText(vo.getName());
-				jtf_event_name.setText(vo.getEvent_name());
-				jtf_count.setText(String.valueOf(vo.getCount()));
+			//수강리스트 출력
+			system = new LectureSystem();			
+			ArrayList<LectureVO> list = system.uplistVO();	
+			
+			jta_gx_list.append("수강코드\t수강명(GX)\t가격(1회당)\n");
+			for(LectureVO vo : list) {
+				if(vo != null) {
+					jta_gx_list.append(vo.getGx_code()+"\t");
+					jta_gx_list.append(vo.getGx_name()+"\t");
+					jta_gx_list.append(vo.getGx_price()+"\n");
+
+				}
 			}
-			
+										
 			
 			//이벤트 호출
 			btn_reg.addActionListener(this);
+			btn_calprice.addActionListener(this);
 			
+		}
+		
+		//유효성체크
+		public boolean redFromCheck() {
+			boolean result = false;
+			
+			if(jcb_gxname.getSelectedItem().equals("선택해주세요")) {
+				JOptionPane.showMessageDialog(null, "수강을 선택해 주세요");	
+				
+			}else if(jcb_excount.getSelectedItem().equals("선택해주세요")){
+				JOptionPane.showMessageDialog(null, "횟수를 선택해 주세요");
+
+			}else if(jtf_gx_totprice.getText().equals("")){
+				JOptionPane.showMessageDialog(null, "총 금액을 확인해 주세요");
+
+			}else {
+				JOptionPane.showConfirmDialog(null, "정말 등록 하시겠습니까?");
+				result=true;
+			}
+			
+			return result;
 		}
 		
 		//method
 		public void actionPerformed(ActionEvent e) {
 			Object obj = e.getSource();
 			
-			if(obj == btn_reg) {//String과 int타입 맞추기 ; Integer.parseInt(), String.valueOf();
-				//vo 생성 : 데이터					
-				String extention = (String)jcb_count.getSelectedItem();
-								
+			if(obj==btn_calprice) {				
+				JOptionPane.showMessageDialog(null, "금액 계산 확인");
+				
+				String gxname = (String)jcb_gxname.getSelectedItem();			
+				String gx_code = "";
+				
+				int gx_price =0;				
+				if(gxname.equals("요가(101)"))	{
+					gx_code ="101"; 
+					gx_price =10000;
+	
+				}else if(gxname.equals("줌바(102)")) {
+					gx_code = "102";
+					gx_price =10000;
+				
+				}else if(gxname.equals("스피닝(103)")) {
+					gx_code = "103";
+					gx_price =12000;
+
+				}		
+				
+				String extension = (String)jcb_excount.getSelectedItem();
+				
 				int count = 0;
-				if(extention.equals("10회"))	count =10;
-				else if(extention.equals("20회"))	count = 20;
+				if(extension.equals("5회"))		count =5;
+				else if(extension.equals("10회"))	count = 10;
+				else if(extension.equals("20회"))	count = 20;
 				
-				LectureVO uvo = new LectureVO();
+				jtf_gx_totprice.setText(String.valueOf(count*gx_price)); 
 				
-				uvo.setCno(Integer.parseInt(jl_cno.getText()));
-				uvo.setName(jtf_name.getText());
-				uvo.setEvent_name((String)jcb_event_name.getSelectedItem());
-				uvo.setCount(Integer.parseInt(jtf_count.getText())+count);
+
+			}else if(obj == btn_reg) {//String과 int타입 맞추기 ; Integer.parseInt(), String.valueOf();
+				//vo 생성 : 데이터					
+				boolean check = redFromCheck();
+				LectureVO vo = new LectureVO();
 				
-				
+				if(check) {
+					String gxname = (String)jcb_gxname.getSelectedItem();			
+					String gx_code = "";
+					
+					int gx_price =0;				
+					if(gxname.equals("요가(101)"))	{
+						gx_code ="101"; 
+						gx_price =10000;
+		
+					}else if(gxname.equals("줌바(102)")) {
+						gx_code = "102";
+						gx_price =10000;
+					
+					}else if(gxname.equals("스피닝(103)")) {
+						gx_code = "103";
+						gx_price =12000;
+
+					}	
+					
+					
+					String extension = (String)jcb_excount.getSelectedItem();
+					
+					int count = 0;
+					if(extension.equals("5회"))		count =5;
+					else if(extension.equals("10회"))	count = 10;
+					else if(extension.equals("20회"))	count = 20;
+					
+
+					vo.setCno(Integer.parseInt(jtf_gx_cno.getText()));					
+					vo.setGx_code(gx_code);
+					vo.setGx_count(Integer.parseInt(LectureUI.jtf_gx_count.getText())+count);				
+					vo.setGx_totprice(Integer.parseInt(jtf_gx_totprice.getText()));	
+					
+				}
 				
 				//dao 생성: DB 연결 -> 등록
-				boolean result = system.update(uvo);
+				boolean result = system.update(vo);
 				
 				if(result) {
 					JOptionPane.showMessageDialog(null, "등록 성공");
+					
 				}else {
 					JOptionPane.showMessageDialog(null, "등록 실패");
 				}
 				
-			}else if(obj==btn_cancel) {
-				JOptionPane.showMessageDialog(null, "등록 취소");
-				jtf_cno.setText("");
-				jtf_name.setText("");
-				jcb_event_name.setSelectedIndex(0);
-				jcb_count.setSelectedIndex(0);
-				jtf_cno.requestFocus();
 			}
 		}
-	
 				
 }

@@ -23,6 +23,7 @@ public class LoginSystem {
 	public int loginCheck(int cno) {
 		int result = 0;
 		int val =dao.getResultLogin(cno);
+System.out.println("val : "+val);		
 		if(val != 0) {
 			//cno로 로그인 한 MemberVO 저장
 			dao.setVO(cno);

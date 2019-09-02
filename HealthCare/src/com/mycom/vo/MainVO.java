@@ -3,7 +3,7 @@ package com.mycom.vo;
 public class MainVO {
 	//field
 	int cno;
-	String name, start_date, end_date, event_name;	
+	String name, start_date, end_date, gx_code;	
 	
 	
 	//method
@@ -31,15 +31,14 @@ public class MainVO {
 	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
 	}
-	public String getEvent_name() {
-		return event_name;
+	public String getGx_code() {
+		return gx_code;
 	}
-	public void setEvent_name(String event_name) {
-		this.event_name = event_name;
+	public void setGx_code(String gx_code) {
+		this.gx_code = gx_code;
 	}
 	
-
-
-	
-
 }
+
+	
+
