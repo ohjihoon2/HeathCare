@@ -149,7 +149,7 @@ public class MainScreenUI implements ActionListener {
 			new InbodyUI(this, startui);
 		}else if(obj == b_sc_personal) {
 			System.out.println("개인일지");
-			new DietUI();
+			new DietUI(StartUI.vo.getCno());
 		}else if(obj == b_sc_chatting) {
 			System.out.println("채팅 클릭");
 
