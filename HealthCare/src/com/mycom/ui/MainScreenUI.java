@@ -129,7 +129,7 @@ public class MainScreenUI implements ActionListener {
 		b_sc_chatting.addActionListener(this);
 	
 		//화면에 회원정보 띄워주기
-		vo = system.getListMainVO(startui.vo.getCno());	
+		vo = system.getListMainVO(StartUI.vo.getCno());	
 		
 		if(vo != null) {
 			jta_sc_uno.append(String.valueOf(vo.getCno()));
@@ -148,7 +148,8 @@ public class MainScreenUI implements ActionListener {
 		Object obj = ae.getSource();
 		if(obj == b_sc_lecture) {
 			p_sc_total.setVisible(false);
-			dao.update(vo.getCno());
+			if(StartUI.vo.getGx_count()!=0)
+				dao.update(StartUI.vo.getCno());
 			new LectureUI(this, startui);
 		}else if(obj == b_sc_inbody) {
 			p_sc_total.setVisible(false);

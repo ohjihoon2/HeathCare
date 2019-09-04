@@ -118,15 +118,15 @@ public class LectureDAO {
 	//data Update
 	public int getResultUpdate(LectureVO vo) {
 		int result = 0;
-		String sql = "update member set gx_code=?, gx_count=?, gx_price=?, gx_validity=? where cno=?";		
+		String sql = "update member set gx_code=?, gx_count=?, gx_price=?, gx_validity=add_months(sysdate,6) where cno=?";		
 		getPreparedStatement(sql);
 		
 		try {
 			pstmt.setString(1, vo.getGx_code());
 			pstmt.setInt(2, vo.getGx_count());
 			pstmt.setInt(3, vo.getGx_totprice());
-			pstmt.setString(4, vo.getGx_validity());
-			pstmt.setInt(5, vo.getCno());
+//			pstmt.setString(4, vo.getGx_validity());
+			pstmt.setInt(4, vo.getCno());
 			
 			result = pstmt.executeUpdate();
 			
