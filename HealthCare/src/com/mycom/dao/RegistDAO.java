@@ -51,7 +51,7 @@ public class RegistDAO {
 	public int getClientInsert(MemberVO vo) {
 		int result =0;
 //		getStatement();
-		String sql = "INSERT INTO member(cno, name, gender, address, phone, division, birth_date, gx_code, start_date, end_date) VALUES(seq_member.nextval,?,UPPER(?),?,?,1,?,?,?,?)";
+		String sql = "INSERT INTO member(cno, name, gender, address, phone, division, created_date, birth_date, gx_code, start_date, end_date) VALUES(seq_member.nextval,?,UPPER(?),?,?,1, sysdate,?,?,?,?)";
 		getPreparedStatement(sql);
 		System.out.println("3단계 성공~");
 		

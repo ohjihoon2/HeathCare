@@ -23,7 +23,7 @@ public class MainScreenUI implements ActionListener {
 	StartUI startui;
 	MainSystem system = new MainSystem();
 	MainDAO dao = new MainDAO();
-	MainVO vo;
+	MainVO mainvo;
 	
 	LectureUI Lecture_class = null;
 	InbodyUI Inbody_class =null;
@@ -129,14 +129,14 @@ public class MainScreenUI implements ActionListener {
 		b_sc_chatting.addActionListener(this);
 	
 		//화면에 회원정보 띄워주기
-		vo = system.getListMainVO(StartUI.vo.getCno());	
+		mainvo = system.getListMainVO(StartUI.vo.getCno());	
 		
-		if(vo != null) {
-			jta_sc_uno.append(String.valueOf(vo.getCno()));
-			jta_sc_limit.append(vo.getStart_date());
-			jta_sc_limit2.append(vo.getEnd_date());
-			if(vo.getGx_code() != null && vo.getGx_code() != "")
-				jta_sc_gx_name.append(vo.getGx_code());
+		if(mainvo != null) {
+			jta_sc_uno.append(String.valueOf(mainvo.getCno()));
+			jta_sc_limit.append(mainvo.getStart_date());
+			jta_sc_limit2.append(mainvo.getEnd_date());
+			if(mainvo.getGx_code() != null && mainvo.getGx_code() != "")
+				jta_sc_gx_name.append(mainvo.getGx_code());
 			else 
 				jta_sc_gx_name.append("헬스장만 이용 중");
 		}
@@ -148,7 +148,7 @@ public class MainScreenUI implements ActionListener {
 		Object obj = ae.getSource();
 		if(obj == b_sc_lecture) {
 			p_sc_total.setVisible(false);
-			if(StartUI.vo.getGx_count()!=0)
+			if(mainvo.getGx_count()!=0)
 				dao.update(StartUI.vo.getCno());
 			new LectureUI(this, startui);
 		}else if(obj == b_sc_inbody) {

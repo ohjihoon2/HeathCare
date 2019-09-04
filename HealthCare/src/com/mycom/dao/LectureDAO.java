@@ -44,7 +44,7 @@ public class LectureDAO {
 	//회원vo리스트
 	public LectureVO getResultVO(int cno) {
 		LectureVO vo = new LectureVO();		
-		String sql= "select cno, name, gx_name, m.gx_count, m.gx_price, m.gx_validity" + 
+		String sql= "select cno, name, gx_name, m.gx_count, m.gx_price, to_char(gx_validity,'yyyy-mm-dd')" + 
 				" from member m, lecture l where m.gx_code=l.gx_code and cno=?";
 		getPreparedStatement(sql);
 		

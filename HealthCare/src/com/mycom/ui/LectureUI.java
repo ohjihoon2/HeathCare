@@ -126,7 +126,7 @@ public class LectureUI extends JFrame implements ActionListener{
         
         //화면에 회원정보 띄워주기
         LectureSystem system = new LectureSystem();        
-        LectureVO vo = system.getListVO(Integer.parseInt(startui.tf_LogId.getText().trim()));
+        LectureVO vo = system.getListVO(StartUI.vo.getCno());
         
         if(vo != null) {
         	jtf_gx_cno.setText(String.valueOf(vo.getCno()));
@@ -144,11 +144,12 @@ public class LectureUI extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		
-		if(obj == b_back) {	//회원가입 완료
+		if(obj == b_back) {	//돌아가기
 			p_gx_main.setVisible(false);
-			mainui.p_sc_total.setVisible(true);
+//			mainui.p_sc_total.setVisible(true);
+			new MainScreenUI(startui);
 			
-		}else if(obj == b_gx_regist) {//수강등록
+		}else if(obj == b_gx_regist) {//수강 신청
 			//new RegistLecture(Integer.parseInt(jtf_gx_cno.getText()));
 			new RegistLecture(StartUI.vo.getCno());
 		
