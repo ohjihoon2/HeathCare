@@ -134,7 +134,8 @@ public class AdminUI extends JFrame implements ActionListener{
 		status = AdminUI.MEMBER;
 		System.out.println("MEMBER2="+getStatus());
 		
-		p_MemMain = new JPanel(new GridLayout(3,1));
+//		p_MemMain = new JPanel(new GridLayout(3,1));
+		p_MemMain = new JPanel(new BorderLayout());
 		p_MemSearch = new JPanel();
 		p_MemResult = new JPanel();
 		p_MemBtn = new JPanel();
@@ -152,8 +153,8 @@ public class AdminUI extends JFrame implements ActionListener{
 
         
         //胶农费 农扁
-        scroll_Mem.setBounds(0,30,800,200);
-        
+//        scroll_Mem.setBounds(0,30,800,200);
+        scroll_Mem.setBounds(30,30,800,350);
         
         p_MemResult.setBounds(0,0,1000,1000);
         p_MemResult.setLayout(null);
@@ -168,9 +169,9 @@ public class AdminUI extends JFrame implements ActionListener{
 		p_MemBtn.add(b_Update);
 		p_MemBtn.add(b_Delete);
 		
-		p_MemMain.add(p_MemSearch);
-		p_MemMain.add(p_MemResult);
-		p_MemMain.add(p_MemBtn);
+		p_MemMain.add(p_MemSearch, BorderLayout.NORTH);
+		p_MemMain.add(p_MemResult, BorderLayout.CENTER);
+		p_MemMain.add(p_MemBtn, BorderLayout.SOUTH);
 		
 //		p_AdmSearch.setSize(600,300);
 		p_MemMain.setVisible(true);
@@ -201,7 +202,7 @@ public class AdminUI extends JFrame implements ActionListener{
 
 	public void lectureManageForm() {
 		status = AdminUI.LECTURE;
-		p_LecMain = new JPanel(new GridLayout(2,1));
+		p_LecMain = new JPanel(new BorderLayout());
 		p_LecResult = new JPanel();
 		p_LecBtn = new JPanel();
 		
@@ -213,7 +214,7 @@ public class AdminUI extends JFrame implements ActionListener{
         scroll_Lec= new JScrollPane(t_Lec, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
         //胶农费 农扁
-        scroll_Lec.setBounds(0,30,800,200);
+        scroll_Lec.setBounds(30,68,800,350);
         
         p_LecResult.setBounds(0,0,1000,1000);
         
@@ -230,6 +231,11 @@ public class AdminUI extends JFrame implements ActionListener{
 		
 //		p_AdmSearch.setSize(600,300);
 		p_LecMain.setVisible(true);
+		
+		
+		p_LecMain.add(p_LecResult, BorderLayout.CENTER);
+		p_LecMain.add(p_LecBtn, BorderLayout.SOUTH);
+		
 		
 		startui.jf.getContentPane().add(p_LecMain,BorderLayout.CENTER);
 		
