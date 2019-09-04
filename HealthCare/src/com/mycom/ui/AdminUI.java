@@ -283,8 +283,13 @@ public class AdminUI extends JFrame implements ActionListener{
 			system.getMember(dtm_Mem);
 		}
 		else if(obj == b_Update) {
-			system.searchData(dtm_Lec,Integer.parseInt(tf_MemCno.getText().trim()));
-			System.out.println("b_Update");
+			system.searchData(dtm_Mem, Integer.parseInt(tf_MemCno.getText().trim()));
+			tf_MemCno.setText("");
+			tf_MemCno.requestFocus();
+			//첫행 선택
+			if (dtm_Mem.getRowCount() > 0) {
+				t_Mem.setRowSelectionInterval(0, 0);
+			}
 		}else if(obj == b_Delete) {
 			System.out.println("b_Delete");
 			

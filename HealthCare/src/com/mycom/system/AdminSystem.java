@@ -39,5 +39,7 @@ public class AdminSystem {
 	public void searchData(DefaultTableModel dtm_Adm, int cno) {	
 		dao.getMember(dtm_Adm, cno);		
 	}
-
+	
+	
+	
 }

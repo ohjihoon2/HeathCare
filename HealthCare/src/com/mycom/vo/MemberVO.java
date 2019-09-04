@@ -3,8 +3,17 @@ package com.mycom.vo;
 public class MemberVO {
 
 	
-	String  name, gender, address, phone, created_date, birth_date, gx_code, start_date, end_date, gx_validity, bmi, fat, pdf, whr;
+	String  name, gender, address, phone, created_date, birth_date, gx_code, start_date, end_date, gx_validity, bmi, fat, pdf, whr, s_weight;
 	int cno, division, gx_price, gx_count;
+	
+	
+	
+	public String getS_weight() {
+		return s_weight;
+	}
+	public void setS_weight(String s_weight) {
+		this.s_weight = s_weight;
+	}
 	public String getName() {
 		return name;
 	}
