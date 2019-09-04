@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import com.mycom.dao.MainDAO;
 import com.mycom.system.MainSystem;
 import com.mycom.vo.MainVO;
 
@@ -20,14 +21,17 @@ import com.mycom.vo.MainVO;
 
 public class MainScreenUI implements ActionListener {
 	StartUI startui;
+	MainSystem system = new MainSystem();
+	MainDAO dao = new MainDAO();
+	MainVO vo;
 	
 	LectureUI Lecture_class = null;
 	InbodyUI Inbody_class =null;
 	
-	JPanel p_sc_total, p_sc_top, p_sc_infobox,p_sc_btnbox,p_sc_uno,p_sc_time,p_sc_picture,p_sc_l_sc_locker,p_sc_sysdate;
+	JPanel p_sc_total, p_sc_top, p_sc_infobox,p_sc_btnbox,p_sc_uno,p_sc_time,p_sc_picture,p_sc__gx_name,p_sc_sysdate;
 	JButton b_sc_lecture, b_sc_inbody, b_sc_personal,b_sc_chatting;
-	JLabel l_sc_topimgbox, l_sc_uno, l_sc_time, l_sc_ubox, l_sc_locker,l_sc_sysdate;
-	JTextArea jta_sc_uno, jta_sc_limit, jta_sc_limit2 , jta_sc_locker; 
+	JLabel l_sc_topimgbox, l_sc_uno, l_sc_time, l_sc_ubox, l_sc_gx_name;
+	JTextArea jta_sc_uno, jta_sc_limit, jta_sc_limit2 , jta_sc_gx_name; 
 	ImageIcon ic_sc_timg, ic_sc_uimg;
 	
 	//constructor
@@ -44,7 +48,7 @@ public class MainScreenUI implements ActionListener {
 		p_sc_uno = new JPanel();
 		p_sc_time = new JPanel();
 		p_sc_picture = new JPanel();
-		p_sc_l_sc_locker = new JPanel();
+		p_sc__gx_name = new JPanel();
 		p_sc_sysdate = new JPanel();
 
 
@@ -79,14 +83,14 @@ public class MainScreenUI implements ActionListener {
 		jta_sc_limit2.setFont(new Font("돋움", Font.BOLD, 15));
 
 
-		l_sc_locker = new JLabel("수강종목");
-		l_sc_locker.setFont(new Font("돋움", Font.BOLD, 30));
-		jta_sc_locker = new JTextArea(8,25); //수강종목 or 헬스 
-		jta_sc_locker.setFont(new Font("돋움", Font.BOLD, 15));
+		l_sc_gx_name = new JLabel("수강종목");
+		l_sc_gx_name.setFont(new Font("돋움", Font.BOLD, 30));
+		jta_sc_gx_name = new JTextArea(8,25); //수강종목 or 헬스 
+		jta_sc_gx_name.setFont(new Font("돋움", Font.BOLD, 15));
 
 
 		p_sc_top.add(l_sc_topimgbox);
-		p_sc_infobox.add(p_sc_uno); p_sc_infobox.add(p_sc_time); p_sc_infobox.add(p_sc_picture); p_sc_infobox.add(p_sc_l_sc_locker);
+		p_sc_infobox.add(p_sc_uno); p_sc_infobox.add(p_sc_time); p_sc_infobox.add(p_sc_picture); p_sc_infobox.add(p_sc__gx_name);
 		p_sc_btnbox.add(b_sc_lecture);
 		p_sc_btnbox.add(b_sc_inbody);
 		p_sc_btnbox.add(b_sc_personal);
@@ -104,8 +108,8 @@ public class MainScreenUI implements ActionListener {
 		p_sc_time.setBorder(BorderFactory.createEmptyBorder(15, 10, 10, 10));
 		p_sc_picture.add(l_sc_ubox);
 		p_sc_picture.setBorder(BorderFactory.createEmptyBorder(15, 10, 10, 10));
-		p_sc_l_sc_locker.add(l_sc_locker); p_sc_l_sc_locker.add(jta_sc_locker);
-		p_sc_l_sc_locker.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		p_sc__gx_name.add(l_sc_gx_name); p_sc__gx_name.add(jta_sc_gx_name);
+		p_sc__gx_name.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		p_sc_total.add(p_sc_top,BorderLayout.NORTH);
 		p_sc_total.add(p_sc_infobox, BorderLayout.CENTER);
@@ -125,15 +129,16 @@ public class MainScreenUI implements ActionListener {
 		b_sc_chatting.addActionListener(this);
 	
 		//화면에 회원정보 띄워주기
+		vo = system.getListMainVO(startui.vo.getCno());	
 		
-		if(StartUI.vo != null) {
-			jta_sc_uno.append(String.valueOf(StartUI.vo.getCno()));
-			jta_sc_limit.append(StartUI.vo.getStart_date());
-			jta_sc_limit2.append(StartUI.vo.getEnd_date());
-			if( StartUI.vo.getGx_code() != null && StartUI.vo.getGx_code() != "")
-				jta_sc_locker.append(StartUI.vo.getGx_code());
+		if(vo != null) {
+			jta_sc_uno.append(String.valueOf(vo.getCno()));
+			jta_sc_limit.append(vo.getStart_date());
+			jta_sc_limit2.append(vo.getEnd_date());
+			if(vo.getGx_code() != null && vo.getGx_code() != "")
+				jta_sc_gx_name.append(vo.getGx_code());
 			else 
-				jta_sc_locker.append("헬스장만 이용 중");
+				jta_sc_gx_name.append("헬스장만 이용 중");
 		}
 	}
 
@@ -143,13 +148,14 @@ public class MainScreenUI implements ActionListener {
 		Object obj = ae.getSource();
 		if(obj == b_sc_lecture) {
 			p_sc_total.setVisible(false);
+			dao.update(vo.getCno());
 			new LectureUI(this, startui);
 		}else if(obj == b_sc_inbody) {
 			p_sc_total.setVisible(false);
 			new InbodyUI(this, startui);
 		}else if(obj == b_sc_personal) {
 			System.out.println("개인일지");
-			new DietUI(StartUI.vo.getCno());
+			new DietUI(startui.vo.getCno());
 		}else if(obj == b_sc_chatting) {
 			System.out.println("채팅 클릭");
 

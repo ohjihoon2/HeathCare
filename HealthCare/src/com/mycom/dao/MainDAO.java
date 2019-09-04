@@ -16,7 +16,7 @@ public class MainDAO {
 	
 	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
 	String user = "HealthCare";
-	String pass ="1234";
+	String pass = "1234";
 	
 	//constructor
 	public MainDAO() {
@@ -42,13 +42,14 @@ public class MainDAO {
 	}
 	
 	//4,5 단계 : 리스트 출력  - Equi Join 사용.
-	public MainVO getListMainVO(String cno) {
+	public MainVO getResultMainVO(int cno) {
 		MainVO vo = new MainVO();
-		String sql = "select cno, name, start_date, end_date, gx_code from member where cno = ?";
+		String sql = "select cno, name, to_char(start_date,'yyyy-mm-dd'), to_char(end_date,'yyyy-mm-dd'), l.gx_name, m.gx_count, m.gx_price "
+					+ " from member m, lecture l where m.gx_code = l.gx_code and cno = ?";
 		getPreparedStatement(sql);
 		
 		try {
-			pstmt.setString(1, cno);
+			pstmt.setInt(1, cno);
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -57,6 +58,8 @@ public class MainDAO {
 				vo.setStart_date(rs.getString(3));
 				vo.setEnd_date(rs.getString(4));
 				vo.setGx_code(rs.getString(5));
+				vo.setGx_count(rs.getInt(6));
+				vo.setGx_price(rs.getInt(7));
 				
 			}
 		} catch (Exception e) {
@@ -64,6 +67,24 @@ public class MainDAO {
 		}
 		
 		return vo;
+	}
+	
+	//update
+	public int update(int cno) {
+		int result = 0;
+		String sql="update member set gx_count=gx_count-1 where cno=?";
+		getPreparedStatement(sql);
+		try {
+			pstmt.setInt(1, cno);
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+		
 	}
 	
 	//종료

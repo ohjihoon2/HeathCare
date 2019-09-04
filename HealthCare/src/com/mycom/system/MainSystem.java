@@ -16,9 +16,10 @@ public class MainSystem {
 		}
 	}
 	
+	
 	//화면 정보 띄우기
-	public MainVO getListMainVO(String seq) {
-		MainVO mvo = dao.getListMainVO(seq);
+	public MainVO getListMainVO(int cno) {
+		MainVO mvo = dao.getResultMainVO(cno);
 		
 		return mvo;
 	}

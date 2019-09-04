@@ -20,8 +20,8 @@ public class DietDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
-	String user = "scott";
-	String pass = "tiger";
+	String user = "HealthCare";
+	String pass = "1234";
 	
 	//Constructor
 	public DietDAO() {

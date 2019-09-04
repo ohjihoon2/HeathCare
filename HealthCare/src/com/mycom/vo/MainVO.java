@@ -2,13 +2,25 @@ package com.mycom.vo;
 
 public class MainVO {
 	//field
-	int cno;
+	int cno, gx_count, gx_price;
 	String name, start_date, end_date, gx_code;	
 	
-	
 	//method
+	
 	public int getCno() {
 		return cno;
+	}
+	public int getGx_price() {
+		return gx_price;
+	}
+	public void setGx_price(int gx_price) {
+		this.gx_price = gx_price;
+	}
+	public int getGx_count() {
+		return gx_count;
+	}
+	public void setGx_count(int gx_count) {
+		this.gx_count = gx_count;
 	}
 	public void setCno(int cno) {
 		this.cno = cno;

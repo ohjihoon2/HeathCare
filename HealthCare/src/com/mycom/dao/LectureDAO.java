@@ -16,7 +16,7 @@ public class LectureDAO {
 	
 	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
 	String user = "HealthCare";
-	String pass ="1234";
+	String pass = "1234";
 	
 	//constructor
 	public LectureDAO() {
@@ -44,7 +44,8 @@ public class LectureDAO {
 	//회원vo리스트
 	public LectureVO getResultVO(int cno) {
 		LectureVO vo = new LectureVO();		
-		String sql= "select cno, name, gx_code, gx_count, gx_price, gx_validity from member where cno=?";
+		String sql= "select cno, name, gx_name, m.gx_count, m.gx_price, m.gx_validity" + 
+				" from member m, lecture l where m.gx_code=l.gx_code and cno=?";
 		getPreparedStatement(sql);
 		
 		try {
@@ -117,14 +118,15 @@ public class LectureDAO {
 	//data Update
 	public int getResultUpdate(LectureVO vo) {
 		int result = 0;
-		String sql = "update member set gx_code=?, gx_count=?, gx_price=? where cno=?";		
+		String sql = "update member set gx_code=?, gx_count=?, gx_price=?, gx_validity=? where cno=?";		
 		getPreparedStatement(sql);
 		
 		try {
 			pstmt.setString(1, vo.getGx_code());
 			pstmt.setInt(2, vo.getGx_count());
-			pstmt.setInt(3, vo.getGx_price());
-			pstmt.setInt(4, vo.getCno());
+			pstmt.setInt(3, vo.getGx_totprice());
+			pstmt.setString(4, vo.getGx_validity());
+			pstmt.setInt(5, vo.getCno());
 			
 			result = pstmt.executeUpdate();
 			

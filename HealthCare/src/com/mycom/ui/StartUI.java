@@ -240,7 +240,11 @@ public class StartUI extends JFrame implements ActionListener{
 			tf_LogId.setText("");
 			sb.delete(0, sb.length());
 		}
+		
 	}
+	
+	
+	
 }
 
 

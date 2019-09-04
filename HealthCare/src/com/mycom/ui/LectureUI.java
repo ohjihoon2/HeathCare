@@ -31,12 +31,14 @@ public class LectureUI extends JFrame implements ActionListener{
 	StartUI startui;
 	JFrame jf;
 	
+	
     JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_right, p_gx_btn, p_gx_cno,
     		p_gx_info, p_gx_cname, p_gx_gxname, p_gx_count, p_gx_validity, p_gx_blank;
     JLabel l_gx_cno, l_gx_info, l_gx_cname, l_gx_gxname, l_gx_count, l_gx_validity;
     JButton b_gx_regist, b_back;
     JTextField jtf_gx_cno, jtf_gx_cname, jtf_gx_gxname, jtf_gx_validity;
     static JTextField jtf_gx_count;
+   
     ImageIcon ic_gx_uimg, ic_gx_topimg;
     JLabel ic_gx_uimgBox, ic_gx_topimgBox;
  //, l_gx_uname , jtf_gx_uname
@@ -129,7 +131,7 @@ public class LectureUI extends JFrame implements ActionListener{
         if(vo != null) {
         	jtf_gx_cno.setText(String.valueOf(vo.getCno()));
         	jtf_gx_cname.setText(vo.getCname());
-        	jtf_gx_gxname.setText(vo.getGx_name());
+        	jtf_gx_gxname.setText(vo.getGx_code());
         	jtf_gx_count.setText(String.valueOf(vo.getGx_count()));
         	jtf_gx_validity.setText(String.valueOf(vo.getGx_validity()));
         	
@@ -161,11 +163,11 @@ public class LectureUI extends JFrame implements ActionListener{
 class RegistLecture extends JFrame implements ActionListener{
 	//field
 		JPanel jp;
-		JLabel jl_gx_cno, jl_gx_list, jl_gx_name, jl_gx_excount, jl_gx_totprice;
+		JLabel jl_gx_cno, jl_gx_list, jl_gx_name, jl_gx_count, jl_gx_totprice;
 		JTextField jtf_gx_cno, jtf_gx_list,jtf_gx_name, jtf_gx_excount, jtf_gx_totprice;
 		JTextArea jta_gx_list;
 		JButton btn_reg, btn_calprice;
-		JComboBox jcb_gxname, jcb_excount;//->vector데이터로 들어감
+		JComboBox jcb_gxname, jcb_count;//->vector데이터로 들어감
 		
 		LectureSystem system;
 		
@@ -183,7 +185,7 @@ class RegistLecture extends JFrame implements ActionListener{
 			jl_gx_name = new JLabel("수 강 명");
 			jtf_gx_name = new JTextField(20);
 			
-			jl_gx_excount = new JLabel("선택 횟수");
+			jl_gx_count = new JLabel("선택 횟수");
 			jtf_gx_excount = new JTextField(20);
 			
 			jl_gx_totprice = new JLabel("총 금액");
@@ -205,13 +207,13 @@ class RegistLecture extends JFrame implements ActionListener{
 			extensionList.add("5회");
 			extensionList.add("10회");
 			extensionList.add("20회");
-			jcb_excount = new JComboBox(extensionList);
+			jcb_count = new JComboBox(extensionList);
 			
 			jp.add(jl_gx_cno); jp.add(jtf_gx_cno);
 			jp.add(jl_gx_list);jp.add(jta_gx_list);
 //			jp.add(jl_gx_list);jp.add(jtf_gx_list);
 			jp.add(jl_gx_name); jp.add(jcb_gxname);
-			jp.add(jl_gx_excount); jp.add(jcb_excount);
+			jp.add(jl_gx_count); jp.add(jcb_count);
 			jp.add(jl_gx_totprice); jp.add(jtf_gx_totprice);
 			jp.add(btn_reg); jp.add(btn_calprice);
 			
@@ -249,7 +251,7 @@ class RegistLecture extends JFrame implements ActionListener{
 			if(jcb_gxname.getSelectedItem().equals("선택해주세요")) {
 				JOptionPane.showMessageDialog(null, "수강을 선택해 주세요");	
 				
-			}else if(jcb_excount.getSelectedItem().equals("선택해주세요")){
+			}else if(jcb_count.getSelectedItem().equals("선택해주세요")){
 				JOptionPane.showMessageDialog(null, "횟수를 선택해 주세요");
 
 			}else if(jtf_gx_totprice.getText().equals("")){
@@ -288,7 +290,7 @@ class RegistLecture extends JFrame implements ActionListener{
 
 				}		
 				
-				String extension = (String)jcb_excount.getSelectedItem();
+				String extension = (String)jcb_count.getSelectedItem();
 				
 				int count = 0;
 				if(extension.equals("5회"))		count =5;
@@ -300,15 +302,14 @@ class RegistLecture extends JFrame implements ActionListener{
 
 			}else if(obj == btn_reg) {//String과 int타입 맞추기 ; Integer.parseInt(), String.valueOf();
 				//vo 생성 : 데이터					
-				boolean check = redFromCheck();
 				LectureVO vo = new LectureVO();
-				
+				boolean check = redFromCheck();
 				if(check) {
-					String gxname = (String)jcb_gxname.getSelectedItem();			
+					String gxname = (String)jcb_gxname.getSelectedItem();	
+
 					String gx_code = "";
-					
 					int gx_price =0;				
-					if(gxname.equals("요가(101)"))	{
+					if(gxname.equals("요가(101)")	){
 						gx_code ="101"; 
 						gx_price =10000;
 		
@@ -321,26 +322,27 @@ class RegistLecture extends JFrame implements ActionListener{
 						gx_price =12000;
 
 					}	
-					
-					
-					String extension = (String)jcb_excount.getSelectedItem();
+
+					String extension = (String)jcb_count.getSelectedItem();
 					
 					int count = 0;
 					if(extension.equals("5회"))		count =5;
 					else if(extension.equals("10회"))	count = 10;
 					else if(extension.equals("20회"))	count = 20;
+							
 					
-
-					vo.setCno(Integer.parseInt(jtf_gx_cno.getText()));					
-					vo.setGx_code(gx_code);
-					vo.setGx_count(Integer.parseInt(LectureUI.jtf_gx_count.getText())+count);				
-					vo.setGx_totprice(Integer.parseInt(jtf_gx_totprice.getText()));	
+					vo.setCno(Integer.parseInt(jtf_gx_cno.getText()));
+					vo.setGx_code(gx_code);			
+					vo.setGx_count(Integer.parseInt(LectureUI.jtf_gx_count.getText())+count);									
+					vo.setGx_totprice(Integer.parseInt(jtf_gx_totprice.getText())+StartUI.vo.getGx_price());	
+					
 					
 				}
+		
+				
 				
 				//dao 생성: DB 연결 -> 등록
-				boolean result = system.update(vo);
-				
+				boolean result = system.update(vo);			
 				if(result) {
 					JOptionPane.showMessageDialog(null, "등록 성공");
 					
