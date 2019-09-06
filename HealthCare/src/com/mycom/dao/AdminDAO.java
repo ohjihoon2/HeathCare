@@ -6,8 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
+
+import com.mycom.vo.MemberVO;
+
 
 
 public class AdminDAO {
@@ -49,43 +53,42 @@ public class AdminDAO {
 	 * 
 	 * memberList 출력
 	 * @param dtm_Adm
+	 * @return 
 	 */
-	public void getMember(DefaultTableModel dtm_Adm) {
-		String sql = "select cno, name, gender, phone, TO_CHAR(birth_date, 'MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr from member where division =1";
+	public ArrayList<MemberVO> getMember(DefaultTableModel dtm_Adm) {
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		
+		String sql = "select cno, name, gender, phone, TO_CHAR(birth_date, 'MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr, S_WEIGHT, GYM_PRICE from member where division =1";
 		getPreparedStatement(sql);
 		
 		try {
 			rs = pstmt.executeQuery();
-			
-			// DefaultTableModel에 있는 기존 데이터 지우기
-			for(int i=0; i<dtm_Adm.getRowCount();) {
-				dtm_Adm.removeRow(0);
-			}
-			
 			while(rs.next()) {
-				Object data[] = { 
-				rs.getInt(1), 
-			    rs.getString(2),
-                rs.getString(3), 
-                rs.getString(4),
-                rs.getString(5),
-                rs.getString(6),
-                rs.getString(7),
-                rs.getString(8),
-                rs.getInt(9),
-                rs.getInt(10),
-                rs.getString(11),
-                rs.getString(12),
-                rs.getString(13),
-                rs.getString(14),
-                rs.getString(15)
-                };
- 
-			   dtm_Adm.addRow(data); //DefaultTableModel에 레코드 추가
+				MemberVO vo = new MemberVO();
+				vo.setCno(rs.getInt(1));
+				vo.setName(rs.getString(2));
+				vo.setGender(rs.getString(3));
+				vo.setPhone(rs.getString(4));
+				vo.setBirth_date(rs.getString(5));
+				vo.setStart_date(rs.getString(6));
+				vo.setEnd_date(rs.getString(7));
+				vo.setGx_code(rs.getString(8));
+				vo.setGx_price(rs.getInt(9));
+				vo.setGx_count(rs.getInt(10));
+                vo.setGx_validity(rs.getString(11));
+                vo.setBmi(rs.getString(12));
+                vo.setFat(rs.getString(13));
+                vo.setPbf(rs.getString(14));
+                vo.setWhr(rs.getString(15));
+                vo.setS_weight(rs.getString(16));
+                vo.setGym_price(rs.getInt(17));
+                list.add(vo);
+                System.out.println("Gender"+vo.getGender());
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return list;
 		
 	}
 	

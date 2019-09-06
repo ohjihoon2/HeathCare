@@ -3,23 +3,8 @@ package com.mycom.vo;
 public class MemberVO {
 
 	
-	String  name, gender, address, phone, created_date, birth_date, gx_code, start_date, end_date, gx_validity, bmi, fat, pdf, whr, s_weight;
+	String  name, gender, address, phone, created_date, birth_date, gx_code, start_date, end_date, gx_validity, bmi, fat, pbf, whr, s_weight;
 	int cno, division, gx_price, gx_count, gym_price;
-	
-	
-	
-	public int getGym_price() {
-		return gym_price;
-	}
-	public void setGym_price(int gym_price) {
-		this.gym_price = gym_price;
-	}
-	public String getS_weight() {
-		return s_weight;
-	}
-	public void setS_weight(String s_weight) {
-		this.s_weight = s_weight;
-	}
 	public String getName() {
 		return name;
 	}
@@ -92,17 +77,23 @@ public class MemberVO {
 	public void setFat(String fat) {
 		this.fat = fat;
 	}
-	public String getPdf() {
-		return pdf;
+	public String getPbf() {
+		return pbf;
 	}
-	public void setPdf(String pdf) {
-		this.pdf = pdf;
+	public void setPbf(String pbf) {
+		this.pbf = pbf;
 	}
 	public String getWhr() {
 		return whr;
 	}
 	public void setWhr(String whr) {
 		this.whr = whr;
+	}
+	public String getS_weight() {
+		return s_weight;
+	}
+	public void setS_weight(String s_weight) {
+		this.s_weight = s_weight;
 	}
 	public int getCno() {
 		return cno;
@@ -128,6 +119,13 @@ public class MemberVO {
 	public void setGx_count(int gx_count) {
 		this.gx_count = gx_count;
 	}
+	public int getGym_price() {
+		return gym_price;
+	}
+	public void setGym_price(int gym_price) {
+		this.gym_price = gym_price;
+	}
+	
 	
 	
 	

@@ -4,10 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.mycom.system.AdminSystem;
+import com.mycom.vo.MemberVO;
 
 public class AdminUI extends JFrame implements ActionListener{
 	StartUI startui;
@@ -36,6 +43,7 @@ public class AdminUI extends JFrame implements ActionListener{
 	JTextArea ta_AdmMain;
 	JTextField tf;
 	JButton b_AdmMember, b_AdmLecture;
+	ArrayList<MemberVO> list;
 	
 	//member 관리 폼
 	JPanel p_MemMain, p_MemSearch, p_MemResult, p_MemBtn;
@@ -43,11 +51,11 @@ public class AdminUI extends JFrame implements ActionListener{
 	JTextField tf_MemCno;
 	JButton b_Search, b_SearchAll, b_Update, b_Delete;
 	JScrollPane scroll_Mem;
-	TableRowSorter sorter;
 
 	DefaultTableModel dtm_Mem;
 	JTable t_Mem;
-	String[] memInfo = {"회원번호", "이름"," 성별", "전화번호", "생일", "시작일", "마지막일", "GX코드", "GX가격", "GX횟수", "GX유효기간", "BMI", "FAT", "PBF", "WHR"};
+	
+	String[] memInfo = {"회원번호", "이름"," 성별", "전화번호", "생일", "시작일", "마지막일", "GX코드", "GX가격", "GX횟수", "GX유효기간", "BMI", "FAT", "PBF", "WHR", "S_WEIGHT", "GYM_PRICE"};
 	//Lecture 관리 폼
 	JPanel p_LecMain, p_LecResult, p_LecBtn;
 //	JButton b_LecUpdate, b_LecDelete;
@@ -72,7 +80,7 @@ public class AdminUI extends JFrame implements ActionListener{
 		b_AdmMember = new JButton("회       원");
 		b_AdmLecture = new JButton("수       업");
 	
-		ta_AdmMain = new JTextArea("xx 관리자님 반갑습니다.",28, 80);
+		ta_AdmMain = new JTextArea("관리자님 반갑습니다.",28, 80);
 		
 		l_AdmTitle.setHorizontalAlignment((int) CENTER_ALIGNMENT);
 		p_AdmTitle.add(l_AdmTitle);
@@ -128,11 +136,53 @@ public class AdminUI extends JFrame implements ActionListener{
 	}
 	
 	public void memberManageForm() {
+		list = system.getMember(dtm_Mem);
+		Vector<String> colList = new Vector<String>();
+		colList.add("회원번호");  
+		colList.add("이름");
+		colList.add("성별");
+		colList.add("전화번호");
+		colList.add("생일");
+		colList.add("시작일");
+		colList.add("마지막일");
+		colList.add("GX코드");
+		colList.add("GX가격");
+		colList.add("GX횟수");
+		colList.add("GX유효기간");
+		colList.add("BMI");
+		colList.add("FAT");
+		colList.add("PBF");
+		colList.add("WHR");
+		colList.add("표준체중");
+		colList.add("헬스가격");
 		
-		System.out.println("MEMBER1="+getStatus());
-		//setStatus(MEMBER);
+		dtm_Mem = new DefaultTableModel(colList,0);	
+		
+		for(MemberVO vo : list) {
+			Vector<String> v = new Vector<String>();
+			v.add(String.valueOf(vo.getCno()));
+			v.add(vo.getName());
+			v.add(vo.getGender());
+			v.add(vo.getPhone());
+			v.add(vo.getBirth_date());
+			v.add(vo.getStart_date());
+			v.add(vo.getEnd_date());
+			v.add(vo.getGx_code());
+			v.add(String.valueOf(vo.getGx_price()));
+			v.add(String.valueOf(vo.getGx_count()));
+			v.add(vo.getGx_validity());
+			v.add(vo.getBmi());
+			v.add(vo.getFat());
+			v.add(vo.getPbf());
+			v.add(vo.getWhr());
+			v.add(vo.getS_weight());
+			v.add(String.valueOf(vo.getGym_price()));
+			
+			dtm_Mem.addRow(v);
+		}	
+		
+		
 		status = AdminUI.MEMBER;
-		System.out.println("MEMBER2="+getStatus());
 		
 //		p_MemMain = new JPanel(new GridLayout(3,1));
 		p_MemMain = new JPanel(new BorderLayout());
@@ -147,9 +197,17 @@ public class AdminUI extends JFrame implements ActionListener{
 		b_Update = new JButton("수    정");
 		b_Delete = new JButton("삭    제");
 		
-		dtm_Mem = new DefaultTableModel(memInfo, 0);
 		t_Mem= new JTable(dtm_Mem); 
-        scroll_Mem= new JScrollPane(t_Mem, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		t_Mem.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        scroll_Mem= new JScrollPane(t_Mem);
+        //getcolumn은 몇번째 컬럼인지, setPreferredWidth 컬럼 가로 길이 설정
+        t_Mem.getColumnModel().getColumn(0).setPreferredWidth(100);
+        t_Mem.getColumnModel().getColumn(1).setPreferredWidth(50);
+		
+//		
+//		dtm_Mem = new DefaultTableModel(memInfo, 0);
+//		t_Mem= new JTable(dtm_Mem); 
+//        scroll_Mem= new JScrollPane(t_Mem, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         
         //스크롤 크기
@@ -177,7 +235,7 @@ public class AdminUI extends JFrame implements ActionListener{
 		p_MemMain.setVisible(true);
 		
 		startui.jf.getContentPane().add(p_MemMain,BorderLayout.CENTER);
-		system.getMember(dtm_Mem);
+//		system.getMember(dtm_Mem);
 		
 		
 //		if(tf_MemCno.getText() == "") {
@@ -198,6 +256,7 @@ public class AdminUI extends JFrame implements ActionListener{
 		b_SearchAll.addActionListener(this);
 		b_Update.addActionListener(this);
 		b_Delete.addActionListener(this);
+		
 	}
 
 	public void lectureManageForm() {
@@ -251,8 +310,53 @@ public class AdminUI extends JFrame implements ActionListener{
 	 * 업데이트
 	 * @param sno
 	 */
-	public void updateForm(String sno) {
-	
+	public void setUpdateChange() {
+		list = system.getMember(dtm_Mem);
+		Vector<String> colList = new Vector<String>();
+		colList.add("회원번호");  
+		colList.add("이름");
+		colList.add("성별");
+		colList.add("전화번호");
+		colList.add("생일");
+		colList.add("시작일");
+		colList.add("마지막일");
+		colList.add("GX코드");
+		colList.add("GX가격");
+		colList.add("GX횟수");
+		colList.add("GX유효기간");
+		colList.add("BMI");
+		colList.add("FAT");
+		colList.add("PBF");
+		colList.add("WHR");
+		colList.add("표준체중");
+		colList.add("헬스가격");
+		
+		dtm_Mem = new DefaultTableModel(colList,0);	
+		
+		for(MemberVO vo : list) {
+			Vector<String> v = new Vector<String>();
+			v.add(String.valueOf(vo.getCno()));
+			v.add(vo.getName());
+			v.add(vo.getGender());
+			v.add(vo.getPhone());
+			v.add(vo.getBirth_date());
+			v.add(vo.getStart_date());
+			v.add(vo.getEnd_date());
+			v.add(vo.getGx_code());
+			v.add(String.valueOf(vo.getGx_price()));
+			v.add(String.valueOf(vo.getGx_count()));
+			v.add(vo.getGx_validity());
+			v.add(vo.getBmi());
+			v.add(vo.getFat());
+			v.add(vo.getPbf());
+			v.add(vo.getWhr());
+			v.add(vo.getS_weight());
+			v.add(String.valueOf(vo.getGym_price()));
+			
+			dtm_Mem.addRow(v);
+		}	
+		//JTable의 데이터 업데이트 하는 메소드
+		t_Mem.setModel(dtm_Mem);
 	}
 	
 	@Override
@@ -288,17 +392,13 @@ public class AdminUI extends JFrame implements ActionListener{
 		}else if(obj == b_SearchAll) {
 			system.getMember(dtm_Mem);
 		}else if(obj == b_Update) {
-			tf_MemCno.setText("");
-			tf_MemCno.requestFocus();
-			//첫행 선택
-			if (dtm_Mem.getRowCount() > 0) {
-				t_Mem.setRowSelectionInterval(0, 0);
-			}
+			JOptionPane.showMessageDialog(null, "하위");
+			new AdminUpdateUI();
+			
 		}else if(obj == b_Delete) {
 			System.out.println("b_Delete");
 			
 		}
 		
 	}
-	
 }

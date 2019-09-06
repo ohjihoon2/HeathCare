@@ -1,5 +1,7 @@
 package com.mycom.system;
 
+import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
 
 import com.mycom.dao.AdminDAO;
@@ -19,9 +21,10 @@ public class AdminSystem {
 	/**
 	 * 멤버 전체 검색
 	 * @param dtm_Adm
+	 * @return 
 	 */
-	public void getMember(DefaultTableModel dtm_Adm) {
-		dao.getMember(dtm_Adm);
+	public ArrayList<MemberVO> getMember(DefaultTableModel dtm_Adm) {
+		return dao.getMember(dtm_Adm);
 	}
 	/**
 	 * 강의 정보 검색
