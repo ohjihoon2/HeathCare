@@ -5,8 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
 
 import com.mycom.vo.DietMemberVO;
 import com.mycom.vo.DietSaveVO;
@@ -181,6 +182,26 @@ public class DietDAO {
 		}
 	}
 	
+	/** 검색 저장 리스트 출력 삭제 **/
+	public int getDeleteList2() {
+		int result = 0;
+		
+		String sql = "delete from DIETSELECT";
+		//getStatement();
+		getPreparedStatement(sql);
+		
+		try {
+			result = pstmt.executeUpdate();
+			System.out.println(result);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	
 	/**회정정보 출력**/
 	public DietMemberVO getMemberInfo(int cno) {
 		DietMemberVO mvo = new DietMemberVO();
@@ -226,13 +247,14 @@ public class DietDAO {
 	}
 	
 	/** 몸무게 출력 **/
-	public DietMemberVO getResultWeight(int cno,String time1) {
+	public DietMemberVO getResultWeight(int cno, String time1) {
 		DietMemberVO vo = new DietMemberVO();
 		String sql = "select d.DW_NO, d.cno, m.name, m.GENDER, dw_weight, d.DW_TARGETWEIGHT, to_char(DW_DATE,'yyyy-MM-dd') "
 				+" from dietweight d,member m"  
 				+" where d.cno = m.cno"
 				+" and d.cno = ?"
-				+" and to_char(DW_DATE,'yyyy-MM-dd') = ?";
+				+" and to_char(DW_DATE,'yyyy-MM-dd') = ?"
+				+ " order by d.DW_NO desc";
 		getPreparedStatement(sql);
 		
 		try {
@@ -258,6 +280,25 @@ public class DietDAO {
 	}
 	
 	
+//	/** 몸무게 삭제 **/
+//	public int getDeleteWeight(int dw_no) {
+//		int result = 0;
+//		
+//		String sql = "delete from DietWeight where DW_NO=?";
+//		//getStatement();
+//		getPreparedStatement(sql);
+//		System.out.println("dw_no="+dw_no);
+//		try {
+//			pstmt.setInt(1, dw_no);
+//			
+//			result = pstmt.executeUpdate();
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return result;
+//	}
+	
 	
 	/**개인일지 등록(회원정보,몸무게,칼로리)**/
 	public int getInsertDiet(DietSaveVO dsvo) {
@@ -270,7 +311,7 @@ public class DietDAO {
 			pstmt.setInt(1, dsvo.getDS_SelectKcal());
 			pstmt.setInt(2, dsvo.getDS_RECOMMEND());
 			pstmt.setInt(3, dsvo.getDS_RESULTKCAL());
-			pstmt.setInt(4, dsvo.getCNO());
+			pstmt.setInt(4, dsvo.getDW_NO());
 			
 			
 			System.out.println( dsvo.getDS_SelectKcal());
@@ -284,6 +325,51 @@ public class DietDAO {
 		}
 		
 		return result;
+	}
+	
+	/**개인일지 저장 출력 (회원정보,몸무게,칼로리)**/
+	public ArrayList<DietSaveVO> getResultDiet(int cno) {
+		ArrayList<DietSaveVO> list = new ArrayList<DietSaveVO>();
+		
+		String sql = "select rownum, DW_NO, CNO, NAME, DW_WEIGHT, DW_TARGETWEIGHT, DS_SELECTKCAL," 
+				+ "     DS_RECOMMEND, DS_RESULTKCAL, to_char(DW_DATE,'yyyy-mm-dd')"
+				+ "	  from(select ds.DW_NO,m.CNO,m.NAME, dw.DW_WEIGHT,dw.DW_TARGETWEIGHT," 
+				+ "    ds.DS_SELECTKCAL,ds.DS_RECOMMEND,ds.DS_RESULTKCAL,dw.DW_DATE" 
+				+ "    from DIETWEIGHT dw, MEMBER m, DIETSAVE ds"
+				+ "    where dw.CNO = m.CNO" 
+				+ "    AND  dw.DW_NO = ds.DW_NO"
+				+ "    and dw.CNO = ?" 
+				+ "    order by ds.DW_NO asc)";
+		
+		//getStatement();
+		getPreparedStatement(sql);
+		
+		try {
+			//rs = stmt.executeQuery(sql);
+			pstmt.setInt(1, cno);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				DietSaveVO vo = new DietSaveVO();
+				vo.setRNO(rs.getInt(1));
+				vo.setDW_NO(rs.getInt(2));
+				vo.setCNO(rs.getInt(3));
+				vo.setNAME(rs.getString(4));
+				vo.setDW_WEIGHT(rs.getString(5));
+				vo.setDW_TARGETWEIGHT(rs.getString(6));
+				vo.setDS_SelectKcal(rs.getInt(7));
+				vo.setDS_RECOMMEND(rs.getInt(8));
+				vo.setDS_RESULTKCAL(rs.getInt(9));
+				vo.setDW_DATE(rs.getString(10));
+				
+				list.add(vo);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 	
 	/** 6단계 : 종료**/

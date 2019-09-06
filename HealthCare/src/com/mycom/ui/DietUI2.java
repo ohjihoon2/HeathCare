@@ -2,14 +2,13 @@ package com.mycom.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.AbstractCellEditor;
+import javax.management.StringValueExp;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,8 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
 
 import com.mycom.dao.DietDAO;
 import com.mycom.system.DietSystem;
@@ -37,7 +34,8 @@ public class DietUI2 extends JFrame implements ActionListener {
 	JPanel p_Dietall, p_Dieta1, p_Dieta2, p_Dieta2_1, p_Dieta2_2, p_Dieta3;
 	
 	JLabel l_Diettitle,l_DietDwNO, l_DietCno, l_Dietdate,l_Dietdate2, l_DietName,l_DietName2, l_Dietsex,l_Dietsex2, l_Dietweight, l_Diettargetweight,
-	       l_Dietdietname,l_Dietdl_Dietcalorie,l_DietCl_Dietcalorie,l_DietRl_Dietcalorie,l_Dietcalorie,l_Dietbad,l_Dietgood;
+	       l_Dietdietname,l_Dietdl_Dietcalorie,l_DietCl_Dietcalorie,l_DietCl_Dietcalorie2,l_DietRl_Dietcalorie
+	       ,l_DietRl_Dietcalorie2,l_Dietcalorie,l_Dietcalorie2,l_Dietbad,l_Dietgood;
 	JTextArea ta_Dietlist, ta_DietRecord;
 	
 	JTextField tf_Dietcalorie,tf_DietDiet, tf_Dietweight, tf_Diettargetweight;
@@ -47,15 +45,17 @@ public class DietUI2 extends JFrame implements ActionListener {
 	JScrollPane s_Dietscroll;
 
 	DietSystem system = new DietSystem();
-	DietMemberVO vo = new DietMemberVO();
+	public static DietMemberVO vo = new DietMemberVO();
 	
 	DefaultTableModel d_Dietdt;
 	JTable j_DIettable;
+	
 	// 스크롤 페널 생성
 	String[] name = {"번호","식품이름","열량(kcal)","날짜"};
 	int Selectsum = 0;
 	int Csum = 0;
 	int kcal=0;
+	
 	//Constructor
 	public DietUI2(DietUI ui) {
 		this.ui = ui;
@@ -133,20 +133,29 @@ public class DietUI2 extends JFrame implements ActionListener {
 		
 		l_DietCl_Dietcalorie = new JLabel("선택한칼로리" +"   -");
 		l_DietCl_Dietcalorie.setFont(new Font("나눔고딕",Font.BOLD,22));
+		
+		l_DietCl_Dietcalorie2 = new JLabel();
+		l_DietCl_Dietcalorie2.setFont(new Font("나눔고딕",Font.BOLD,22));
 //		tf_Dietcalorie = new JTextField("kcal");
 //		tf_Dietcalorie.setFont(new Font("나눔고딕",Font.BOLD,18));
 		
 		l_DietRl_Dietcalorie = new JLabel("권장칼로리"+"  =");
 		l_DietRl_Dietcalorie.setFont(new Font("나눔고딕",Font.BOLD,22));
 		
+		l_DietRl_Dietcalorie2 = new JLabel();
+		l_DietRl_Dietcalorie2.setFont(new Font("나눔고딕",Font.BOLD,22));
+		
 		l_Dietcalorie = new JLabel("칼로리");
 		l_Dietcalorie.setFont(new Font("나눔고딕",Font.BOLD,22));
 		
-		l_Dietbad = new JLabel("Bad~");
+		l_Dietcalorie2 = new JLabel();
+		l_Dietcalorie2.setFont(new Font("나눔고딕",Font.BOLD,22));
+		
+		l_Dietbad = new JLabel();
 		l_Dietbad.setFont(new Font("나눔고딕",Font.BOLD,16));
 		l_Dietbad.setForeground(Color.DARK_GRAY);
 		
-		l_Dietgood = new JLabel("Good~");
+		l_Dietgood = new JLabel();
 		l_Dietgood.setFont(new Font("나눔고딕",Font.BOLD,16));
 		l_Dietgood.setForeground(Color.DARK_GRAY);
 		
@@ -163,11 +172,12 @@ public class DietUI2 extends JFrame implements ActionListener {
 		
 		b_DietResult = new JButton("칼로리계산");
 		b_DietSave = new JButton("저장");
-		b_DietReset = new JButton("취소");
+		//b_DietReset = new JButton("취소");
 		b_DietBack = new JButton("뒤로가기");
 		
 		p_Dieta1.setBounds(0,50,980,200);
 		p_Dieta1.setBackground(Color.WHITE);
+		l_DietDwNO.setBounds(150,20,100,30);
 		l_Dietdate.setBounds(200,50,100,30);
 		l_Dietdate2.setBounds(250,50,100,30);
 		l_DietName.setBounds(200,90,430,30);
@@ -192,19 +202,23 @@ public class DietUI2 extends JFrame implements ActionListener {
 		
 		p_Dieta3.setBounds(0,750,980,100);
 		p_Dieta3.setBackground(Color.WHITE);
-		l_DietCl_Dietcalorie.setBounds(250,300,200,30);
+		l_DietCl_Dietcalorie.setBounds(270,300,200,30);
+		l_DietCl_Dietcalorie2.setBounds(145,300,300,30);
 		//tf_Dietcalorie.setBounds(350,10,200,30);
-		l_DietRl_Dietcalorie.setBounds(420,300,200,30);
-		l_Dietcalorie.setBounds(570,300,200,30);
-		l_Dietbad.setBounds(380,350,200,30);
-		l_Dietgood.setBounds(500,350,200,30);
-		b_DietResult.setBounds(670,300,100,30);
+		l_DietRl_Dietcalorie.setBounds(440,300,200,30);
+		l_DietRl_Dietcalorie2.setBounds(380,300,300,30);
+		l_Dietcalorie.setBounds(590,300,200,30);
+		l_Dietcalorie2.setBounds(610,300,300,30);
+		l_Dietbad.setBounds(440,350,300,30);
+		l_Dietgood.setBounds(440,350,300,30);
+		b_DietResult.setBounds(830,300,100,30);
 		
-		b_DietSave.setBounds(380,30,60,30);
-		b_DietReset.setBounds(460,30,60,30);
-		b_DietBack.setBounds(540,30,100,30);
+		b_DietSave.setBounds(400,30,60,30);
+		//b_DietReset.setBounds(460,30,60,30);
+		b_DietBack.setBounds(520,30,100,30);
 		
 		
+		p_Dieta1.add(l_DietDwNO);
 		p_Dieta1.add(l_Dietdate);
 		p_Dieta1.add(l_Dietdate2);
 		p_Dieta1.add(l_DietName);
@@ -223,9 +237,12 @@ public class DietUI2 extends JFrame implements ActionListener {
 		//scroll.add(p_Dieta2_2);
 		p_Dieta2.add(s_Dietscroll);
 		p_Dieta2.add(l_DietCl_Dietcalorie);
+		p_Dieta2.add(l_DietCl_Dietcalorie2);
 		//p_Dieta3.add(tf_Dietcalorie);
 		p_Dieta2.add(l_DietRl_Dietcalorie);
+		p_Dieta2.add(l_DietRl_Dietcalorie2);
 		p_Dieta2.add(l_Dietcalorie);
+		p_Dieta2.add(l_Dietcalorie2);
 		p_Dieta2.add(l_Dietbad);
 		p_Dieta2.add(l_Dietgood);
 		p_Dieta2.add(b_DietResult);
@@ -233,7 +250,7 @@ public class DietUI2 extends JFrame implements ActionListener {
 		
 		
 		p_Dieta3.add(b_DietSave);
-		p_Dieta3.add(b_DietReset);
+		//p_Dieta3.add(b_DietReset);
 		p_Dieta3.add(b_DietBack);
 		p_Dietall.add(p_Dieta3);
 		
@@ -252,7 +269,7 @@ public class DietUI2 extends JFrame implements ActionListener {
 		//이벤트 등록
 		b_DietResult.addActionListener(this);
 		b_DietSave.addActionListener(this);
-		b_DietReset.addActionListener(this);
+		//b_DietReset.addActionListener(this);
 		b_DietBack.addActionListener(this);		
 		//b_DietChoice.addActionListener(this);		
 		
@@ -264,26 +281,32 @@ public class DietUI2 extends JFrame implements ActionListener {
             j_DIettable.setRowSelectionInterval(0, 0);
         }
         
-        //현재날짜를 String 값으로 만들기
-        SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
-        		
-        Date time = new Date();
-        		
-        String time1 = format1.format(time);
-        
-        vo = dao.getResultWeight(DietUI.mvo.getCNO(),time1);
-        
-        l_DietDwNO.setText(Integer.toString(vo.getDW_NO()));
-        l_DietName2.setText(vo.getNAME());
-        l_Dietsex2.setText(vo.getGENDER());
-        tf_Dietweight.setText(vo.getDW_WEIGHT());
-        tf_Diettargetweight.setText(vo.getDW_TARGETWEIGHT());
-      
+       
+      getWeight();
 	}
 	
-
-       
+	
+	/** 몸무게 출력 **/
+	public void getWeight() {
+		//현재날짜를 String 값으로 만들기
+	    SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+	    		
+	    Date time = new Date();
+	    		
+	    String time1 = format1.format(time);
+	    
+	    vo = dao.getResultWeight(DietUI.mvo.getCNO(),time1);
+	    
+	    l_DietDwNO.setText(Integer.toString(vo.getDW_NO()));
+	    l_Dietdate2.setText(vo.getDW_DATE());
+	    l_DietName2.setText(vo.getNAME());
+	    l_Dietsex2.setText(vo.getGENDER());
+	    tf_Dietweight.setText(vo.getDW_WEIGHT());
+	    tf_Diettargetweight.setText(vo.getDW_TARGETWEIGHT());
+	}
 	 
+	
+	
 	//테이블 검색한 칼로리 누적 합
 	  public int getSum() {
       	int rowsCount =  j_DIettable.getRowCount();
@@ -301,10 +324,12 @@ public class DietUI2 extends JFrame implements ActionListener {
 			
 			if(checkResult == 1) {
 				//System.out.println("모든 메뉴 선택");
+				l_Dietgood.setText("참 잘했어요~");
 				l_Dietgood.setForeground(Color.GREEN);
 				
 				
 			}else if(checkResult == 2) {
+				l_Dietbad.setText("권장 칼로리 초과!!");
 				l_Dietbad.setForeground(Color.RED);
 				
 			}
@@ -321,9 +346,14 @@ public class DietUI2 extends JFrame implements ActionListener {
 				Selectsum = getSum();
 				Csum = Selectsum - DietSystem.MENKCAL;
 	 			
-				l_DietCl_Dietcalorie.setText(Integer.toString(getSum())+"kcal");
-				l_DietRl_Dietcalorie.setText(Integer.toString(DietSystem.MENKCAL)+"kcal");
-				l_Dietcalorie.setText(Integer.toString(Csum)+"kcal");
+				l_DietCl_Dietcalorie.setText("");
+				l_DietCl_Dietcalorie2.setText(Integer.toString(getSum())+"kcal(선택한칼로리)");
+				
+				l_DietRl_Dietcalorie.setText("");
+				l_DietRl_Dietcalorie2.setText("- "+Integer.toString(DietSystem.MENKCAL)+"kcal(권장칼로리)");
+				
+				l_Dietcalorie.setText("");
+				l_Dietcalorie2.setText("= "+Integer.toString(Csum)+"kcal(칼로리)");
 				
 				kcal = Csum;
 				int checkResult = system.kcalCheck(kcal);
@@ -333,9 +363,14 @@ public class DietUI2 extends JFrame implements ActionListener {
 				Selectsum = getSum();
 				Csum = Selectsum - DietSystem.GIRLKCAL;
 	 			
-				l_DietCl_Dietcalorie.setText(Integer.toString(getSum())+"kcal");
-				l_DietRl_Dietcalorie.setText(Integer.toString(DietSystem.GIRLKCAL)+"kcal");
-				l_Dietcalorie.setText(Integer.toString(Csum)+"kcal");
+				l_DietCl_Dietcalorie.setText("");
+				l_DietCl_Dietcalorie2.setText(Integer.toString(getSum())+"kcal(선택한칼로리)");
+				
+				l_DietRl_Dietcalorie.setText("");
+				l_DietRl_Dietcalorie2.setText("- "+Integer.toString(DietSystem.GIRLKCAL)+"kcal(권장칼로리)");
+				
+				l_Dietcalorie.setText("");
+				l_Dietcalorie2.setText("= "+Integer.toString(Csum)+"kcal(칼로리)");
 				
 				kcal = Csum;
 				int checkResult = system.kcalCheck(kcal);
@@ -356,12 +391,23 @@ public class DietUI2 extends JFrame implements ActionListener {
         		dsvo.setDS_SelectKcal(getSum());
             	dsvo.setDS_RECOMMEND(DietSystem.MENKCAL);
             	dsvo.setDS_RESULTKCAL(kcal);
-            	dsvo.setCNO(DietUI.mvo.getCNO());
+            	dsvo.setDW_NO(vo.getDW_NO());
             	
             	boolean result = system.registDiet(dsvo);
             	
             	if(result) {
             		JOptionPane.showMessageDialog(null, "등록완료");
+            		
+            		//추가시킨 식단들 삭제
+            		int val = dao.getDeleteList2();
+            		if(val != 0) {
+            			JOptionPane.showMessageDialog(null, "리스트삭제완료");
+            		}else {
+            			JOptionPane.showMessageDialog(null, "리스트삭제실패");
+            		}
+            		
+            		
+            		
             	}else {
             		JOptionPane.showMessageDialog(null, "등록 안됐음");
             		
@@ -373,12 +419,23 @@ public class DietUI2 extends JFrame implements ActionListener {
 				dsvo.setDS_SelectKcal(getSum());
             	dsvo.setDS_RECOMMEND(DietSystem.GIRLKCAL);
             	dsvo.setDS_RESULTKCAL(kcal);
-            	dsvo.setCNO(DietUI.mvo.getCNO());
+            	dsvo.setDW_NO(vo.getDW_NO());
             	
             	boolean result = system.registDiet(dsvo);
             	
             	if(result) {
             		JOptionPane.showMessageDialog(null, "등록완료");
+            		
+            		
+            		//추가시킨 식단들 삭제
+            		int val = dao.getDeleteList2();
+            		if(val != 0) {
+            			JOptionPane.showMessageDialog(null, "리스트삭제완료");
+            		}else {
+            			JOptionPane.showMessageDialog(null, "리스트삭제실패");
+            		}
+            		
+            		
             	}else {
             		JOptionPane.showMessageDialog(null, "등록 안됐음");
             		
@@ -387,13 +444,25 @@ public class DietUI2 extends JFrame implements ActionListener {
 			}
         		
             	
-            	
+        }else if(ae.getSource() == b_DietBack ) {
+        	ui.flag=false;
+    	    ui.flag2=false;
+    	    
+        	int rowsCount =  j_DIettable.getRowCount();
+        	//추가시킨 식단들 삭제
         	
+        	if(rowsCount>0) {
+        			dao.getDeleteList2();
+        			p_Dietall.setVisible(false);
+    	        	ui.p_Dietall.setVisible(true);
+    	        	//new DietUI();
+    	        	
+        	}
+        	else {
+        		p_Dietall.setVisible(false);
+	        	ui.p_Dietall.setVisible(true);
+        	}
         	
-        }else if(ae.getSource() == b_DietBack) {
-        	p_Dietall.setVisible(false);
-        	ui.p_Dietall.setVisible(true);
-        	//new DietUI();
         }
 			
 	}

@@ -3,12 +3,17 @@ package com.mycom.vo;
 public class DietSaveVO {
 
 	//Field
-	int CNO,DW_NO,DS_SelectKcal,DS_RECOMMEND,DS_RESULTKCAL;
+	int RNO,CNO,DW_NO,DS_SelectKcal,DS_RECOMMEND,DS_RESULTKCAL;
 	String NAME,GENDER,DW_WEIGHT,DW_TARGETWEIGHT,DW_DATE;
-	
 
 	//Constructor
 	//Method
+	public int getRNO() {
+		return RNO;
+	}
+	public void setRNO(int rNO) {
+		RNO = rNO;
+	}
 	public int getCNO() {
 		return CNO;
 	}

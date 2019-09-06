@@ -35,14 +35,14 @@ public class DietUI extends JFrame implements ActionListener {
 	JFrame jf;
 	JPanel p_Dietall, p_Dieta1, p_Dieta2, p_Dieta2_1, p_Dieta2_2, p_Dieta3;
 	
-	JLabel l_Diettitle, l_Dietdate,l_Dietdate2, l_l_Dietdietname,l_l_Dietdietname2, l_Dietsex,l_Dietsex2, l_Dietweight, l_Diettargetweight,
+	JLabel l_Diettitle, l_DietmemNo,l_DietmemNo2, l_l_Dietdietname,l_l_Dietdietname2, l_Dietsex,l_Dietsex2, l_Dietweight, l_Diettargetweight,
 	       l_Dietdietname,l_Dietdl_Dietcalorie,l_DietCl_Dietcalorie,l_DietRl_Dietcalorie,l_Dietcalorie,l_Dietbad,l_Dietgood;
 	
 	JTextArea ta_Dietlist, ta_DietRecord;
 	
 	JTextField tf_DietCno,tf_DietDiet, tf_DWNO,tf_Dietweight, tf_Diettargetweight;
 	
-	JButton b_DietSearch,b_DietWeight , b_DietNext, b_DietReset, b_DietBack;
+	JButton b_DietSearch,b_DietWeight , b_DietNext, b_DietReset, b_ResultDiet;
 	
 	JScrollPane s_Dietscroll;
 
@@ -50,15 +50,19 @@ public class DietUI extends JFrame implements ActionListener {
 	
 	DefaultTableModel d_Dietdt;
 	JTable j_DIettable;
-	StartUI sa;
-	int cno;
+	 boolean flag = false;
+	 boolean flag2 = false;
 	// 스크롤 페널 생성
 	String[] name = {"번호","식품이름","1회제공량(g)",	"열량(kcal)",	"탄수화물(g)","단백질(g)","지방(g)","당류(g)","나트륨(mg)","선택"};
 	public static DietMemberVO mvo = new DietMemberVO(); 
+	public static DietMemberVO mvo2 = new DietMemberVO(); 
+	int cno;
 	
 	//Constructor
 	public DietUI(int cno) {
 		this.cno = cno;
+		
+		
 		
 		jf = new JFrame();
 		p_Dietall = new JPanel();
@@ -96,11 +100,11 @@ public class DietUI extends JFrame implements ActionListener {
 		l_Diettitle = new JLabel("개인일지",JLabel.CENTER);
 		l_Diettitle.setFont(new Font("나눔고딕",Font.BOLD,25));
 		
-		l_Dietdate = new JLabel();
-		l_Dietdate.setFont(new Font("나눔고딕",Font.BOLD,16));
-//		
-//		l_Dietdate2 = new JLabel();
-//		l_Dietdate2.setFont(new Font("나눔고딕",Font.BOLD,16));
+		l_DietmemNo = new JLabel("회원번호 :");
+		l_DietmemNo.setFont(new Font("나눔고딕",Font.BOLD,16));
+		
+		l_DietmemNo2 = new JLabel();
+		l_DietmemNo2.setFont(new Font("나눔고딕",Font.BOLD,16));
 		
 		l_l_Dietdietname = new JLabel("회원  :");
 		l_l_Dietdietname.setFont(new Font("나눔고딕",Font.BOLD,16));
@@ -143,9 +147,9 @@ public class DietUI extends JFrame implements ActionListener {
 //		l_Dietgood = new JLabel("l_Dietgood");
 //		l_Dietgood.setFont(new Font("나눔고딕",Font.BOLD,14));
 //		l_Dietgood.setForeground(Color.GREEN);
-		tf_DietCno = new JTextField(20);
+		//tf_DietCno = new JTextField(20);
 		tf_DietDiet = new JTextField();
-//		jtfl_Dietdate = new JTextField();
+//		jtfl_DietmemNo = new JTextField();
 //		jtfl_l_Dietdietname = new JTextField();
 //		jtfSex = new JTextField();
 		tf_DWNO = new JTextField();
@@ -160,13 +164,13 @@ public class DietUI extends JFrame implements ActionListener {
 		b_DietSearch = new JButton("검색");
 		b_DietNext = new JButton("다음");
 		b_DietReset = new JButton("취소");
-		b_DietBack = new JButton("메인");
+		b_ResultDiet = new JButton("개인 식단");
 		
 		p_Dieta1.setBounds(0,50,980,200);
 		p_Dieta1.setBackground(Color.WHITE);
-		tf_DietCno.setBounds(200,20,100,30);
-		l_Dietdate.setBounds(200,50,100,30);
-//		l_Dietdate2.setBounds(250,50,100,30);
+		//tf_DietCno.setBounds(200,20,100,30);
+		l_DietmemNo.setBounds(200,50,100,30);
+		l_DietmemNo2.setBounds(270,50,100,30);
 		l_l_Dietdietname.setBounds(200,90,100,30);
 		l_l_Dietdietname2.setBounds(250,90,100,30);
 		l_Dietsex.setBounds(200,130,100,30);
@@ -197,11 +201,11 @@ public class DietUI extends JFrame implements ActionListener {
 //		l_Dietgood.setBounds(520,40,200,30);
 		b_DietNext.setBounds(400,60,60,30);
 		b_DietReset.setBounds(480,60,60,30);
-		b_DietBack.setBounds(560,60,60,30);
+		b_ResultDiet.setBounds(560,60,100,30);
 		
-		p_Dieta1.add(tf_DietCno);
-		p_Dieta1.add(l_Dietdate);
-//		p_Dieta1.add(l_Dietdate2);
+		//p_Dieta1.add(tf_DietCno);
+		p_Dieta1.add(l_DietmemNo);
+		p_Dieta1.add(l_DietmemNo2);
 		p_Dieta1.add(l_l_Dietdietname);
 		p_Dieta1.add(l_l_Dietdietname2);
 		p_Dieta1.add(l_Dietsex);
@@ -229,7 +233,7 @@ public class DietUI extends JFrame implements ActionListener {
 //		p_Dieta3.add(l_Dietgood);
 		p_Dieta3.add(b_DietNext);
 		p_Dieta3.add(b_DietReset);
-		p_Dieta3.add(b_DietBack);
+		p_Dieta3.add(b_ResultDiet);
 		p_Dietall.add(p_Dieta3);
 		
 		p_Dieta1.setLayout(null);
@@ -246,21 +250,34 @@ public class DietUI extends JFrame implements ActionListener {
 		
 		//이벤트 등록
 		b_DietWeight.addActionListener(this);
-		tf_DietCno.addActionListener(this);
+		//tf_DietCno.addActionListener(this);
 		b_DietSearch.addActionListener(this);
 		b_DietNext.addActionListener(this);
 		b_DietReset.addActionListener(this);
-		b_DietBack.addActionListener(this);		
+		b_ResultDiet.addActionListener(this);		
 		//b_DietChoice.addActionListener(this);		
 		
 		//모든레코드를 검색하여 DefaultTableModle에 올리기
         system.getList(d_Dietdt);
         tf_DietDiet.requestFocus();
-        l_l_Dietdietname2.setText(Integer.toString(cno));
         //첫번행 선택.
         if (d_Dietdt.getRowCount() > 0) {
             j_DIettable.setRowSelectionInterval(0, 0);
+            
         }
+        
+//  
+      getMember();
+	}
+	
+	public void getMember() {
+		mvo = system.MemberInfo(cno);
+		
+		if(mvo != null) {
+			l_DietmemNo2.setText(Integer.toString(mvo.getCNO()));
+			l_l_Dietdietname2.setText(mvo.getNAME());
+			l_Dietsex2.setText(mvo.getGENDER());
+		}
 	}
 	
 	
@@ -290,6 +307,7 @@ public class DietUI extends JFrame implements ActionListener {
                 
                 if(result != 0) {
                 	JOptionPane.showMessageDialog(null, "등록성공");
+                	flag2 = true;
                 }else {
                 	JOptionPane.showMessageDialog(null, "등록실패");
                 }
@@ -317,45 +335,53 @@ public class DietUI extends JFrame implements ActionListener {
 	}
 	
 	
+
 	
 	
 	
 	//이벤트 처리
 	public void actionPerformed(ActionEvent ae) {
 			Object obj = ae.getSource();
-		if(obj == tf_DietCno) {
-			mvo = system.MemberInfo(Integer.parseInt(tf_DietCno.getText().trim()));
 			
-			if(mvo != null) {
-				l_Dietdate.setText(Integer.toString(mvo.getCNO()));
-				l_l_Dietdietname2.setText(mvo.getNAME());
-				l_Dietsex2.setText(mvo.getGENDER());
-			}
+		 if(obj == b_DietWeight) {
 			
 			
-		}else if(obj == b_DietWeight) {
-			//현재날짜를 String 값으로 만들기
-	        SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
-	        		
-	        Date time = new Date();
-	        		
-	        String time1 = format1.format(time);
-	        
-			DietMemberVO mvo2 = new DietMemberVO();
-			mvo2.setDW_WEIGHT(tf_Dietweight.getText());
-			mvo2.setDW_TARGETWEIGHT(tf_Diettargetweight.getText());
-			mvo2.setDW_DATE(time1);
-			mvo2.setCNO(mvo.getCNO());
-        	
-        	boolean result = system.registWeight(mvo2);
-        	
-        	if(result) {
-        		JOptionPane.showMessageDialog(null, "몸무게 등록");
-        	}else {
-        		JOptionPane.showMessageDialog(null, "몸무게 등록 안됐음");
-        		
+			 if(!tf_Dietweight.getText().equals("")&&!tf_Diettargetweight.getText().equals("")) {
+	        	int w = Integer.parseInt(tf_Dietweight.getText());
+	        	int tw = Integer.parseInt(tf_Diettargetweight.getText());
+	        	if(w<=tw) {
+	        		/**DB에는 저장됨 수정필요**/
+	        		JOptionPane.showMessageDialog(null, "현재 체중보다 목표 체중을 적게 입력하세요");
+	        	}
+	        	else {
+	        		//현재날짜를 String 값으로 만들기
+	    	        SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+	    	        		
+	    	        Date time = new Date();
+	    	        		
+	    	        String time1 = format1.format(time);
+	    	        
+	    			mvo2 = new DietMemberVO();
+	    			mvo2.setDW_WEIGHT(tf_Dietweight.getText().trim());
+	    			mvo2.setDW_TARGETWEIGHT(tf_Diettargetweight.getText().trim());
+	    			mvo2.setDW_DATE(time1);
+	    			mvo2.setCNO(mvo.getCNO());
+	            	
+	            	
+	            	boolean result = system.registWeight(mvo2);
+	            	
+	        		if(result) {
+		        		JOptionPane.showMessageDialog(null, "몸무게 등록");
+		        		flag = true;
+		        	}else {
+		        		JOptionPane.showMessageDialog(null, "몸무게 등록 안됐음");
+		        		
+		        	}
+	        	}
         	}
-            
+			 else {
+				 JOptionPane.showMessageDialog(null, "몸무게를 입력하세요");
+			 }
         }
 		/** 다이어트 식단 검색**/
 		else if(obj == b_DietSearch) {
@@ -366,9 +392,39 @@ public class DietUI extends JFrame implements ActionListener {
             	j_DIettable.setRowSelectionInterval(0, 0);
             
         }else if(obj == b_DietNext) {
-    		p_Dietall.setVisible(false);
-        	new DietUI2(this);
+        	/** 확실한 제약조건 필요**/
+        	System.out.println(flag);
+        	
+        		if(!tf_Dietweight.getText().equals("")&&!tf_Diettargetweight.getText().equals("")) {
+        			//몸무게 등록
+        			if(flag) {
+        				if(flag2) {
+	                		p_Dietall.setVisible(false);
+	                		new DietUI2(this);
+	                		tf_Dietweight.setText("");
+	                		tf_Diettargetweight.setText("");
+        				}
+        				else {
+        					JOptionPane.showMessageDialog(null, "음식을 추가해주세요");
+        				}
+        			}else {
+        				JOptionPane.showMessageDialog(null, "몸무게 등록을 누르세요");
+        			}
+        			
+        		}else {
+        			JOptionPane.showMessageDialog(null, "몸무게를 입력하세요");
+        		}
+        	
+        	
+        } else if(obj == b_ResultDiet) {
+        	p_Dietall.setVisible(false);
+        	new DietUI3(this);
+        	
+        }else if(obj == b_DietReset) {
+        	jf.setVisible(false);
         }
+		
+		
 			
 	}
 	

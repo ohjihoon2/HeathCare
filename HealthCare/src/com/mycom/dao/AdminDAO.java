@@ -9,6 +9,7 @@ import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
 
+
 public class AdminDAO {
 	//Field
 	Connection conn;
@@ -160,6 +161,51 @@ public class AdminDAO {
 			e.printStackTrace();
 		}	
 	}
+//	/** Update **/
+//	public int getResultUpdate(MemberVO vo) {
+//		int result = 0;
+//		String sql = "update member set btitle = ?, bcontent = ? where bno = ?";
+//		getPreparedStatement(sql);
+//		System.out.println(vo.getBtitle());
+//		System.out.println(vo.getBcontent());
+//		System.out.println(vo.getBno());
+//		try {
+//			pstmt.setString(1, vo.getBtitle());
+//			pstmt.setString(2, vo.getBcontent());
+//			pstmt.setInt(3, vo.getBno());
+//			
+//			result = pstmt.executeUpdate();
+//			
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		return result;
+//	}
 	
+	
+	/** Delete **/
+	public int getResultDelete(int bno) {
+		int result = 0;
+		String sql = "delete from si_board where bno = ?";
+		getPreparedStatement(sql);
+		try {
+			pstmt.setInt(1, bno);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/** Á¾·á **/
+	public void close() {
+		try {
+			if(rs != null) rs.close();
+			if(stmt != null) stmt.close();
+			if(conn != null) conn.close();			
+		}catch(Exception e) {e.printStackTrace();}
+	}
 
 }

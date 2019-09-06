@@ -287,9 +287,7 @@ public class AdminUI extends JFrame implements ActionListener{
 			
 		}else if(obj == b_SearchAll) {
 			system.getMember(dtm_Mem);
-		}
-		else if(obj == b_Update) {
-			system.searchData(dtm_Mem, Integer.parseInt(tf_MemCno.getText().trim()));
+		}else if(obj == b_Update) {
 			tf_MemCno.setText("");
 			tf_MemCno.requestFocus();
 			//첫행 선택

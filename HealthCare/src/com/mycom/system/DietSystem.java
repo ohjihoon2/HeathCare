@@ -1,5 +1,7 @@
 package com.mycom.system;
 
+import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
 
 import com.mycom.dao.DietDAO;
@@ -76,5 +78,14 @@ public class DietSystem {
 		
 		return result;
 	}
+	
+	//개인일지 저장 출력
+	public ArrayList<DietSaveVO> getDietList(int cno) {
+		
+		ArrayList<DietSaveVO> list = dao.getResultDiet(cno);
+		
+		
+		return list;
+	}	
 
 }

@@ -23,7 +23,7 @@ public class RegistSystem {
 	public boolean regist(MemberVO vo) {
 		boolean result = false;
 		System.out.println("regist ¿‘º∫");
-		int val= dao.getClientInsert(vo);
+		int val= dao.getMemberInsert(vo);
 		if(val != 0) {
 			
 			System.out.println("sno="+ sno);
@@ -31,8 +31,8 @@ public class RegistSystem {
 		}
 		return result;
 	}
-	public int searchSno() {
-		sno = dao.searchCno();
+	public int searchSno(String name) {
+		sno = dao.searchCno(name);
 		System.out.println("system.searchSno() = " +sno);
 		
 		return sno;

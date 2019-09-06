@@ -38,7 +38,7 @@ public class MainScreenUI implements ActionListener {
 	public MainScreenUI(StartUI startui) {
 		//1.메인 화면 구성
 		this.startui = startui;
-		
+		System.out.println("mainCno"+StartUI.vo.getCno());
 		p_sc_total = new JPanel();
 		
 		p_sc_total.setLayout(new BorderLayout());

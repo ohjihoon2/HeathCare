@@ -203,7 +203,6 @@ public class StartUI extends JFrame implements ActionListener{
 			p_LogMain.setVisible(false); 
 			new RegistUI(this);
 		}else if (obj == b_LogLogin) {
-		
 			//·Î±×ÀÎ
 				login();
 		}else if(obj == b_Log0) {

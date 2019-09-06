@@ -4,10 +4,16 @@ public class MemberVO {
 
 	
 	String  name, gender, address, phone, created_date, birth_date, gx_code, start_date, end_date, gx_validity, bmi, fat, pdf, whr, s_weight;
-	int cno, division, gx_price, gx_count;
+	int cno, division, gx_price, gx_count, gym_price;
 	
 	
 	
+	public int getGym_price() {
+		return gym_price;
+	}
+	public void setGym_price(int gym_price) {
+		this.gym_price = gym_price;
+	}
 	public String getS_weight() {
 		return s_weight;
 	}

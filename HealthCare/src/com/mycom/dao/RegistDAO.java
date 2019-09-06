@@ -19,7 +19,7 @@ public class RegistDAO {
 	String user = "HealthCare";
 	String pass = "1234";
 	
-	int cno;
+	int cno = 0;
 	//Constructor
 	public RegistDAO() {
 		try {
@@ -48,10 +48,10 @@ public class RegistDAO {
 	/**
 	 * 4~5단계 : 데이터 추가 
 	 */
-	public int getClientInsert(MemberVO vo) {
+	public int getMemberInsert(MemberVO vo) {
 		int result =0;
 //		getStatement();
-		String sql = "INSERT INTO member(cno, name, gender, address, phone, division, created_date, birth_date, gx_code, start_date, end_date) VALUES(seq_member.nextval,?,UPPER(?),?,?,1, sysdate,?,?,?,?)";
+		String sql = "INSERT INTO member(cno, name, gender, address, phone, division, created_date, birth_date, gx_code, start_date, end_date, gym_price) VALUES(seq_member.nextval,?,UPPER(?),?,?,1, sysdate,?,?,sysdate, add_months(sysdate,?),?)";
 		getPreparedStatement(sql);
 		System.out.println("3단계 성공~");
 		
@@ -64,8 +64,8 @@ public class RegistDAO {
 			pstmt.setString(4, vo.getPhone());
 			pstmt.setString(5, vo.getBirth_date());
 			pstmt.setString(6, vo.getGx_code());
-			pstmt.setString(7, vo.getStart_date());
-			pstmt.setString(8, vo.getEnd_date());
+			pstmt.setString(7, vo.getEnd_date());
+			pstmt.setInt(8, vo.getGym_price());
 			
 			// api 에는 매게변수가 없는데 오류가 안뜨는이유 
 			// result = pstmt.executeUpdate(sql); 는 statement 를 상속하기 때문에 매개변수 sql을 넣어도 오류가 뜨지 않음. 하지만 틀린구문이다.
@@ -79,16 +79,24 @@ public class RegistDAO {
 	}
 	
 	/** 4~5 단계 : 로그인 정보 vo에 값 넣기 **/
-	public int searchCno() {
-		
-		String sql = "SELECT * FROM(select cno, name ,rank() over(order by created_date desc) AS RK from member) WHERE RK =1";
+	public int searchCno(String name) {
+		/**
+		 *  SELECT CNO 
+			FROM (SELECT CNO FROM MEMBER
+			WHERE NAME='?' 
+			ORDER BY CREATED_DATE DESC)
+			WHERE ROWNUM=1;
+		 * 
+		 */
+		String sql = "SELECT cno FROM (select cno, name ,rank() over(PARTITION BY NAME order by created_date desc) AS RK from member) WHERE RK =1 AND NAME =?";
 		getPreparedStatement(sql);	//3단계 호출
 		
 		try {
+			pstmt.setString(1, name);
 			rs = pstmt.executeQuery();
-			cno = 0;
 			if(rs.next()) {			
 				cno = rs.getInt(1);
+				System.out.println("dao.cno = "+cno);
 			}
 		}catch(Exception e) {		
 			e.printStackTrace();
