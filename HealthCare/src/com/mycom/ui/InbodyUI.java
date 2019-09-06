@@ -35,11 +35,11 @@ public class InbodyUI extends JFrame implements ActionListener {
 	StartUI startui;
 	JFrame jf;
 	JPanel p_InbMain, p_InbCb, p_InbMain_img;
-	JLabel l_InbMsg, l_InbCb, l_InbBmi_height, l_InbBmi_weight, l_InbPbf_bodyfat, l_InbPbf_weight, l_InbWhr_waist,
+	JLabel l_InbMsg, l_InbCb, l_InbBmi_height, l_InbBmi_weight, l_InbPbf_bodyfat, l_InbWhr_waist,
 	l_InbWhr_butt, l_InbReBMI, l_InbReWe, l_InbRePBF, l_InbReFat, l_InbReWHR;
 	TextField tf_InbBmi_height, tf_InbBmi_weight, tf_InbPbf_bodyfat,  tf_InbPbf_weight, tf_InbWhr_waist, tf_InbWhr_butt;
 	JRadioButton cb_InbM, cb_InbW;
-	JButton b_InbEnter, b_InbSave, b_InbReg, b_InbMain;
+	JButton b_InbEnter, b_InbSave, b_InbMain;
 	ImageIcon icon;
 	double height, weight, BMI, bweight, FAT, PBF, WHR, waist, butt, S_weight;
 	Vector age;
@@ -49,14 +49,13 @@ public class InbodyUI extends JFrame implements ActionListener {
 	InbodySystem system;
 	InbodyDAO dao;
 	InbodyVO ivo;
-	
-	
+	JRadioButton[] gender = new JRadioButton[2];
+
 	// UI 구성
 	public InbodyUI(MainScreenUI mainui,StartUI startui) {
-		
-//		dao = new InbodyDAO();
+
 		system = new InbodySystem();
-		
+
 		this.mainui = mainui;
 		this.startui = startui;
 
@@ -65,14 +64,15 @@ public class InbodyUI extends JFrame implements ActionListener {
 
 		p_InbMain = new JPanel() {
 			public void paintComponent(Graphics g) {
-				
-				// 이미지 전체 사이즈
-				Dimension d = getSize();
-				g.drawImage(icon.getImage(), 0, 0, d.width, d.height, null);
 
-				setOpaque(false); 
+			// 이미지 전체 사이즈
+			Dimension d = getSize();
+			g.drawImage(icon.getImage(), 0, 0, d.width, d.height, null);
 
-				super.paintComponent(g);
+			setOpaque(false); 
+
+			super.paintComponent(g);
+			
 			}
 		};
 
@@ -84,12 +84,12 @@ public class InbodyUI extends JFrame implements ActionListener {
 
 		l_InbMsg = new JLabel("*** 신체정보를 입력하시고 아래의 체크버튼을 누르세요 ***");
 		l_InbMsg.setFont(new Font("나눔고딕", Font.BOLD, 16));
-		
+
 		/////////////////// 체크박스////////////////////////
 
 		p_InbCb = new JPanel();
 		cb_InbM = new JRadioButton("남자");
-		cb_InbW = new JRadioButton("여자");
+		cb_InbW = new JRadioButton("여자");		
 
 		age=new Vector();
 		age.add("연령");
@@ -103,24 +103,22 @@ public class InbodyUI extends JFrame implements ActionListener {
 
 
 		ButtonGroup group = new ButtonGroup();
+		gender[0] = new JRadioButton("남자");
+		gender[1] = new JRadioButton("여자");
+		group.add(gender[0]);
+		group.add(gender[1]);
+
+		if(StartUI.vo.getGender().equals("M")) {
+			cb_InbM.setSelected(true);
+		}else if(StartUI.vo.getGender().equals("F")) {
+			cb_InbW.setSelected(true);
+		}
+
 		group.add(cb_InbM);
 		group.add(cb_InbW);
 
-		Enumeration<AbstractButton> enums = group.getElements();
 
-		
-		int gibonCode = 0;
 
-		while(enums.hasMoreElements()) {
-			AbstractButton ab = enums.nextElement();
-			JRadioButton jb = (JRadioButton)ab;
-
-			if(jb.isSelected())	  
-				gibonCode = Integer.parseInt(jb.getText().trim());
-
-		}
-		
-		
 		/**
 		 * 오른쪽
 		 **/
@@ -128,7 +126,6 @@ public class InbodyUI extends JFrame implements ActionListener {
 		a_InbRe = new JTextArea();
 		a_InbRe.setFont(new Font("나눔고딕",Font.BOLD,17));
 		a_InbRe.append(" ====== 인바디 검사 결과 ====== \n");
-
 
 		//////////////// BMI 측정 ///////////////////////
 		l_InbBmi_height = new JLabel("키(cm) :");
@@ -142,8 +139,6 @@ public class InbodyUI extends JFrame implements ActionListener {
 		///////////////// 체지방률 /////////////////////////
 		l_InbPbf_bodyfat = new JLabel("체지방(kg) :");
 		l_InbPbf_bodyfat.setFont(new Font("나눔고딕", Font.BOLD, 16));
-		l_InbPbf_weight = new JLabel("몸무게(kg) :");
-		l_InbPbf_weight.setFont(new Font("나눔고딕", Font.BOLD, 15));
 
 		tf_InbPbf_bodyfat = new TextField();
 		tf_InbPbf_weight = new TextField();
@@ -160,7 +155,6 @@ public class InbodyUI extends JFrame implements ActionListener {
 		/////////////// 체크, 다시입력 버튼 /////////////////////
 		b_InbEnter = new JButton("체크");
 		b_InbSave = new JButton("저장");
-		b_InbReg = new JButton("출력");
 		b_InbMain = new JButton("메인");
 
 
@@ -180,21 +174,17 @@ public class InbodyUI extends JFrame implements ActionListener {
 		tf_InbBmi_height.setBounds(220, 200, 50, 30);
 		tf_InbBmi_weight.setBounds(440, 200, 50, 30);
 
-		l_InbPbf_bodyfat.setBounds(130, 270, 90, 50);
-		l_InbPbf_weight.setBounds(350, 290, 80, 15);
-		tf_InbPbf_bodyfat.setBounds(220, 280, 50, 30);
-		tf_InbPbf_weight.setBounds(440, 280, 50, 30);
+		l_InbWhr_waist.setBounds(110, 290, 110, 25);
+		l_InbWhr_butt.setBounds(310, 290, 130, 25);
+		tf_InbWhr_waist.setBounds(220, 290, 50, 30);
+		tf_InbWhr_butt.setBounds(440, 290, 50, 30);
 
-		l_InbWhr_waist.setBounds(110, 370, 110, 25);
-		l_InbWhr_butt.setBounds(310, 370, 130, 25);
-		tf_InbWhr_waist.setBounds(220, 370, 50, 30);
-		tf_InbWhr_butt.setBounds(440, 370, 50, 30);
+		l_InbPbf_bodyfat.setBounds(130, 360, 90, 50);
+		tf_InbPbf_bodyfat.setBounds(220, 370, 50, 30);
 
-		b_InbEnter.setBounds(180, 450, 60, 25);
-		b_InbSave.setBounds(250, 450, 60, 25);
-		b_InbReg.setBounds(320,450,60,25);
-		b_InbMain.setBounds(390, 450, 60, 25);
-
+		b_InbEnter.setBounds(220, 450, 60, 25);
+		b_InbSave.setBounds(290, 450, 60, 25);
+		b_InbMain.setBounds(360, 450, 60, 25);
 
 		a_InbRe.setBounds(600, 200, 280, 210);
 		a_InbRe.setBackground(Color.WHITE);
@@ -213,7 +203,6 @@ public class InbodyUI extends JFrame implements ActionListener {
 		p_InbMain.add(tf_InbBmi_weight);
 
 		p_InbMain.add(l_InbPbf_bodyfat);
-		p_InbMain.add(l_InbPbf_weight);
 		p_InbMain.add(tf_InbPbf_bodyfat);
 		p_InbMain.add(tf_InbPbf_weight);
 
@@ -224,18 +213,14 @@ public class InbodyUI extends JFrame implements ActionListener {
 
 		p_InbMain.add(b_InbEnter);
 		p_InbMain.add(b_InbSave);
-		p_InbMain.add(b_InbReg);
 		p_InbMain.add(b_InbMain);
 
 		p_InbMain.add(a_InbRe);
 
-
 		// 이벤트 핸들러 정의
 		b_InbEnter.addActionListener(this);
 		b_InbSave.addActionListener(this);
-		b_InbReg.addActionListener(this);
 		b_InbMain.addActionListener(this);
-		
 
 		p_InbMain.setSize(1000, 600);
 		p_InbMain.setVisible(true);
@@ -256,76 +241,75 @@ public class InbodyUI extends JFrame implements ActionListener {
 	/**이벤트 처리**/
 	public void actionPerformed(ActionEvent ae) {
 		Object obj = ae.getSource();
-		
+
 		if(obj == b_InbSave) {
-					
-//			StartUI.vo.setBmi(String.valueOf(StartUI.vo.getBmi()));
-//			StartUI.vo.setS_weight(String.valueOf(StartUI.vo.getS_weight()));
-//			StartUI.vo.setFat(String.valueOf(StartUI.vo.getFat()));
-//			StartUI.vo.setPdf(String.valueOf(StartUI.vo.getPdf()));
-//			StartUI.vo.setWhr(String.valueOf(StartUI.vo.getWhr()));
-//			
+
+			StartUI.vo.setBmi(String.valueOf(StartUI.vo.getBmi()));
+			StartUI.vo.setS_weight(String.valueOf(StartUI.vo.getS_weight()));
+			StartUI.vo.setFat(String.valueOf(StartUI.vo.getFat()));
+			StartUI.vo.setPbf(String.valueOf(StartUI.vo.getPbf()));
+			StartUI.vo.setWhr(String.valueOf(StartUI.vo.getWhr()));
+
 			ivo = new InbodyVO();
-//			
+
 			System.out.println("bmi = "+BMI);
 			System.out.println("S_weight = "+S_weight);
-			
+
 			ivo.setBMI(String.valueOf(BMI));
 			ivo.setS_weight(String.valueOf(S_weight));
 			ivo.setFAT(String.valueOf(FAT));
 			ivo.setPBF(String.valueOf(PBF));			
 			ivo.setWHR(String.valueOf(WHR));	
-////			StartUI.vo.set
-			
-//			System.out.println("vo2222;;;" + ivo);
+
+
+			//			System.out.println("vo2222;;;" + ivo);
 			int result = system.getResultUpdate(ivo, StartUI.vo.getCno());
-			
+
 			if(result != 0) {
 				JOptionPane.showMessageDialog(null, "저장");
 			}else {
 				JOptionPane.showMessageDialog(null, "저장실패");
 			}
 		}
-		
-				//////////////////// BMI 계산////////////////////////////////////
-				String s = ae.getActionCommand();
-	
-				if (s.equals("체크")) {
-	
-				if(!tf_InbBmi_height.getText().equals("") && !tf_InbBmi_height.getText().equals(null)) {
-	
-					// 문자형인 키값을 int형으로 바꿈
-					height = Double.valueOf(tf_InbBmi_height.getText()).doubleValue();
-	
-					// 표준체중계산    		  
-					S_weight =Math.round(height - 100) * 0.9;
-	
-					// 키값을 cm인 키를 m로 바꿈
-					height = height / 100;
-					weight = Double.valueOf(tf_InbBmi_weight.getText()).doubleValue();
-	
-					// BMI 계산
-					BMI = Math.round(weight / (height * height));
-	
-					// 비만도 계산 
-					FAT = BMI;
-	
-	
-					if (FAT < 20.0) {
-						Fat_Result = "저체중";    	        	 
-					}else if (20.0 <= FAT && FAT < 25.0) {
-						Fat_Result = "정상";
-					}else if (25.0 <= FAT && FAT < 30.0) {
-						Fat_Result = "과체중";
-					}else if (FAT <= 30.0) {
-						Fat_Result = "비만";
-					}
-	
+
+		//////////////////// BMI 계산////////////////////////////////////
+		String s = ae.getActionCommand();
+
+		if (s.equals("체크")) {
+
+			if(!tf_InbBmi_height.getText().equals("") && !tf_InbBmi_height.getText().equals(null)) {
+
+				// 문자형인 키값을 int형으로 바꿈
+				height = Double.valueOf(tf_InbBmi_height.getText()).doubleValue();
+
+				// 표준체중계산    		  
+				S_weight =Math.round(height - 100) * 0.9;
+
+				// 키값을 cm인 키를 m로 바꿈
+				height = height / 100;
+				weight = Double.valueOf(tf_InbBmi_weight.getText()).doubleValue();
+
+				// BMI 계산
+				BMI = Math.round(weight / (height * height));
+
+				// 비만도 계산 
+				FAT = BMI;
+
+				if (FAT < 20.0) {
+					Fat_Result = "저체중";    	        	 
+				}else if (20.0 <= FAT && FAT < 25.0) {
+					Fat_Result = "정상";
+				}else if (25.0 <= FAT && FAT < 30.0) {
+					Fat_Result = "과체중";
+				}else if (FAT <= 30.0) {
+					Fat_Result = "비만";
+				}
+
 
 				/////////////////////////// 체지방률 계산/////////////////////////////////////    
 				// 계산법 : 체지방(kg) / 체중(kg) X 100%
 
-				weight = Double.valueOf(tf_InbPbf_weight.getText()).doubleValue();
+				weight = Double.valueOf(tf_InbBmi_weight.getText()).doubleValue();
 				bweight = Double.valueOf(tf_InbPbf_bodyfat.getText()).doubleValue();
 
 				PBF = Math.round((bweight / weight) * 100); 
@@ -361,6 +345,7 @@ public class InbodyUI extends JFrame implements ActionListener {
 						else if(25.6<=PBF&& PBF<=29.7) result = "보통";
 						else if(PBF>=29.8) result = "나쁨";
 					}
+				
 				}
 
 				if(cb_InbW.isSelected()) {
@@ -395,9 +380,7 @@ public class InbodyUI extends JFrame implements ActionListener {
 						else if(PBF>38) result = "나쁨";
 					}
 
-
 				}
-
 
 				/////////////// 복부지방률 계산 /////////////////////////////////////////////////////
 				// 복부지방률 (Waist-Hip Ratio) - 복부에 있는 지방의 비율 (엉덩이 둘레와 허리둘레의 비율)
@@ -406,14 +389,14 @@ public class InbodyUI extends JFrame implements ActionListener {
 				if (s.equals("체크")) {
 					waist = Double.valueOf(tf_InbWhr_waist.getText()).doubleValue();
 					butt = Double.valueOf(tf_InbWhr_butt.getText()).doubleValue();
-					
+
 					System.out.println("waist;;;" + waist);
 					System.out.println("butt;;;" + butt);
 					double a =  waist / butt;
 					WHR = Math.round(a*100d)/100d;
-					
+
 					System.out.println("WHR;;;" + WHR);
-					
+
 					if(cb_InbM.isSelected()) {
 						if(0.86<=WHR && WHR<=0.99) result2 = "정상범위";
 						else if(WHR>=1.0) result2 = "복부비만";
@@ -430,7 +413,7 @@ public class InbodyUI extends JFrame implements ActionListener {
 				a_InbRe.setText(" ====== 인바디 검사 결과 ====== \n\n"+ "  BMI : " + BMI+"\n"+ "  표준체중 : "+  S_weight + "\n" 
 						+ "  비만도 : " + Fat_Result+"\n"+"  체지방률 : " +PBF+" "+ result + "\n" +"  복부지방률 : " +WHR +" "+ result2 );
 
-				
+
 			}else {
 				a_InbRe.setText("신체 정보를 입력하세요 ^^");
 			}
@@ -440,7 +423,7 @@ public class InbodyUI extends JFrame implements ActionListener {
 			mainui.p_sc_total.setVisible(true);
 		} 
 
-     
+
 	}   
 }
 
