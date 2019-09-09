@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -16,32 +17,36 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import com.mycom.dao.LectureDAO;
 import com.mycom.system.LectureSystem;
 import com.mycom.vo.LectureVO;
 
-
-public class LectureUI extends JFrame implements ActionListener{
-	
+public class LectureUI implements ActionListener{	
     //field
 	MainScreenUI mainui;
-	StartUI startui;
-	JFrame jf;
+	StartUI startui;	
+	LectureSystem system = new LectureSystem();
 	
-	
-    JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_right, p_gx_btn, p_gx_cno,
-    		p_gx_info, p_gx_cname, p_gx_gxname, p_gx_count, p_gx_validity, p_gx_blank;
+    JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_table, p_gx_picture, p_picture, p_button, p_gx_right, p_gx_btn, p_gx_cno,
+    		p_gx_info, p_gx_cname, p_gx_gxname, p_gx_count, p_gx_validity, p_gx_blank1, p_gx_blank2;
     JLabel l_gx_cno, l_gx_info, l_gx_cname, l_gx_gxname, l_gx_count, l_gx_validity;
     JButton b_gx_regist, b_back;
+    JTable table;
+    JScrollPane js;
+    ArrayList<LectureVO> list;
+    DefaultTableModel jmodel= null;
     JTextField jtf_gx_cno, jtf_gx_cname, jtf_gx_gxname, jtf_gx_validity;
     static JTextField jtf_gx_count;
    
-    ImageIcon ic_gx_uimg, ic_gx_topimg;
-    JLabel ic_gx_uimgBox, ic_gx_topimgBox;
- //, l_gx_uname , jtf_gx_uname
+    ImageIcon ic_gx_topimg, ic_gx_yoga, ic_gx_zumba, ic_gx_spinning, ic_gx_yoga1, ic_gx_zumba1, ic_gx_spinning1;
+    JLabel ic_gx_yogaBox, ic_gx_zumbaBox, ic_gx_spinningBox, ic_gx_topimgBox;
+
    
     
     //constructor
@@ -49,23 +54,52 @@ public class LectureUI extends JFrame implements ActionListener{
     	this.mainui = mainui;
     	this.startui = startui;
     	
+    	//GX_table
+    	list = system.uplistVO();
+		
+		Vector<String> columnList = new Vector<String>();
+		columnList.add("GX코드");
+		columnList.add("GX이름");
+		columnList.add("GX가격(회당)");
+		
+		jmodel = new DefaultTableModel(columnList,0);
+		for(LectureVO vo: list) {
+			Vector<String> v = new Vector<String>();
+			v.add(vo.getGx_code());
+			v.add(vo.getGx_name());
+			v.add(String.valueOf(vo.getGx_price()));
+			
+			jmodel.addRow(v);  
+		}	
+    	
         p_gx_main = new JPanel();
         p_gx_main.setLayout(new BorderLayout());
-        p_gx_top = new JPanel();    
+        p_gx_top = new JPanel();          
         p_gx_main2 = new JPanel(new GridLayout(1,2));
-        p_gx_left = new JPanel(new GridLayout(2,1));
-        p_gx_cno = new JPanel();
-        p_gx_right = new JPanel();
-        p_gx_btn = new JPanel();
+           
+        p_gx_left = new JPanel(new GridLayout(7,1));
         p_gx_info = new JPanel();
+        p_gx_cno = new JPanel();
         p_gx_cname = new JPanel();
         p_gx_gxname = new JPanel();
         p_gx_count = new JPanel();
         p_gx_validity = new JPanel();
-        p_gx_blank = new JPanel();
+        p_gx_blank1 = new JPanel();
+        p_gx_blank2 = new JPanel();
+
+        p_gx_btn = new JPanel();
         
+        p_gx_right = new JPanel(new GridLayout(2,1));
+        p_gx_table = new JPanel(new GridLayout(2,1));
+        table = new JTable(jmodel); 
+        js = new JScrollPane(table);
+        p_gx_picture = new JPanel(new GridLayout(2,1));
+        p_picture = new JPanel();
+        p_button = new JPanel();
+       //new GridLayout(1,3)
         
         l_gx_info = new JLabel("[  수 강  정 보  ]") ;
+        l_gx_info.setFont(new Font("돋움", Font.BOLD, 20));
         l_gx_cno = new JLabel("회원번호 ");
         jtf_gx_cno = new JTextField(20);
         l_gx_cname = new JLabel("회원이름 ");
@@ -79,47 +113,72 @@ public class LectureUI extends JFrame implements ActionListener{
         b_gx_regist = new JButton("수강 신청");
         b_back = new JButton("돌아가기");
              
-        l_gx_cno.setBackground(Color.black);
-        l_gx_cno.setFont(new Font("돋움", Font.BOLD, 50));
-        l_gx_info.setFont(new Font("돋움", Font.BOLD, 20));
         
-        ic_gx_topimg = new ImageIcon("image/top.png");
-        ic_gx_topimgBox = new JLabel(ic_gx_topimg);
+        ic_gx_topimg = new ImageIcon("image/gymlabel.png");
+        ic_gx_topimgBox = new JLabel(ic_gx_topimg);        
+//      ImageIcon img_icon = new ImageIcon(path);
+//		Image img1 = img_icon.getImage();
+//		Image img2 = img1.getScaledInstance(80, 55, Image.SCALE_DEFAULT);
+//		ImageIcon img_icon2 = new ImageIcon(img2);
         
         
-        ic_gx_uimg = new ImageIcon("image/회원.png");
-        ic_gx_uimgBox = new JLabel(ic_gx_uimg);
+        ic_gx_yoga = new ImageIcon("image/yoga.jpg");
+        Image img1 = ic_gx_yoga.getImage();
+        Image yoga = img1.getScaledInstance(140,110, Image.SCALE_DEFAULT);
+        ic_gx_yoga1 = new ImageIcon(yoga);
+        ic_gx_yogaBox = new JLabel(ic_gx_yoga1);
+        
+        ic_gx_zumba = new ImageIcon("image/zumba.jpg");
+        Image img2 = ic_gx_zumba.getImage();
+        Image zumba = img2.getScaledInstance(140,110, Image.SCALE_DEFAULT);
+        ic_gx_zumba1 = new ImageIcon(zumba);
+        ic_gx_zumbaBox = new JLabel(ic_gx_zumba1);
+        
+        ic_gx_spinning = new ImageIcon("image/spinning.PNG");
+        Image img3 = ic_gx_spinning.getImage();
+        Image spinning = img3.getScaledInstance(140,110, Image.SCALE_DEFAULT);
+        ic_gx_spinning1 = new ImageIcon(spinning);
+        ic_gx_spinningBox = new JLabel(ic_gx_spinning1);
 
-       
+        
         p_gx_main.add("North", p_gx_top);
         p_gx_main.add("Center", p_gx_main2);
         
         
+        
         p_gx_top.add(ic_gx_topimgBox);
         p_gx_main2.add(p_gx_left); p_gx_main2.add(p_gx_right);
-        p_gx_cno.add(l_gx_cno);  p_gx_cno.add(jtf_gx_cno);
-        p_gx_left.add(p_gx_cno);  
-        p_gx_left.add(ic_gx_uimgBox);
-   
+        
         p_gx_info.add(l_gx_info);
+        p_gx_cno.add(l_gx_cno);  p_gx_cno.add(jtf_gx_cno);
         p_gx_cname.add(l_gx_cname); p_gx_cname.add(jtf_gx_cname);
         p_gx_gxname.add(l_gx_gxname); p_gx_gxname.add(jtf_gx_gxname);
         p_gx_count.add(l_gx_count); p_gx_count.add(jtf_gx_count);
         p_gx_validity.add(l_gx_validity); p_gx_validity.add(jtf_gx_validity);
         
-        p_gx_right.setLayout(new GridLayout(7,1));      
-        p_gx_right.add(p_gx_blank);
-        p_gx_right.add(p_gx_info); p_gx_right.add(p_gx_cname); p_gx_right.add(p_gx_gxname);
-        p_gx_right.add(p_gx_count); p_gx_right.add(p_gx_validity);
-        p_gx_right.add(p_gx_btn, BorderLayout.SOUTH);
-        p_gx_btn.add(b_gx_regist);
-        p_gx_btn.add(b_back);
+        p_gx_left.add(p_gx_blank1);
+        p_gx_left.add(p_gx_info);
+        p_gx_left.add(p_gx_cno); p_gx_left.add(p_gx_cname); p_gx_left.add(p_gx_gxname);
+        p_gx_left.add(p_gx_count); p_gx_left.add(p_gx_validity);
+        
+        p_gx_right.add(p_gx_table);        
+        p_gx_table.add(p_gx_blank2); 
+        p_gx_table.add(js);
+        p_gx_right.add(p_gx_picture);
+        p_gx_picture.add(p_picture); p_gx_picture.add(p_button);
+        p_picture.add(ic_gx_yogaBox);
+        p_picture.add(ic_gx_zumbaBox);
+        p_picture.add(ic_gx_spinningBox);
+        p_button.add(p_gx_btn, BorderLayout.SOUTH);
+        
+        p_gx_btn.add(b_gx_regist);  p_gx_btn.add(b_back);
         
         p_gx_main.setSize(1000,600);
         p_gx_main.setVisible(true);
         
-        startui.jf.getContentPane().add(p_gx_main, BorderLayout.CENTER);
+        startui.jf.getContentPane().add(p_gx_main);
         
+        //이벤트 처리
         b_gx_regist.addActionListener(this);
         b_back.addActionListener(this);  
         

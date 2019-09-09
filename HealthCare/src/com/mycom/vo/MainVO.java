@@ -4,11 +4,42 @@ public class MainVO {
 	//field
 	int cno, gx_count, gx_price;
 	String name, start_date, end_date, gx_code;	
+	double bmi,fat,pbf,whr,s_weight;
 	
 	//method
 	
 	public int getCno() {
 		return cno;
+	}
+	public double getBmi() {
+		return bmi;
+	}
+	public void setBmi(double bmi) {
+		this.bmi = bmi;
+	}
+	public double getFat() {
+		return fat;
+	}
+	public void setFat(double fat) {
+		this.fat = fat;
+	}
+	public double getPbf() {
+		return pbf;
+	}
+	public void setPbf(double pbf) {
+		this.pbf = pbf;
+	}
+	public double getWhr() {
+		return whr;
+	}
+	public void setWhr(double whr) {
+		this.whr = whr;
+	}
+	public double getS_weight() {
+		return s_weight;
+	}
+	public void setS_weight(double s_weight) {
+		this.s_weight = s_weight;
 	}
 	public int getGx_price() {
 		return gx_price;

@@ -15,7 +15,7 @@ public class RegistDAO {
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
-	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
+	String url = "jdbc:oracle:thin:@211.63.89.226:1521";
 	String user = "HealthCare";
 	String pass = "1234";
 	

@@ -14,7 +14,8 @@ public class LectureDAO {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	
-	String url = "jdbc:oracle:thin:@127.0.0.1:1521";
+	//String url = "jdbc:oracle:thin:@127.0.0.1:1521";
+	String url = "jdbc:oracle:thin:@211.63.89.226:1521";
 	String user = "HealthCare";
 	String pass = "1234";
 	
@@ -69,31 +70,11 @@ public class LectureDAO {
 	}
 
 	
-//	//data insert
-//	public int getResultInsert(LectureVO vo) {
-//		int result = 0;
-//		
-//		String sql = "insert into lecture values(?,?,?,add_month(sysdate,6),?)";
-//		getPreparedStatement(sql);
-//		
-//		try {
-//			pstmt.setInt(1, vo.getCno());
-//			pstmt.setString(2, vo.getEvent_name());
-//			pstmt.setInt(3, vo.getCount());
-//			pstmt.setString(4,  vo.getName());
-//			
-//			result = pstmt.executeUpdate();
-//			
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		return result;
-//	}
+	
 	//수강리스트 출력
 	public ArrayList<LectureVO> getGXList() {
 		ArrayList<LectureVO> list = new ArrayList<LectureVO>();
-		String sql="select gx_code, gx_name, gx_price from lecture";
+		String sql="select gx_code, gx_name, gx_price from lecture where gx_code<>100";
 		getPreparedStatement(sql);	
 		
 		try {
@@ -125,7 +106,6 @@ public class LectureDAO {
 			pstmt.setString(1, vo.getGx_code());
 			pstmt.setInt(2, vo.getGx_count());
 			pstmt.setInt(3, vo.getGx_totprice());
-//			pstmt.setString(4, vo.getGx_validity());
 			pstmt.setInt(4, vo.getCno());
 			
 			result = pstmt.executeUpdate();
