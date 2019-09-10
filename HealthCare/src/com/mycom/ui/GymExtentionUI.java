@@ -1,6 +1,7 @@
 package com.mycom.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -92,10 +93,12 @@ public class GymExtentionUI implements ActionListener {
 
 
 		btn_extention = new JButton("연장 신청");
+		btn_extention.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 		btn_back = new JButton("돌아가기");
+		btn_back.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 		jtf_checkprice = new JTextField(30);
 		jtf_checkdate = new JTextField(30);
-		
+				
 		p_main.add(p_top);p_main.add(p_table);p_main.add(p_price);
 		p_price.add(p_checkdate); p_price.add(p_checkprice); p_price.add(p_extention);
 		p_top.add(p_blank); p_top.add(p_title);
@@ -103,6 +106,7 @@ public class GymExtentionUI implements ActionListener {
 		
 		table = new JTable(model);
 		js = new JScrollPane(table);
+		table.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 		table.getColumnModel().getColumn(4).setCellRenderer(new TableCell());
 	        //table에서 column을 불러온 뒤 셀의 속성을 설정해준다
 		table.getColumnModel().getColumn(4).setCellEditor(new TableCell());
@@ -120,6 +124,7 @@ public class GymExtentionUI implements ActionListener {
 		p_extention.add(btn_back, BorderLayout.SOUTH);	
 		
 		startui.jf.getContentPane().add(p_main, BorderLayout.CENTER);
+		startui.jf.getContentPane().setBackground(Color.WHITE);
 		p_main.setSize(1000,600);
 		p_main.setVisible(true);
                 	

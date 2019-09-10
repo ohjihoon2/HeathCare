@@ -45,8 +45,9 @@ public class LectureDAO {
 	//회원vo리스트
 	public LectureVO getResultVO(int cno) {
 		LectureVO vo = new LectureVO();		
-		String sql= "select cno, name, gx_name, m.gx_count, m.gx_price, to_char(gx_validity,'yyyy-mm-dd')" + 
-				" from member m, lecture l where m.gx_code=l.gx_code and cno=?";
+		String sql= "select cno, name, l.gx_name, gx_count, m.gx_price, to_char(gx_validity,'yyyy-mm-dd')"
+				+ " from member m, lecture l "
+				+ " where m.gx_code=l.gx_code and cno=?";
 		getPreparedStatement(sql);
 		
 		try {
@@ -56,7 +57,7 @@ public class LectureDAO {
 			if(rs.next()) {
 				vo.setCno(rs.getInt(1));
 				vo.setCname(rs.getString(2));
-				vo.setGx_code(rs.getString(3));
+				vo.setGx_code(rs.getString(3));			
 				vo.setGx_count(rs.getInt(4));
 				vo.setGx_price(rs.getInt(5));
 				vo.setGx_validity(rs.getString(6));
@@ -99,7 +100,7 @@ public class LectureDAO {
 	//data Update
 	public int getResultUpdate(LectureVO vo) {
 		int result = 0;
-		String sql = "update member set gx_code=?, gx_count=?, gx_price=?, gx_validity=add_months(sysdate,6) where cno=?";		
+		String sql = "update member set gx_code=?, gx_count=nvl(gx_count,0)+?, gx_price=nvl(gx_price,0)+?, gx_validity=add_months(sysdate,6) where cno=?";		
 		getPreparedStatement(sql);
 		
 		try {

@@ -47,7 +47,7 @@ public class LectureUI implements ActionListener{
     ImageIcon ic_gx_topimg, ic_gx_yoga, ic_gx_zumba, ic_gx_spinning, ic_gx_yoga1, ic_gx_zumba1, ic_gx_spinning1;
     JLabel ic_gx_yogaBox, ic_gx_zumbaBox, ic_gx_spinningBox, ic_gx_topimgBox;
 
-   
+ 
     
     //constructor
     public LectureUI(MainScreenUI mainui, StartUI startui) {
@@ -93,6 +93,7 @@ public class LectureUI implements ActionListener{
         p_gx_table = new JPanel(new GridLayout(2,1));
         table = new JTable(jmodel); 
         js = new JScrollPane(table);
+        table.setBackground(Color.WHITE);
         p_gx_picture = new JPanel(new GridLayout(2,1));
         p_picture = new JPanel();
         p_button = new JPanel();
@@ -100,19 +101,20 @@ public class LectureUI implements ActionListener{
         
         l_gx_info = new JLabel("[  수 강  정 보  ]") ;
         l_gx_info.setFont(new Font("돋움", Font.BOLD, 20));
-        l_gx_cno = new JLabel("회원번호 ");
-        jtf_gx_cno = new JTextField(20);
-        l_gx_cname = new JLabel("회원이름 ");
-        jtf_gx_cname = new JTextField(20);
-        l_gx_gxname = new JLabel("수강명");
-        jtf_gx_gxname = new JTextField(30);
-        l_gx_count = new JLabel("남은 수강 횟수");
-        jtf_gx_count = new JTextField(30);
+        l_gx_cno = new JLabel("회원 번호 ");
+        jtf_gx_cno = new JTextField(10);
+        l_gx_cname = new JLabel("회원 이름 ");
+        jtf_gx_cname = new JTextField(10);
+        l_gx_gxname = new JLabel("수강 이름");
+        jtf_gx_gxname = new JTextField(10);
+        l_gx_count = new JLabel("남은 횟수");
+        jtf_gx_count = new JTextField(10);
         l_gx_validity = new JLabel("유효 기간");
-        jtf_gx_validity = new JTextField(30);
+        jtf_gx_validity = new JTextField(10);
         b_gx_regist = new JButton("수강 신청");
+        b_gx_regist.setBackground(Color.getHSBColor(0.8f, 0.09f, 0.9f));
         b_back = new JButton("돌아가기");
-             
+        b_back.setBackground(Color.getHSBColor(0.8f, 0.09f, 0.9f));     
         
         ic_gx_topimg = new ImageIcon("image/gymlabel.png");
         ic_gx_topimgBox = new JLabel(ic_gx_topimg);        
@@ -177,6 +179,7 @@ public class LectureUI implements ActionListener{
         p_gx_main.setVisible(true);
         
         startui.jf.getContentPane().add(p_gx_main);
+        startui.jf.setBackground(Color.WHITE);
         
         //이벤트 처리
         b_gx_regist.addActionListener(this);
@@ -190,7 +193,7 @@ public class LectureUI implements ActionListener{
         if(vo != null) {
         	jtf_gx_cno.setText(String.valueOf(vo.getCno()));
         	jtf_gx_cname.setText(vo.getCname());
-        	jtf_gx_gxname.setText(vo.getGx_code());
+        	jtf_gx_gxname.setText(vo.getGx_code());      	
         	jtf_gx_count.setText(String.valueOf(vo.getGx_count()));
         	jtf_gx_validity.setText(String.valueOf(vo.getGx_validity()));
         	
@@ -220,8 +223,9 @@ public class LectureUI implements ActionListener{
    
 }
 
-class RegistLecture extends JFrame implements ActionListener{
+class RegistLecture implements ActionListener{
 	//field
+		JFrame jf = new JFrame();
 		JPanel jp;
 		JLabel jl_gx_cno, jl_gx_list, jl_gx_name, jl_gx_count, jl_gx_totprice;
 		JTextField jtf_gx_cno, jtf_gx_list,jtf_gx_name, jtf_gx_excount, jtf_gx_totprice;
@@ -231,6 +235,9 @@ class RegistLecture extends JFrame implements ActionListener{
 		
 		LectureSystem system;
 		
+		
+		
+		
 		//constructor
 		public RegistLecture(int cno) {			
 			jp = new JPanel(new GridLayout(6,2));
@@ -239,21 +246,28 @@ class RegistLecture extends JFrame implements ActionListener{
 			jtf_gx_cno.setText(Integer.toString(cno));
 			
 			jta_gx_list = new JTextArea(1,1);
+			jta_gx_list.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 			jl_gx_list = new JLabel("수강리스트");
 			jtf_gx_list = new JTextField(20);
+			
 			
 			jl_gx_name = new JLabel("수 강 명");
 			jtf_gx_name = new JTextField(20);
 			
+			
 			jl_gx_count = new JLabel("선택 횟수");
 			jtf_gx_excount = new JTextField(20);
+			
 			
 			jl_gx_totprice = new JLabel("총 금액");
 			jtf_gx_totprice = new JTextField(20);
 			
 			
+			
 			btn_reg = new JButton("  등    록  ");
+			btn_reg.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 			btn_calprice = new JButton("금액 계산 확인");
+			btn_calprice.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 			
 			Vector lecturenameList = new Vector();
 			lecturenameList.add("선택하세요");
@@ -278,9 +292,10 @@ class RegistLecture extends JFrame implements ActionListener{
 			jp.add(btn_reg); jp.add(btn_calprice);
 			
 			
-			getContentPane().add(jp);
-			setSize(500,500);
-			setVisible(true);
+			jf.getContentPane().add(jp);
+			jf.getContentPane().setBackground(Color.white);
+			jf.setSize(500,500);
+			jf.setVisible(true);
 			
 			
 			//수강리스트 출력
@@ -297,6 +312,7 @@ class RegistLecture extends JFrame implements ActionListener{
 				}
 			}
 										
+			
 			
 			//이벤트 호출
 			btn_reg.addActionListener(this);
@@ -317,9 +333,6 @@ class RegistLecture extends JFrame implements ActionListener{
 			}else if(jtf_gx_totprice.getText().equals("")){
 				JOptionPane.showMessageDialog(null, "총 금액을 확인해 주세요");
 
-			}else {
-				JOptionPane.showConfirmDialog(null, "정말 등록 하시겠습니까?");
-				result=true;
 			}
 			
 			return result;
@@ -333,7 +346,7 @@ class RegistLecture extends JFrame implements ActionListener{
 				JOptionPane.showMessageDialog(null, "금액 계산 확인");
 				
 				String gxname = (String)jcb_gxname.getSelectedItem();			
-				String gx_code = "";
+				String gx_code = "100";
 				
 				int gx_price =0;				
 				if(gxname.equals("요가(101)"))	{
@@ -367,10 +380,10 @@ class RegistLecture extends JFrame implements ActionListener{
 				if(check) {
 					String gxname = (String)jcb_gxname.getSelectedItem();	
 
-					String gx_code = "";
+					String gx_code = "100";
 					int gx_price =0;				
 					if(gxname.equals("요가(101)")	){
-						gx_code ="101"; 
+						gx_code ="101";
 						gx_price =10000;
 		
 					}else if(gxname.equals("줌바(102)")) {
@@ -381,7 +394,8 @@ class RegistLecture extends JFrame implements ActionListener{
 						gx_code = "103";
 						gx_price =12000;
 
-					}	
+					}					
+					
 
 					String extension = (String)jcb_count.getSelectedItem();
 					
@@ -398,16 +412,19 @@ class RegistLecture extends JFrame implements ActionListener{
 					
 					
 				}
-		
-				
+			
 				
 				//dao 생성: DB 연결 -> 등록
-				boolean result = system.update(vo);			
-				if(result) {
+				int val = JOptionPane.showConfirmDialog(null, "등록 하시겠습니까?");		
+				if(val == 0) {
+					system.update(vo);
 					JOptionPane.showMessageDialog(null, "등록 성공");
+					jf.setVisible(false);
+					//jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); ()	
 					
-				}else {
+				}else if(val != 0){
 					JOptionPane.showMessageDialog(null, "등록 실패");
+					jf.setVisible(false);
 				}
 				
 			}

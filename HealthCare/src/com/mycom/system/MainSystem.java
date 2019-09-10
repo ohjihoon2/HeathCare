@@ -20,13 +20,13 @@ public class MainSystem {
 	//화면 정보 띄우기
 	public MainVO getListMainVO(int cno) {
 		MainVO mvo = dao.getResultMainVO(cno);
-System.out.println("system.cno:"+cno);		
+		
 		return mvo;
 	}
 	
 	public MainVO getListInbodyVO(int cno) {
 		MainVO mvo = dao.getInbodyVO(cno);
-System.out.println("system.cno:"+cno);		
+		
 		return mvo;
 	}
 	

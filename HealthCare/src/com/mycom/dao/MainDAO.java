@@ -65,7 +65,6 @@ public class MainDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-System.out.println("dao.cno:"+cno);		
 		
 		return vo;
 	}
@@ -74,7 +73,7 @@ System.out.println("dao.cno:"+cno);
 	//4,5 단계 : 회원정보리스트 출력  - Equi Join 사용.
 	public MainVO getResultMainVO(int cno) {
 		MainVO vo = new MainVO();
-		String sql = "select cno, name, to_char(start_date,'yyyy-mm-dd'), to_char(end_date,'yyyy-mm-dd'), l.gx_name, m.gx_count, m.gx_price "
+		String sql = "select cno, name, to_char(start_date,'yyyy-mm-dd'), to_char(end_date,'yyyy-mm-dd'), gx_name, m.gx_count, m.gx_price "
 					+ " from member m, lecture l where m.gx_code = l.gx_code and cno = ?";
 		getPreparedStatement(sql);
 		
@@ -88,6 +87,7 @@ System.out.println("dao.cno:"+cno);
 				vo.setStart_date(rs.getString(3));
 				vo.setEnd_date(rs.getString(4));
 				vo.setGx_code(rs.getString(5));
+				System.out.println(vo.getGx_code());
 				vo.setGx_count(rs.getInt(6));
 				vo.setGx_price(rs.getInt(7));
 				
@@ -95,7 +95,6 @@ System.out.println("dao.cno:"+cno);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-System.out.println("dao.cno:"+cno);		
 		
 		return vo;
 	}
