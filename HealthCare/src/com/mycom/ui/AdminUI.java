@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.mycom.system.AdminSystem;
+import com.mycom.vo.LectureVO;
 import com.mycom.vo.MemberVO;
 
 public class AdminUI extends JFrame implements ActionListener{
@@ -44,6 +46,7 @@ public class AdminUI extends JFrame implements ActionListener{
 	JTextField tf;
 	JButton b_AdmMember, b_AdmLecture;
 	ArrayList<MemberVO> list;
+	ArrayList<LectureVO> list2;
 	//member 관리 폼
 	JPanel p_MemMain, p_MemSearch, p_MemResult, p_MemBtn;
 	JLabel l_MemCno;
@@ -262,6 +265,24 @@ public class AdminUI extends JFrame implements ActionListener{
 	}
 
 	public void lectureManageForm() {
+		list2 = system.getlecture(dtm_Lec);
+		Vector<String> colList2 = new Vector<String>();
+		colList2.add("종목코드");  
+		colList2.add("종목명");
+		colList2.add("금액");
+		
+		dtm_Lec = new DefaultTableModel(colList2, 0);
+		
+		for(LectureVO vo : list2) {
+			Vector<String> v = new Vector<String>();
+			v.add(vo.getGx_code());
+			v.add(vo.getGx_name());
+			v.add(String.valueOf(vo.getGx_price()));
+			
+			dtm_Lec.addRow(v);
+		}	
+		
+		
 		status = AdminUI.LECTURE;
 		p_LecMain = new JPanel(new BorderLayout());
 		p_LecResult = new JPanel();
@@ -270,7 +291,7 @@ public class AdminUI extends JFrame implements ActionListener{
 		b_LecUpdate = new JButton("수    정");
 		b_LecDelete = new JButton("삭    제");
 		
-		dtm_Lec = new DefaultTableModel(lecInfo, 0);
+		
 		t_Lec= new JTable(dtm_Lec); 
         scroll_Lec= new JScrollPane(t_Lec, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
@@ -300,10 +321,6 @@ public class AdminUI extends JFrame implements ActionListener{
 		
 		startui.jf.getContentPane().add(p_LecMain,BorderLayout.CENTER);
 		
-		//모든레코드를 검색하여 DefaultTableModle에 올리기
-        system.getLecture(dtm_Lec);
-		
-        
 		b_LecUpdate.addActionListener(this);
 		b_LecDelete.addActionListener(this);
 	}
@@ -312,6 +329,29 @@ public class AdminUI extends JFrame implements ActionListener{
 	 * 업데이트
 	 * @param sno
 	 */
+	
+	public void setUpdateChange2() {
+		list2 = system.getlecture(dtm_Lec);
+		Vector<String> colList2 = new Vector<String>();
+		colList2.add("종목코드");  
+		colList2.add("종목명");
+		colList2.add("금액");
+		
+		dtm_Lec = new DefaultTableModel(colList2, 0);
+		
+		for(LectureVO vo : list2) {
+			Vector<String> v = new Vector<String>();
+			v.add(vo.getGx_code());
+			v.add(vo.getGx_name());
+			v.add(String.valueOf(vo.getGx_price()));
+			
+			dtm_Lec.addRow(v);
+		}	
+		//JTable의 데이터 업데이트 하는 메소드
+		t_Lec.setModel(dtm_Lec);
+	}
+	
+	
 	public void setUpdateChange() {
 		list = system.getMember(dtm_Mem);
 		Vector<String> colList = new Vector<String>();
@@ -360,6 +400,7 @@ public class AdminUI extends JFrame implements ActionListener{
 		//JTable의 데이터 업데이트 하는 메소드
 		t_Mem.setModel(dtm_Mem);
 	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -415,25 +456,24 @@ public class AdminUI extends JFrame implements ActionListener{
 			}
 		}else if(obj == b_LecUpdate) {
 			int row = t_Lec.getSelectedRow();
-			MemberVO vo = list.get(row);
-			System.out.println(vo.getGx_code());
+			LectureVO vo = list2.get(row);
 			new AdminLecUpdateUI(vo.getGx_code(),this);
 			
 			
 		}else if(obj == b_LecDelete) {
 			
-			int row = t_Mem.getSelectedRow();
-			MemberVO vo = list.get(row);
+			int row = t_Lec.getSelectedRow();
+			LectureVO vo = list2.get(row);
 			
 			int delConfirm = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?");
 			
 			if(delConfirm == 0) {
 				
-				boolean result = system.getAdminDelete(vo.getCno());
+				boolean result = system.getAdminLectureDelete(vo.getGx_code());
 				
 				if(result) {
 					JOptionPane.showMessageDialog(null, "삭제완료");
-					setUpdateChange();
+					setUpdateChange2();
 				}else {
 					JOptionPane.showMessageDialog(null, "삭제실패");
 				}

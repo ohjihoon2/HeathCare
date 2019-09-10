@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
+import com.mycom.vo.LectureVO;
 import com.mycom.vo.MemberVO;
 
 
@@ -91,31 +92,54 @@ public class AdminDAO {
 		
 	}
 	
-	public void getLecture(DefaultTableModel lec_Adm) {
-		String sql = "select * from lecture";
+	
+	public ArrayList<LectureVO> getlecture(DefaultTableModel dtm_Lec) {
+		ArrayList<LectureVO> list2 = new ArrayList<LectureVO>();
+		
+		String sql = "select gx_code, gx_name, gx_price from lecture";
 		getPreparedStatement(sql);
 		
 		try {
 			rs = pstmt.executeQuery();
-			
-			// DefaultTableModel에 있는 기존 데이터 지우기
-			for(int i=0; i<lec_Adm.getRowCount();) {
-				lec_Adm.removeRow(0);
-			}
-			
 			while(rs.next()) {
-				Object data[] = { 
-				rs.getString(1), 
-			    rs.getString(2),
-                rs.getInt(3) 
-                };
- 
-				lec_Adm.addRow(data); //DefaultTableModel에 레코드 추가
+				LectureVO vo = new LectureVO();
+				vo.setGx_code(rs.getString(1));
+				vo.setGx_name(rs.getString(2));
+				vo.setGx_price(rs.getInt(3));
+                list2.add(vo);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		return list2;
+		
 	}
+	
+//	public void getLecture(DefaultTableModel lec_Adm) {
+//		String sql = "select * from lecture";
+//		getPreparedStatement(sql);
+//		
+//		try {
+//			rs = pstmt.executeQuery();
+//			
+//			// DefaultTableModel에 있는 기존 데이터 지우기
+//			for(int i=0; i<lec_Adm.getRowCount();) {
+//				lec_Adm.removeRow(0);
+//			}
+//			
+//			while(rs.next()) {
+//				Object data[] = { 
+//				rs.getString(1), 
+//			    rs.getString(2),
+//                rs.getInt(3) 
+//                };
+// 
+//				lec_Adm.addRow(data); //DefaultTableModel에 레코드 추가
+//			}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void getMember(DefaultTableModel dtm_Adm, int cno) {
 		String sql = "select cno, name, gender, phone, TO_CHAR(birth_date, 'YY/MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr from member where cno = ?";
@@ -190,6 +214,27 @@ public class AdminDAO {
 		return result;
 	}
 	
+	
+	public int getLectureUpdate(LectureVO lvo) {
+		int result = 0;
+		
+		String sql = "update lecture set gx_name=?, gx_price=? "
+				+ " where gx_code=?";
+		getPreparedStatement(sql);
+		
+		try {
+			pstmt.setString(1, lvo.getGx_name());
+			pstmt.setInt(2, lvo.getGx_price());
+			pstmt.setString(3, lvo.getGx_code());
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	/** Select : VO 객체 가져오기 **/
 	public MemberVO getMember(int cno) {
 		MemberVO vo = new MemberVO();
@@ -227,9 +272,9 @@ public class AdminDAO {
 	}
 	
 	/** Select : VO 객체 가져오기 **/
-	public MemberVO getMember(String code) {
-		MemberVO vo = new MemberVO();
-		String sql = "select cno, name, gender, phone, address, TO_CHAR(birth_date, 'YY/MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr from member where gx_code = ?";
+	public LectureVO getlecture(String code) {
+		LectureVO vo = new LectureVO();
+		String sql = "select gx_code, gx_name, gx_price from lecture where gx_code=?";
 		getPreparedStatement(sql);
 		
 		try {
@@ -238,23 +283,9 @@ public class AdminDAO {
 			
 			
 			if(rs.next()) {
-					vo.setCno(rs.getInt(1)); 
-				    vo.setName(rs.getString(2));
-				    vo.setGender(rs.getString(3));
-				    vo.setPhone(rs.getString(4));
-				    vo.setAddress(rs.getString(5));
-				    vo.setBirth_date(rs.getString(6));
-				    vo.setStart_date(rs.getString(7));
-				    vo.setEnd_date(rs.getString(8));
-				    vo.setGx_code(rs.getString(9));
-				    vo.setGx_price(rs.getInt(10));
-				    vo.setGx_count(rs.getInt(11));
-				    vo.setGx_validity(rs.getString(12));
-				    vo.setBmi(rs.getString(13));
-				    vo.setFat(rs.getString(14));
-				    vo.setPbf(rs.getString(15));
-				    vo.setWhr(rs.getString(16));
- 
+					vo.setGx_code(rs.getString(1)); 
+				    vo.setGx_name(rs.getString(2));
+				    vo.setGx_price(rs.getInt(3));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -269,6 +300,21 @@ public class AdminDAO {
 		getPreparedStatement(sql);
 		try {
 			pstmt.setInt(1, cno);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int getAdminLectureDelete(String code) {
+		int result = 0;
+		String sql = "delete from lecture where gx_code = ?";
+		getPreparedStatement(sql);
+		try {
+			pstmt.setString(1, code);
 			
 			result = pstmt.executeUpdate();
 			

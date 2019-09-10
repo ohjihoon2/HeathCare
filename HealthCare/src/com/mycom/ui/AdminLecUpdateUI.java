@@ -19,6 +19,7 @@ import javax.swing.border.LineBorder;
 
 import com.mycom.dao.AdminDAO;
 import com.mycom.system.RegistSystem;
+import com.mycom.vo.LectureVO;
 import com.mycom.vo.MemberVO;
 
 public class AdminLecUpdateUI extends JFrame implements ActionListener{
@@ -45,7 +46,7 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 		//1. 화면구성
 		// 패널 초기화 
 		
-		MemberVO cvo = dao.getMember(code);
+		LectureVO lvo = dao.getlecture(code);
 		
 		jf = new JFrame();
 		p_RegMain = new JPanel();
@@ -67,116 +68,43 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 		b_RegCancel = new JButton("다시쓰기");
 		b_RegExit = new JButton("나가기");
 		
-		l_RegTitle = new JLabel("회원정보수정");
+		l_RegTitle = new JLabel("수업수정");
 		l_RegTitle.setFont(new Font("나눔고딕",Font.BOLD,26));
 		
-		l_RegName = new JLabel("회원명");
+		l_RegName = new JLabel("종목코드");
 		l_RegName.setFont(new Font("나눔고딕",Font.BOLD,18));
 		
-		l_RegGender = new JLabel("성별");
-		l_RegGender.setFont(new Font("나눔고딕",Font.BOLD,18));
-		
-		l_RegAddress = new JLabel("주소");
+		l_RegAddress = new JLabel("종목명");
 		l_RegAddress.setFont(new Font("나눔고딕",Font.BOLD,18));
 		
-		l_RegPhone = new JLabel("연락처");
+		l_RegPhone = new JLabel("금액");
 		l_RegPhone.setFont(new Font("나눔고딕",Font.BOLD,18));
 		
-		l_RegBirth_date = new JLabel("생년월일");
-		l_RegBirth_date.setFont(new Font("나눔고딕",Font.BOLD,18));
-		
-		l_RegGx_code = new JLabel("종목");
-		l_RegGx_code.setFont(new Font("나눔고딕",Font.BOLD,18));
-		
-//		l_RegStart_date = new JLabel("시작일");
-//		l_RegStart_date.setFont(new Font("나눔고딕",Font.BOLD,18));
-		
-//		l_RegEnd_date = new JLabel("헬스기간");
-//		l_RegEnd_date.setFont(new Font("나눔고딕",Font.BOLD,18));
-	
-		rb_RegMen = new JRadioButton("남");
-		rb_RegWomen= new JRadioButton("여");
-		
-		rb_RegCODE1 = new JRadioButton("헬스");
-		rb_RegCODE2 = new JRadioButton("요가");
-		rb_RegCODE3 = new JRadioButton("줌바");
-		rb_RegCODE4 = new JRadioButton("스피닝");
-		
-		rb_RegTerm1 = new JRadioButton("1개월");
-		rb_RegTerm2 = new JRadioButton("3개월");
-		rb_RegTerm3 = new JRadioButton("6개월");
-		rb_RegTerm4 = new JRadioButton("12개월");
 		
 		tf_RegName = new JTextField(10);
 		tf_RegAddress = new JTextField(10);
 		tf_RegPhone = new JTextField(10);
-		tf_RegBirth_date = new JTextField(10);
-		tf_RegGx_code = new JTextField(10);
-		tf_RegStart_date = new JTextField(10);
-		tf_RegEnd_date = new JTextField(10);
+		
 		
 		/**리스트에서 정보 가져오기**/
-		tf_RegName.setText(cvo.getName());
-		
-		//성별
-		if(cvo.getGender().equals("M")) {
-			rb_RegMen.setSelected(true);
-		}else if (cvo.getGender().equals("F")){
-			rb_RegWomen.setSelected(true);
-		}
-		
-		tf_RegAddress.setText(cvo.getAddress());
-		tf_RegPhone.setText(cvo.getPhone());
-		tf_RegBirth_date.setText(cvo.getBirth_date());
-		
-		//종목
-		if(cvo.getGx_code().equals("100")) {
-			rb_RegCODE1.setSelected(true);
-			
-		}else if (cvo.getGx_code().equals("101")){
-			rb_RegCODE2.setSelected(true);
-			
-		}else if (cvo.getGx_code().equals("102")){
-			rb_RegCODE3.setSelected(true);
-			
-		}else if (cvo.getGx_code().equals("103")){
-			rb_RegCODE4.setSelected(true);
-		}
-		
-		
+		tf_RegName.setText(lvo.getGx_code());
+		tf_RegAddress.setText(lvo.getGx_name());
+		tf_RegPhone.setText(String.valueOf(lvo.getGx_price()));
 		
 		
 		p_RegTitle.setBounds(0,0,980,70);
 		p_RegTitle.setBackground(Color.WHITE);
-		l_RegTitle.setBounds(420,20,200,30);
+		l_RegTitle.setBounds(440,20,200,30);
 		
 		p_RegBoard.setBounds(0,90,980,380);
 		p_RegBoard.setBackground(Color.WHITE);
-		l_RegName.setBounds(300,30,100,20);
-		l_RegGender.setBounds(300,80,100,20);
-		l_RegAddress.setBounds(300,130,100,20);
-		l_RegPhone.setBounds(300,180,100,20);
-		l_RegBirth_date.setBounds(300,230,100,20);
-		l_RegGx_code.setBounds(300,280,100,20);
-		//l_RegEnd_date.setBounds(300,330,100,20);
+		l_RegName.setBounds(300,80,100,20);
+		l_RegAddress.setBounds(300,180,100,20);
+		l_RegPhone.setBounds(300,280,100,20);
 		
-		rb_RegMen.setBounds(400,75,50,30);
-		rb_RegWomen.setBounds(450,75,50,30);
-		
-		rb_RegCODE1.setBounds(400,275,100,30);
-		rb_RegCODE2.setBounds(500,275,100,30);
-		rb_RegCODE3.setBounds(600,275,100,30);
-		rb_RegCODE4.setBounds(700,275,100,30);
-		
-		rb_RegTerm1.setBounds(400,325,100,30);
-		rb_RegTerm2.setBounds(500,325,100,30);
-		rb_RegTerm3.setBounds(600,325,100,30);
-		rb_RegTerm4.setBounds(700,325,100,30);
-		
-		tf_RegName.setBounds(400,30,300,20);
-		tf_RegAddress.setBounds(400,130,300,20);
-		tf_RegPhone.setBounds(400,180,300,20);
-		tf_RegBirth_date.setBounds(400,230,300,20);
+		tf_RegName.setBounds(400,80,300,20);
+		tf_RegAddress.setBounds(400,180,300,20);
+		tf_RegPhone.setBounds(400,280,300,20);
 		
 		p_RegBtn.setBounds(0,480,980,70);
 		b_RegSave.setBounds(320,15,100,30);
@@ -187,51 +115,13 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 		p_RegMain.add(p_RegTitle);
 		
 		p_RegBoard.add(l_RegName);
-		p_RegBoard.add(l_RegGender);
 		p_RegBoard.add(l_RegAddress);
 		p_RegBoard.add(l_RegPhone);
-		p_RegBoard.add(l_RegBirth_date);
-		p_RegBoard.add(l_RegGx_code);
-		//p_RegBoard.add(l_RegStart_date);
-		//p_RegBoard.add(l_RegEnd_date);
 		
 		p_RegBoard.add(tf_RegName);
 		p_RegBoard.add(tf_RegAddress);
 		p_RegBoard.add(tf_RegPhone);
-		p_RegBoard.add(tf_RegBirth_date);
-		//p_RegBoard.add(tf_RegGx_code);
-		//p_RegBoard.add(tf_RegStart_date);
-		//p_RegBoard.add(tf_RegEnd_date);
 		
-		group1 = new ButtonGroup();
-		group1.add(rb_RegMen);
-		group1.add(rb_RegWomen);
-		
-		p_RegBoard.add(rb_RegMen);
-		p_RegBoard.add(rb_RegWomen);
-		
-		group2 = new ButtonGroup();
-		group2.add(rb_RegCODE1);
-		group2.add(rb_RegCODE2);
-		group2.add(rb_RegCODE3);
-		group2.add(rb_RegCODE4);
-		
-		p_RegBoard.add(rb_RegCODE1);
-		p_RegBoard.add(rb_RegCODE2);
-		p_RegBoard.add(rb_RegCODE3);
-		p_RegBoard.add(rb_RegCODE4);
-		
-//		group3 = new ButtonGroup();
-//		group3.add(rb_RegTerm1);
-//		group3.add(rb_RegTerm2);
-//		group3.add(rb_RegTerm3);
-//		group3.add(rb_RegTerm4);
-//		
-//		p_RegBoard.add(rb_RegTerm1);
-//		p_RegBoard.add(rb_RegTerm2);
-//		p_RegBoard.add(rb_RegTerm3);
-//		p_RegBoard.add(rb_RegTerm4);
-//		
 		p_RegMain.add(p_RegBoard);
 		
 		
@@ -267,9 +157,9 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 	public boolean regFormCheck() {
 		boolean result = false;
 		
-		if(tf_RegName.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "이름을 입력해주세요");
-			tf_RegName.requestFocus();
+		if(tf_RegAddress.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "종목명 입력해주세요");
+			tf_RegAddress.requestFocus();
 		}else {
 			result = true;
 		}
@@ -286,38 +176,18 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 			//회원정보 --> VO 생성 --> DAO ---> DB 
 			if(regFormCheck()) {
 				//2. MemberVO 객체에 입력한 데이터를 담아서 -- 등록요청
-				MemberVO vo = new MemberVO();
+				LectureVO lvo = new LectureVO();
 				
-				vo.setName(tf_RegName.getText());
+				lvo.setGx_name(tf_RegAddress.getText());
+				lvo.setGx_price(Integer.parseInt(tf_RegPhone.getText()));
+				lvo.setGx_code(code);
 				
-				if(rb_RegMen.isSelected()) {
-					vo.setGender("M");
-				}else if(rb_RegWomen.isSelected()) {
-					vo.setGender("F");
-				}
-				
-				vo.setAddress(tf_RegAddress.getText());
-				vo.setPhone(tf_RegPhone.getText());
-				vo.setBirth_date(tf_RegBirth_date.getText());
-				
-				if(rb_RegCODE1.isSelected()) {
-					vo.setGx_code("100");
-				}else if(rb_RegCODE2.isSelected()) {
-					vo.setGx_code("101");
-				}else if(rb_RegCODE3.isSelected()) {
-					vo.setGx_code("102");
-				}else if(rb_RegCODE4.isSelected()) {
-					vo.setGx_code("103");
-				}
-				
-				//vo.setCno(cno);
-				
-				int result = dao.getResultUpdate(vo);
+				int result = dao.getLectureUpdate(lvo);
 				
 				if(result != 0) {
 					JOptionPane.showMessageDialog(null, "수정완료");
 					jf.setVisible(false);
-					ui.setUpdateChange();
+					ui.setUpdateChange2();
 				}else {
 					JOptionPane.showMessageDialog(null, "등록실패");
 				}
@@ -325,12 +195,8 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 		}else if(obj == b_RegCancel) { //다시쓰기
 			//필드 초기화
 			tf_RegName.setText("");
-			group1.clearSelection();
 			tf_RegAddress.setText("");
 			tf_RegPhone.setText("");
-			tf_RegBirth_date.setText("");
-			group2.clearSelection();
-			group3.clearSelection();
 			
 			tf_RegName.requestFocus();
 		}else if(obj == b_RegExit) {  //나가기

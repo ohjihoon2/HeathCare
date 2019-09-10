@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.mycom.dao.AdminDAO;
 import com.mycom.ui.StartUI;
+import com.mycom.vo.LectureVO;
 import com.mycom.vo.MemberVO;
 
 
@@ -30,9 +31,14 @@ public class AdminSystem {
 	 * 강의 정보 검색
 	 * @param dtm_Adm
 	 */
-	public void getLecture(DefaultTableModel dtm_Adm) {
-		dao.getLecture(dtm_Adm);
+	
+	public ArrayList<LectureVO> getlecture(DefaultTableModel dtm_Lec) {
+		return dao.getlecture(dtm_Lec);
 	}
+	
+//	public void getLecture (DefaultTableModel dtm_Adm) {
+//		dao.getLecture(dtm_Adm);
+//	}
 	
 	/**
 	 * 멤버 검색
@@ -50,6 +56,17 @@ public class AdminSystem {
 		boolean result = false;
 		
 		int val = dao.getResultDelete(cno);
+		if(val != 0) {
+			result = true;
+		}
+		
+		return result;
+	}
+	
+	public boolean getAdminLectureDelete(String code) {
+		boolean result = false;
+		
+		int val = dao.getAdminLectureDelete(code);
 		if(val != 0) {
 			result = true;
 		}

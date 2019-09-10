@@ -330,7 +330,7 @@ public class AdminMemUpdateUI extends JFrame implements ActionListener{
 			tf_RegPhone.setText("");
 			tf_RegBirth_date.setText("");
 			group2.clearSelection();
-			group3.clearSelection();
+			//group3.clearSelection();
 			
 			tf_RegName.requestFocus();
 		}else if(obj == b_RegExit) {  //³ª°¡±â
