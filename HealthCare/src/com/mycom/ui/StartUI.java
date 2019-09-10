@@ -1,10 +1,12 @@
 package com.mycom.ui;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,6 +17,8 @@ import javax.swing.JTextField;
 
 import com.mycom.system.LoginSystem;
 import com.mycom.vo.MemberVO;
+
+import javafx.scene.layout.Background;
 
 
 public class StartUI extends JFrame implements ActionListener{
@@ -37,6 +41,8 @@ public class StartUI extends JFrame implements ActionListener{
 	JTextField tf_LogId;
 	JButton b_LogLogin, b_LogCreate, b_Log0, b_Log1, b_Log2, b_Log3, b_Log4, b_Log5, b_Log6, b_Log7, b_Log8, b_Log9, b_LogStar, b_LogRe;
 	StringBuffer sb;
+	ImageIcon ic_gx_topimg;
+    JLabel ic_gx_yogaBox;
 	
 	//회원가입 Field
 	/**
@@ -87,8 +93,12 @@ public class StartUI extends JFrame implements ActionListener{
 		group.add(rb_LogMember);
 		group.add(rb_LogAdmin);
 		
-		p_LogChoice.add(rb_LogMember);
-		p_LogChoice.add(rb_LogAdmin);
+		p_LogLogin.add(rb_LogMember);
+		p_LogLogin.add(rb_LogAdmin);
+		ic_gx_topimg = new ImageIcon("image/logo3.jpg");
+		 ic_gx_yogaBox = new JLabel(ic_gx_topimg);        
+		
+		p_LogChoice.add(ic_gx_yogaBox);
 		
 		p_LogLogin.add(l_Logid);
 		p_LogLogin.add(tf_LogId);
@@ -96,6 +106,7 @@ public class StartUI extends JFrame implements ActionListener{
 		p_LogNum.setLayout(new GridLayout(5,3));
 
 		
+		 
 		p_LogNum.add(b_Log1);
 		p_LogNum.add(b_Log2);
 		p_LogNum.add(b_Log3);
@@ -123,6 +134,12 @@ public class StartUI extends JFrame implements ActionListener{
 //		p_LogNum.setSize(600, 400);
 //		p_LogNum.setBounds(200,200,350,200);
 		jf.setLocation(500	, 20);
+		
+		
+		p_LogChoice.setBackground(Color.WHITE);
+		p_LogLogin.setBackground(Color.WHITE);
+		p_LogNum.setBackground(Color.WHITE);
+		p_LogBtn.setBackground(Color.WHITE);
 		jf.setVisible(true);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

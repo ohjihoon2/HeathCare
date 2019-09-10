@@ -35,17 +35,17 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 	JButton b_RegSave, b_RegCancel, b_RegExit;
 	ButtonGroup group1,group2,group3;
 	AdminUI ui;
-	int cno;
+	String code;
 	
 	//Constructor
-	public AdminLecUpdateUI(int cno, AdminUI ui){	
+	public AdminLecUpdateUI(String code, AdminUI ui){	
 		this.ui = ui;
-		
+		this.code = code;
+		System.out.println(code);
 		//1. 화면구성
 		// 패널 초기화 
-		this.cno = cno;
 		
-		MemberVO cvo = dao.getMember(cno);
+		MemberVO cvo = dao.getMember(code);
 		
 		jf = new JFrame();
 		p_RegMain = new JPanel();
@@ -310,7 +310,7 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 					vo.setGx_code("103");
 				}
 				
-				vo.setCno(cno);
+				//vo.setCno(cno);
 				
 				int result = dao.getResultUpdate(vo);
 				

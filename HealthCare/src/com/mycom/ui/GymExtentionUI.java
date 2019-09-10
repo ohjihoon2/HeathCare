@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Vector;
 
 import javax.swing.AbstractCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,6 +49,9 @@ public class GymExtentionUI implements ActionListener {
 	ArrayList<GymExtentionVO> tablelist;
 	JTextField jtf_checkprice,jtf_checkdate;
 	JButton btn_extention, btn_back;
+	
+	ImageIcon ic_gx_topimg;
+    JLabel ic_gx_topimgBox;
 	
 	//constructor
 	public GymExtentionUI(MainScreenUI mainui, StartUI startui) {
@@ -86,11 +90,14 @@ public class GymExtentionUI implements ActionListener {
 		p_checkprice = new JPanel();
 		p_extention = new JPanel();
 
+        ic_gx_topimg = new ImageIcon("image/logo3.jpg");
+        ic_gx_topimgBox = new JLabel(ic_gx_topimg);
+		
 		lb_title = new JLabel("*** 헬스 연장 신청 ***");
 		lb_title.setFont(new Font("굴림", Font.BOLD, 20));
 		lb_checkdate = new JLabel("헬스 연장 기간 확인");
 		lb_checkpirce = new JLabel("헬스 연장 금액 확인");
-
+	
 
 		btn_extention = new JButton("연장 신청");
 		btn_extention.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
@@ -102,7 +109,7 @@ public class GymExtentionUI implements ActionListener {
 		p_main.add(p_top);p_main.add(p_table);p_main.add(p_price);
 		p_price.add(p_checkdate); p_price.add(p_checkprice); p_price.add(p_extention);
 		p_top.add(p_blank); p_top.add(p_title);
-		p_title.add(lb_title);		
+		p_blank.add(ic_gx_topimgBox); p_title.add(lb_title);
 		
 		table = new JTable(model);
 		js = new JScrollPane(table);
@@ -112,6 +119,17 @@ public class GymExtentionUI implements ActionListener {
 		table.getColumnModel().getColumn(4).setCellEditor(new TableCell());
 	        //table에서 column을 불러온 뒤 활성화할수 있고, 편집할수 있게 고쳐준다	
 	        
+		//white
+		p_main.setBackground(Color.WHITE);
+		p_title.setBackground(Color.WHITE); 
+		p_table.setBackground(Color.WHITE); 
+		p_price.setBackground(Color.WHITE); 
+		p_checkdate.setBackground(Color.WHITE);
+		p_checkprice.setBackground(Color.WHITE);
+		p_extention.setBackground(Color.WHITE);
+		p_top.setBackground(Color.WHITE);
+		p_blank.setBackground(Color.WHITE);
+		js.getViewport().setBackground(Color.WHITE);
 		
 		js.setPreferredSize(new Dimension(700,150));
 		p_table.add(js);

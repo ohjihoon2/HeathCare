@@ -392,7 +392,6 @@ public class AdminUI extends JFrame implements ActionListener{
 			
 		}else if(obj == b_MemUpdate) {
 			int row = t_Mem.getSelectedRow();
-			
 			MemberVO vo = list.get(row);
 			new AdminMemUpdateUI(vo.getCno(),this);
 			
@@ -415,10 +414,11 @@ public class AdminUI extends JFrame implements ActionListener{
 				}
 			}
 		}else if(obj == b_LecUpdate) {
-			int row = t_Mem.getSelectedRow();
-			
+			int row = t_Lec.getSelectedRow();
 			MemberVO vo = list.get(row);
-			new AdminMemUpdateUI(vo.getCno(),this);
+			System.out.println(vo.getGx_code());
+			new AdminLecUpdateUI(vo.getGx_code(),this);
+			
 			
 		}else if(obj == b_LecDelete) {
 			

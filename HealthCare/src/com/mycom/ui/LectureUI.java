@@ -30,7 +30,7 @@ import com.mycom.vo.LectureVO;
 public class LectureUI implements ActionListener{	
     //field
 	static MainScreenUI mainui;
-	static StartUI startui;	
+	static StartUI startui;
 	LectureSystem system = new LectureSystem();
 	static JPanel p_gx_main;
     JPanel p_gx_top, p_gx_main2, p_gx_left, p_gx_table, p_gx_picture, p_picture, p_button, p_gx_right, p_gx_btn, p_gx_cno,
@@ -74,29 +74,65 @@ public class LectureUI implements ActionListener{
     	
         p_gx_main = new JPanel();
         p_gx_main.setLayout(new BorderLayout());
-        p_gx_top = new JPanel();          
+        p_gx_main.setBackground(Color.WHITE);
+        
+        p_gx_top = new JPanel();        
+        p_gx_top.setBackground(Color.WHITE);
+        
         p_gx_main2 = new JPanel(new GridLayout(1,2));
-           
+        p_gx_main2.setBackground(Color.WHITE);
+        
         p_gx_left = new JPanel(new GridLayout(7,1));
+        p_gx_left.setBackground(Color.WHITE);
+        
         p_gx_info = new JPanel();
+        p_gx_info.setBackground(Color.WHITE);
+        
         p_gx_cno = new JPanel();
+        p_gx_cno.setBackground(Color.WHITE);
+        
         p_gx_cname = new JPanel();
+        p_gx_cname.setBackground(Color.WHITE);
+        
         p_gx_gxname = new JPanel();
+        p_gx_gxname.setBackground(Color.WHITE);
+        
         p_gx_count = new JPanel();
+        p_gx_count.setBackground(Color.WHITE);
+        
         p_gx_validity = new JPanel();
+        p_gx_validity.setBackground(Color.WHITE);
+        
         p_gx_blank1 = new JPanel();
+        p_gx_blank1.setBackground(Color.WHITE);
+        
         p_gx_blank2 = new JPanel();
-
+        p_gx_blank2.setBackground(Color.WHITE);
+        
         p_gx_btn = new JPanel();
+        p_gx_btn.setBackground(Color.WHITE);
         
         p_gx_right = new JPanel(new GridLayout(2,1));
+        p_gx_right.setBackground(Color.WHITE);
+        
         p_gx_table = new JPanel(new GridLayout(2,1));
+        p_gx_table.setBackground(Color.WHITE);
+        
         table = new JTable(jmodel); 
-        js = new JScrollPane(table);
         table.setBackground(Color.WHITE);
+        
+        js = new JScrollPane(table);
+        js.getViewport().setBackground(Color.WHITE);
+        
         p_gx_picture = new JPanel(new GridLayout(2,1));
+        p_gx_picture.setBackground(Color.WHITE);
+        
         p_picture = new JPanel();
+        p_picture.setBackground(Color.WHITE);
+        
         p_button = new JPanel();
+        p_button.setBackground(Color.WHITE);
+        
        //new GridLayout(1,3)
         
         l_gx_info = new JLabel("[  수 강  정 보  ]") ;
@@ -112,11 +148,9 @@ public class LectureUI implements ActionListener{
         l_gx_validity = new JLabel("유효 기간");
         jtf_gx_validity = new JTextField(10);
         b_gx_regist = new JButton("수강 신청");
-        b_gx_regist.setBackground(Color.getHSBColor(0.8f, 0.09f, 0.9f));
         b_back = new JButton("돌아가기");
-        b_back.setBackground(Color.getHSBColor(0.8f, 0.09f, 0.9f));     
         
-        ic_gx_topimg = new ImageIcon("image/gymlabel.png");
+        ic_gx_topimg = new ImageIcon("image/logo3.jpg");
         ic_gx_topimgBox = new JLabel(ic_gx_topimg);        
 //      ImageIcon img_icon = new ImageIcon(path);
 //		Image img1 = img_icon.getImage();
@@ -187,15 +221,6 @@ public class LectureUI implements ActionListener{
         
         
         //화면에 회원정보 띄워주기
-        updateLectureInfo();
-        	
-        
-        
-    } 
-    
-  //화면에 회원정보 띄워주기
-    public void updateLectureInfo() {
-    	
         LectureSystem system = new LectureSystem();        
         LectureVO vo = system.getListVO(StartUI.vo.getCno());
         
@@ -205,9 +230,10 @@ public class LectureUI implements ActionListener{
         	jtf_gx_gxname.setText(vo.getGx_code());      	
         	jtf_gx_count.setText(String.valueOf(vo.getGx_count()));
         	jtf_gx_validity.setText(String.valueOf(vo.getGx_validity()));
+        	
         }
-    }
-
+        
+    } 
     
     
 	@Override
@@ -271,9 +297,8 @@ class RegistLecture implements ActionListener{
 			
 			
 			
-			btn_reg = new JButton("  등    록  ");		
+			btn_reg = new JButton("  등    록  ");
 			btn_calprice = new JButton("금액 계산 확인");
-			
 			
 			Vector lecturenameList = new Vector();
 			lecturenameList.add("선택하세요");
@@ -419,26 +444,24 @@ class RegistLecture implements ActionListener{
 					vo.setGx_totprice(Integer.parseInt(jtf_gx_totprice.getText())+StartUI.vo.getGx_price());	
 					
 					
-					//dao 생성: DB 연결 -> 등록
 					int val = JOptionPane.showConfirmDialog(null, "등록 하시겠습니까?");		
 					if(val == 0) {
 						system.update(vo);
 						JOptionPane.showMessageDialog(null, "등록 성공");
 						jf.setVisible(false);
 						LectureUI.p_gx_main.setVisible(false);
-						
 						new LectureUI(LectureUI.mainui, LectureUI.startui);
-						
-						
 					}else if(val != 0){
 						JOptionPane.showMessageDialog(null, "등록 실패");
 						jf.setVisible(false);
 					}
 					
-					
 				}
 			
-		
+				
+				//dao 생성: DB 연결 -> 등록
+				
+				
 			}
 		}
 				

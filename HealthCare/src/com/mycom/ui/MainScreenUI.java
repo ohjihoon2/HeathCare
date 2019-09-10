@@ -104,7 +104,7 @@ public class MainScreenUI implements ActionListener {
 
 		
 
-		ic_sc_timg = new ImageIcon("image/gymlabel.png");
+		ic_sc_timg = new ImageIcon("image/logo3.jpg");
 		l_sc_topimgbox = new JLabel(ic_sc_timg);
 
 		lb_info = new JLabel("[ 회 원  정 보 ]");
@@ -173,7 +173,26 @@ public class MainScreenUI implements ActionListener {
 		
 		startui.jf.getContentPane().add(p_sc_total,BorderLayout.CENTER);
 		p_sc_total.getRootPane().setBackground(Color.WHITE);
-
+		
+		
+		p_sc_inbody.setBackground(Color.WHITE);
+		p_inbodytitle.setBackground(Color.WHITE);
+		p_bmi.setBackground(Color.WHITE);
+		p_fat.setBackground(Color.WHITE);
+		p_pbf.setBackground(Color.WHITE);
+		p_whr.setBackground(Color.WHITE);
+		p_weight.setBackground(Color.WHITE);
+		p_sc_top.setBackground(Color.WHITE);
+		p_sc_center.setBackground(Color.WHITE);
+		p_sc_btnbox.setBackground(Color.WHITE);
+		p_sc_sysdate.setBackground(Color.WHITE);
+		p_sc_infobox.setBackground(Color.WHITE);
+		p_blank.setBackground(Color.WHITE);
+		p_sc_uno.setBackground(Color.WHITE);
+		p_sc_cname.setBackground(Color.WHITE);
+		p_sc_time.setBackground(Color.WHITE);
+		p_sc_gx_name.setBackground(Color.WHITE);
+		
 		p_sc_total.setSize(1000,600);
 		p_sc_total.setVisible(true);
 		
