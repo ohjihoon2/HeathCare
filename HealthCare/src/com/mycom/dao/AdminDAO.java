@@ -58,7 +58,7 @@ public class AdminDAO {
 	public ArrayList<MemberVO> getMember(DefaultTableModel dtm_Adm) {
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
 		
-		String sql = "select cno, name, gender, phone, TO_CHAR(birth_date, 'MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr, S_WEIGHT, GYM_PRICE from member where division =1";
+		String sql = "select cno, name, gender, phone, TO_CHAR(birth_date, 'YY/MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr, S_WEIGHT, GYM_PRICE from member where division =1";
 		getPreparedStatement(sql);
 		
 		try {
@@ -83,7 +83,6 @@ public class AdminDAO {
                 vo.setS_weight(rs.getString(16));
                 vo.setGym_price(rs.getInt(17));
                 list.add(vo);
-                System.out.println("Gender"+vo.getGender());
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -119,7 +118,7 @@ public class AdminDAO {
 	}
 	
 	public void getMember(DefaultTableModel dtm_Adm, int cno) {
-		String sql = "select cno, name, gender, phone, TO_CHAR(birth_date, 'MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr from member where cno = ?";
+		String sql = "select cno, name, gender, phone, TO_CHAR(birth_date, 'YY/MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr from member where cno = ?";
 		getPreparedStatement(sql);
 		
 		try {
@@ -164,35 +163,76 @@ public class AdminDAO {
 			e.printStackTrace();
 		}	
 	}
-//	/** Update **/
-//	public int getResultUpdate(MemberVO vo) {
-//		int result = 0;
-//		String sql = "update member set btitle = ?, bcontent = ? where bno = ?";
-//		getPreparedStatement(sql);
-//		System.out.println(vo.getBtitle());
-//		System.out.println(vo.getBcontent());
-//		System.out.println(vo.getBno());
-//		try {
-//			pstmt.setString(1, vo.getBtitle());
-//			pstmt.setString(2, vo.getBcontent());
-//			pstmt.setInt(3, vo.getBno());
-//			
-//			result = pstmt.executeUpdate();
-//			
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		return result;
-//	}
 	
+	/** Update **/
+	public int getResultUpdate(MemberVO vo) {
+		int result = 0;
+		
+		String sql = "update member set name=?, gender=?, address=?, "
+				+ "phone=?, birth_date =?, gx_code=?"
+				+ "where cno=?";
+		getPreparedStatement(sql);
+		
+		try {
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getGender());
+			pstmt.setString(3, vo.getAddress());
+			pstmt.setString(4, vo.getPhone());
+			pstmt.setString(5, vo.getBirth_date());
+			pstmt.setString(6, vo.getGx_code());
+			pstmt.setInt(7, vo.getCno());
+			
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	/** Select : VO 객체 가져오기 **/
+	public MemberVO getMember(int cno) {
+		MemberVO vo = new MemberVO();
+		String sql = "select cno, name, gender, phone, address, TO_CHAR(birth_date, 'YY/MM/DD'), TO_CHAR(start_date, 'YY.MM.DD'), TO_CHAR(end_date, 'YY.MM.DD'), gx_code, gx_price, gx_count, gx_validity, bmi, fat, pbf, whr from member where cno = ?";
+		getPreparedStatement(sql);
+		
+		try {
+			pstmt.setInt(1, cno);	
+			rs = pstmt.executeQuery();
+			
+			
+			if(rs.next()) {
+					vo.setCno(rs.getInt(1)); 
+				    vo.setName(rs.getString(2));
+				    vo.setGender(rs.getString(3));
+				    vo.setPhone(rs.getString(4));
+				    vo.setAddress(rs.getString(5));
+				    vo.setBirth_date(rs.getString(6));
+				    vo.setStart_date(rs.getString(7));
+				    vo.setEnd_date(rs.getString(8));
+				    vo.setGx_code(rs.getString(9));
+				    vo.setGx_price(rs.getInt(10));
+				    vo.setGx_count(rs.getInt(11));
+				    vo.setGx_validity(rs.getString(12));
+				    vo.setBmi(rs.getString(13));
+				    vo.setFat(rs.getString(14));
+				    vo.setPbf(rs.getString(15));
+				    vo.setWhr(rs.getString(16));
+ 
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}	
+		return vo;
+	}
 	
 	/** Delete **/
-	public int getResultDelete(int bno) {
+	public int getResultDelete(int cno) {
 		int result = 0;
-		String sql = "delete from si_board where bno = ?";
+		String sql = "delete from member where cno = ?";
 		getPreparedStatement(sql);
 		try {
-			pstmt.setInt(1, bno);
+			pstmt.setInt(1, cno);
 			
 			result = pstmt.executeUpdate();
 			

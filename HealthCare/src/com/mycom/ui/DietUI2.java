@@ -74,7 +74,7 @@ public class DietUI2 extends JFrame implements ActionListener {
 		
 		d_Dietdt = new DefaultTableModel(name, 0);
 		j_DIettable = new JTable(d_Dietdt); 
-        s_Dietscroll = new JScrollPane(j_DIettable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        s_Dietscroll = new JScrollPane(j_DIettable, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,  JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         
         
         j_DIettable.getColumnModel().getColumn(0).setPreferredWidth(50);

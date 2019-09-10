@@ -44,7 +44,6 @@ public class AdminUI extends JFrame implements ActionListener{
 	JTextField tf;
 	JButton b_AdmMember, b_AdmLecture;
 	ArrayList<MemberVO> list;
-	
 	//member 관리 폼
 	JPanel p_MemMain, p_MemSearch, p_MemResult, p_MemBtn;
 	JLabel l_MemCno;
@@ -63,11 +62,10 @@ public class AdminUI extends JFrame implements ActionListener{
 	DefaultTableModel dtm_Lec;
 	JTable t_Lec;
 	String[] lecInfo = {"종목코드", "종목명"," 금액"};
+	AdminUI ui;
 	
 	public AdminUI(StartUI startui) {		
-		//setStatus(MAIN);
 		this.startui = startui;
-//		status = AdminUI.MAIN;
 		System.out.println("Status=" + getStatus());		
 		//1. 화면구성
 		jf = new JFrame();
@@ -135,6 +133,9 @@ public class AdminUI extends JFrame implements ActionListener{
 		}
 	}
 	
+	
+	
+	
 	public void memberManageForm() {
 		list = system.getMember(dtm_Mem);
 		Vector<String> colList = new Vector<String>();
@@ -180,6 +181,7 @@ public class AdminUI extends JFrame implements ActionListener{
 			
 			dtm_Mem.addRow(v);
 		}	
+		
 		
 		
 		status = AdminUI.MEMBER;
@@ -365,14 +367,10 @@ public class AdminUI extends JFrame implements ActionListener{
 		
 		if(obj ==b_AdmMember) {
 			switchingPanel(getStatus());
-//			p_AdmMain.setVisible(false);
-//			p_LecMain.setVisible(false);
 			
 			memberManageForm();
 		}else if(obj == b_AdmLecture) {
 			switchingPanel(getStatus());
-//			p_AdmMain.setVisible(false);
-//			p_MemMain.setVisible(false);
 			lectureManageForm();
 		}else if(obj == b_Search){
 			if(tf_MemCno.getText().trim().length()>0) {
@@ -384,19 +382,38 @@ public class AdminUI extends JFrame implements ActionListener{
 					t_Mem.setRowSelectionInterval(0, 0);
 				}
 			}
-//			JOptionPane.showInternalMessageDialog(null, "검색");
-//			sorter.setRowFilter(RowFilter.regexFilter(tf_MemCno.getText().trim()));
-//			system.searchData(dtm_Lec, Integer.parseInt(tf_MemCno.getText().trim()));
-//			tf_MemCno.setText("");
+//			
 			
 		}else if(obj == b_SearchAll) {
 			system.getMember(dtm_Mem);
 		}else if(obj == b_Update) {
-			JOptionPane.showMessageDialog(null, "하위");
-			new AdminUpdateUI();
+			int row = t_Mem.getSelectedRow();
+			
+			MemberVO vo = list.get(row);
+			new AdminUpdateUI(vo.getCno(),this);
 			
 		}else if(obj == b_Delete) {
-			System.out.println("b_Delete");
+			
+			int row = t_Mem.getSelectedRow();
+			MemberVO vo = list.get(row);
+			
+			int delConfirm = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?");
+			
+			if(delConfirm == 0) {
+				
+				boolean result = system.getAdminDelete(vo.getCno());
+				
+				if(result) {
+					JOptionPane.showMessageDialog(null, "삭제완료");
+					setUpdateChange();
+				}else {
+					JOptionPane.showMessageDialog(null, "삭제실패");
+				}
+			}
+			
+			
+			
+			
 			
 		}
 		

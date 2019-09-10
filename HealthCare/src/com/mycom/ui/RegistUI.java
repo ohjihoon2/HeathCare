@@ -1,5 +1,7 @@
 package com.mycom.ui;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import com.mycom.system.RegistSystem;
 import com.mycom.vo.MemberVO;
@@ -35,10 +38,16 @@ public class RegistUI extends JFrame implements ActionListener{
 		// ÆÐ³Î ÃÊ±âÈ­ 
 		this.startui = startui;
 		
-		p_RegMain = new JPanel(new GridLayout(3,1));
+		p_RegMain = new JPanel();
 		
 		p_RegTitle = new JPanel();
-		p_RegBoard = new JPanel(new GridLayout(10,2));
+		LineBorder b1 = new LineBorder(Color.BLACK,1); 
+		p_RegTitle.setBorder(b1);
+		
+		p_RegBoard = new JPanel();
+		LineBorder b2 = new LineBorder(Color.BLACK,2);
+		p_RegBoard.setBorder(b2);
+		
 		p_RegBtn = new JPanel();
 		p_RegGender = new JPanel();
 		p_RegCode = new JPanel();
@@ -49,18 +58,32 @@ public class RegistUI extends JFrame implements ActionListener{
 		b_RegExit = new JButton("³ª°¡±â");
 		
 		l_RegTitle = new JLabel("È¸¿ø°¡ÀÔ");
+		l_RegTitle.setFont(new Font("³ª´®°íµñ",Font.BOLD,26));
 		
 		l_RegName = new JLabel("È¸¿ø¸í");
-		l_RegGender = new JLabel("¼ºº°");
-		l_RegAddress = new JLabel("ÁÖ¼Ò");
-		l_RegPhone = new JLabel("¿¬¶ôÃ³");
-		l_RegBirth_date = new JLabel("»ý³â¿ùÀÏ");
-		l_RegGx_code = new JLabel("Á¾¸ñ");
-		l_RegStart_date = new JLabel("½ÃÀÛÀÏ");
-		l_RegEnd_date = new JLabel("Çï½º±â°£");
-	
-		tf_RegName = new JTextField(10);
+		l_RegName.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
 		
+		l_RegGender = new JLabel("¼ºº°");
+		l_RegGender.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
+		
+		l_RegAddress = new JLabel("ÁÖ¼Ò");
+		l_RegAddress.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
+		
+		l_RegPhone = new JLabel("¿¬¶ôÃ³");
+		l_RegPhone.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
+		
+		l_RegBirth_date = new JLabel("»ý³â¿ùÀÏ");
+		l_RegBirth_date.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
+		
+		l_RegGx_code = new JLabel("Á¾¸ñ");
+		l_RegGx_code.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
+		
+//		l_RegStart_date = new JLabel("½ÃÀÛÀÏ");
+//		l_RegStart_date.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
+		
+		l_RegEnd_date = new JLabel("Çï½º±â°£");
+		l_RegEnd_date.setFont(new Font("³ª´®°íµñ",Font.BOLD,18));
+	
 		rb_RegMen = new JRadioButton("³²");
 		rb_RegWomen= new JRadioButton("¿©");
 		
@@ -74,6 +97,7 @@ public class RegistUI extends JFrame implements ActionListener{
 		rb_RegTerm3 = new JRadioButton("6°³¿ù");
 		rb_RegTerm4 = new JRadioButton("12°³¿ù");
 		
+		tf_RegName = new JTextField(10);
 		tf_RegAddress = new JTextField(10);
 		tf_RegPhone = new JTextField(10);
 		tf_RegBirth_date = new JTextField(10);
@@ -81,16 +105,69 @@ public class RegistUI extends JFrame implements ActionListener{
 		tf_RegStart_date = new JTextField(10);
 		tf_RegEnd_date = new JTextField(10);
 		
-		l_RegTitle.setHorizontalAlignment(0);
-		p_RegTitle.add(l_RegTitle);
+		p_RegTitle.setBounds(0,0,980,70);
+		p_RegTitle.setBackground(Color.WHITE);
+		l_RegTitle.setBounds(440,20,200,30);
 		
+		p_RegBoard.setBounds(0,90,980,380);
+		p_RegBoard.setBackground(Color.WHITE);
+		l_RegName.setBounds(300,30,100,20);
+		l_RegGender.setBounds(300,80,100,20);
+		l_RegAddress.setBounds(300,130,100,20);
+		l_RegPhone.setBounds(300,180,100,20);
+		l_RegBirth_date.setBounds(300,230,100,20);
+		l_RegGx_code.setBounds(300,280,100,20);
+		l_RegEnd_date.setBounds(300,330,100,20);
+		
+		rb_RegMen.setBounds(400,75,50,30);
+		rb_RegWomen.setBounds(450,75,50,30);
+		
+		rb_RegCODE1.setBounds(400,275,100,30);
+		rb_RegCODE2.setBounds(500,275,100,30);
+		rb_RegCODE3.setBounds(600,275,100,30);
+		rb_RegCODE4.setBounds(700,275,100,30);
+		
+		rb_RegTerm1.setBounds(400,325,100,30);
+		rb_RegTerm2.setBounds(500,325,100,30);
+		rb_RegTerm3.setBounds(600,325,100,30);
+		rb_RegTerm4.setBounds(700,325,100,30);
+		
+		tf_RegName.setBounds(400,30,300,20);
+		tf_RegAddress.setBounds(400,130,300,20);
+		tf_RegPhone.setBounds(400,180,300,20);
+		tf_RegBirth_date.setBounds(400,230,300,20);
+		
+		p_RegBtn.setBounds(0,480,980,70);
+		b_RegSave.setBounds(320,15,100,30);
+		b_RegCancel.setBounds(450,15,100,30);
+		b_RegExit.setBounds(580,15,100,30);
+		
+		p_RegTitle.add(l_RegTitle);
+		p_RegMain.add(p_RegTitle);
+		
+		p_RegBoard.add(l_RegName);
+		p_RegBoard.add(l_RegGender);
+		p_RegBoard.add(l_RegAddress);
+		p_RegBoard.add(l_RegPhone);
+		p_RegBoard.add(l_RegBirth_date);
+		p_RegBoard.add(l_RegGx_code);
+		//p_RegBoard.add(l_RegStart_date);
+		p_RegBoard.add(l_RegEnd_date);
+		
+		p_RegBoard.add(tf_RegName);
+		p_RegBoard.add(tf_RegAddress);
+		p_RegBoard.add(tf_RegPhone);
+		p_RegBoard.add(tf_RegBirth_date);
+		//p_RegBoard.add(tf_RegGx_code);
+		//p_RegBoard.add(tf_RegStart_date);
+		//p_RegBoard.add(tf_RegEnd_date);
 		
 		group1 = new ButtonGroup();
 		group1.add(rb_RegMen);
 		group1.add(rb_RegWomen);
 		
-		p_RegGender.add(rb_RegMen);
-		p_RegGender.add(rb_RegWomen);
+		p_RegBoard.add(rb_RegMen);
+		p_RegBoard.add(rb_RegWomen);
 		
 		group2 = new ButtonGroup();
 		group2.add(rb_RegCODE1);
@@ -98,10 +175,10 @@ public class RegistUI extends JFrame implements ActionListener{
 		group2.add(rb_RegCODE3);
 		group2.add(rb_RegCODE4);
 		
-		p_RegCode.add(rb_RegCODE1);
-		p_RegCode.add(rb_RegCODE2);
-		p_RegCode.add(rb_RegCODE3);
-		p_RegCode.add(rb_RegCODE4);
+		p_RegBoard.add(rb_RegCODE1);
+		p_RegBoard.add(rb_RegCODE2);
+		p_RegBoard.add(rb_RegCODE3);
+		p_RegBoard.add(rb_RegCODE4);
 		
 		group3 = new ButtonGroup();
 		group3.add(rb_RegTerm1);
@@ -109,31 +186,57 @@ public class RegistUI extends JFrame implements ActionListener{
 		group3.add(rb_RegTerm3);
 		group3.add(rb_RegTerm4);
 		
-		p_RegTerm.add(rb_RegTerm1);
-		p_RegTerm.add(rb_RegTerm2);
-		p_RegTerm.add(rb_RegTerm3);
-		p_RegTerm.add(rb_RegTerm4);
+		p_RegBoard.add(rb_RegTerm1);
+		p_RegBoard.add(rb_RegTerm2);
+		p_RegBoard.add(rb_RegTerm3);
+		p_RegBoard.add(rb_RegTerm4);
 		
-		p_RegBoard.add(l_RegName); p_RegBoard.add(tf_RegName);
-		p_RegBoard.add(l_RegGender); p_RegBoard.add(p_RegGender);
-		p_RegBoard.add(l_RegAddress); p_RegBoard.add(tf_RegAddress);
-		p_RegBoard.add(l_RegPhone); p_RegBoard.add(tf_RegPhone);
-		p_RegBoard.add(l_RegBirth_date); p_RegBoard.add(tf_RegBirth_date);
-		p_RegBoard.add(l_RegGx_code); p_RegBoard.add(p_RegCode);
-		p_RegBoard.add(l_RegEnd_date); p_RegBoard.add(p_RegTerm);
+		p_RegMain.add(p_RegBoard);
 		
 		
 		p_RegBtn.add(b_RegSave);
 		p_RegBtn.add(b_RegCancel);
 		p_RegBtn.add(b_RegExit);
+		p_RegMain.add(p_RegBtn);
+		
+		///////////////////////////////////////////////////////
+
 		
 		
-		p_RegMain.add(p_RegTitle);		
-		p_RegMain.add(p_RegBoard);		
-		p_RegMain.add(p_RegBtn);		
+		
+		
+		
+		
+//		p_RegBoard.add(l_RegName); p_RegBoard.add(tf_RegName);
+//		p_RegBoard.add(l_RegGender); p_RegBoard.add(p_RegGender);
+//		p_RegBoard.add(l_RegAddress); p_RegBoard.add(tf_RegAddress);
+//		p_RegBoard.add(l_RegPhone); p_RegBoard.add(tf_RegPhone);
+//		p_RegBoard.add(l_RegBirth_date); p_RegBoard.add(tf_RegBirth_date);
+//		p_RegBoard.add(l_RegGx_code); p_RegBoard.add(p_RegCode);
+//		p_RegBoard.add(l_RegEnd_date); p_RegBoard.add(p_RegTerm);
+		
+		
+//		p_RegBtn.add(b_RegSave);
+//		p_RegBtn.add(b_RegCancel);
+//		p_RegBtn.add(b_RegExit);
+//		
+//		
+//		p_RegMain.add(p_RegTitle);		
+//		p_RegMain.add(p_RegBoard);		
+//		p_RegMain.add(p_RegBtn);		
 		
 //			setTitle("È¸¿ø°¡ÀÔ");
 //			getContentPane().add(p_RegMain, BorderLayout.CENTER);
+	
+		
+
+		p_RegTitle.setLayout(null);
+		p_RegBoard.setLayout(null);
+		p_RegBtn.setLayout(null);
+		p_RegGender.setLayout(null);
+		p_RegCode.setLayout(null);
+		p_RegTerm.setLayout(null);
+		p_RegMain.setLayout(null);
 		p_RegMain.setSize(1000,600);
 		p_RegMain.setVisible(true);
 //			setBounds(200,200,350,200);

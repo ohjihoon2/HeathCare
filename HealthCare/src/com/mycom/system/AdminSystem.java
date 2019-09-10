@@ -43,6 +43,19 @@ public class AdminSystem {
 		dao.getMember(dtm_Adm, cno);		
 	}
 	
+	/**
+	 * ªË¡¶ 
+	 */
+	public boolean getAdminDelete(int cno) {
+		boolean result = false;
+		
+		int val = dao.getResultDelete(cno);
+		if(val != 0) {
+			result = true;
+		}
+		
+		return result;
+	}
 	
 	
 }
