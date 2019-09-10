@@ -27,6 +27,7 @@ System.out.println("val : "+val);
 		if(val != 0) {
 			//cno로 로그인 한 MemberVO 저장
 			dao.setVO(cno);
+			
 			System.out.println("division = "+StartUI.vo.getDivision());
 			if(StartUI.vo.getDivision()==1) {
 				result = 1;

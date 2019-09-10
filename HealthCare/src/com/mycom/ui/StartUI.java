@@ -94,7 +94,9 @@ public class StartUI extends JFrame implements ActionListener{
 		group.add(rb_LogAdmin);
 		
 		p_LogLogin.add(rb_LogMember);
+		rb_LogMember.setBackground(new Color(255,255,255));
 		p_LogLogin.add(rb_LogAdmin);
+		rb_LogAdmin.setBackground(new Color(255,255,255));
 		ic_gx_topimg = new ImageIcon("image/logo3.jpg");
 		 ic_gx_yogaBox = new JLabel(ic_gx_topimg);        
 		

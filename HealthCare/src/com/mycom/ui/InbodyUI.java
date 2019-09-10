@@ -60,7 +60,7 @@ public class InbodyUI extends JFrame implements ActionListener {
 		this.startui = startui;
 
 		setLocation(400, 100);
-		icon = new ImageIcon("C:\\gg\\ht22.jpg");
+		icon = new ImageIcon("C:\\gg\\ht70.jpg");
 
 		p_InbMain = new JPanel() {
 			public void paintComponent(Graphics g) {
@@ -162,9 +162,9 @@ public class InbodyUI extends JFrame implements ActionListener {
 		l_InbMsg.setBounds(110, 60, 450, 20);
 
 		cb_InbM.setBounds(210, 130, 60, 30);
-		cb_InbM.setBackground(new Color(88, 175, 192));
+		cb_InbM.setBackground(new Color(223, 229, 229));
 		cb_InbW.setBounds(270, 130, 60, 30);
-		cb_InbW.setBackground(new Color(88, 175, 192));
+		cb_InbW.setBackground(new Color(223, 229, 229));
 
 		ageBox.setBounds(360,130,80,30);
 		ageBox.setBackground(Color.WHITE);
