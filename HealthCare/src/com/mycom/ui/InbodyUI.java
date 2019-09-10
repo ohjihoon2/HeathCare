@@ -420,7 +420,9 @@ public class InbodyUI extends JFrame implements ActionListener {
 
 		}else if(s.equals("∏ﬁ¿Œ")) {
 			p_InbMain.setVisible(false);
-			mainui.p_sc_total.setVisible(true);
+			
+//			mainui.p_sc_total.setVisible(true);
+			new MainScreenUI(startui);
 		} 
 
 
