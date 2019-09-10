@@ -385,7 +385,11 @@ public class AdminUI extends JFrame implements ActionListener{
 //			
 			
 		}else if(obj == b_SearchAll) {
-			system.getMember(dtm_Mem);
+			//system.getMember(dtm_Mem);
+			switchingPanel(getStatus());
+			
+			memberManageForm();
+			
 		}else if(obj == b_Update) {
 			int row = t_Mem.getSelectedRow();
 			
