@@ -100,7 +100,7 @@ public class LectureDAO {
 	//data Update
 	public int getResultUpdate(LectureVO vo) {
 		int result = 0;
-		String sql = "update member set gx_code=?, gx_count=nvl(gx_count,0)+?, gx_price=nvl(gx_price,0)+?, gx_validity=add_months(sysdate,6) where cno=?";		
+		String sql = "update member set gx_code=?, gx_count=?, gx_price=?, gx_validity=add_months(sysdate,6) where cno=?";		
 		getPreparedStatement(sql);
 		
 		try {

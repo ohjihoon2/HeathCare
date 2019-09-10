@@ -21,7 +21,7 @@ import com.mycom.dao.AdminDAO;
 import com.mycom.system.RegistSystem;
 import com.mycom.vo.MemberVO;
 
-public class AdminUpdateUI extends JFrame implements ActionListener{
+public class AdminLecUpdateUI extends JFrame implements ActionListener{
 	RegistSystem system = new RegistSystem();
 	StartUI startui;
 	AdminDAO dao = new AdminDAO();
@@ -38,7 +38,7 @@ public class AdminUpdateUI extends JFrame implements ActionListener{
 	int cno;
 	
 	//Constructor
-	public AdminUpdateUI(int cno, AdminUI ui){	
+	public AdminLecUpdateUI(int cno, AdminUI ui){	
 		this.ui = ui;
 		
 		//1. 화면구성

@@ -48,7 +48,7 @@ public class AdminUI extends JFrame implements ActionListener{
 	JPanel p_MemMain, p_MemSearch, p_MemResult, p_MemBtn;
 	JLabel l_MemCno;
 	JTextField tf_MemCno;
-	JButton b_Search, b_SearchAll, b_Update, b_Delete;
+	JButton b_Search, b_SearchAll, b_MemUpdate, b_MemDelete, b_LecUpdate, b_LecDelete;
 	JScrollPane scroll_Mem;
 
 	DefaultTableModel dtm_Mem;
@@ -196,8 +196,8 @@ public class AdminUI extends JFrame implements ActionListener{
 		tf_MemCno = new JTextField(10);		
 		b_Search = new JButton("검    색");
 		b_SearchAll = new JButton("전 체 보 기");
-		b_Update = new JButton("수    정");
-		b_Delete = new JButton("삭    제");
+		b_MemUpdate = new JButton("수    정");
+		b_MemDelete = new JButton("삭    제");
 		
 		t_Mem= new JTable(dtm_Mem); 
 		t_Mem.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -226,8 +226,8 @@ public class AdminUI extends JFrame implements ActionListener{
 		
 		p_MemResult.add(scroll_Mem);
 		
-		p_MemBtn.add(b_Update);
-		p_MemBtn.add(b_Delete);
+		p_MemBtn.add(b_MemUpdate);
+		p_MemBtn.add(b_MemDelete);
 		
 		p_MemMain.add(p_MemSearch, BorderLayout.NORTH);
 		p_MemMain.add(p_MemResult, BorderLayout.CENTER);
@@ -256,8 +256,8 @@ public class AdminUI extends JFrame implements ActionListener{
 		//검색 이벤트 위임
 		b_Search.addActionListener(this);
 		b_SearchAll.addActionListener(this);
-		b_Update.addActionListener(this);
-		b_Delete.addActionListener(this);
+		b_MemUpdate.addActionListener(this);
+		b_MemDelete.addActionListener(this);
 		
 	}
 
@@ -267,8 +267,8 @@ public class AdminUI extends JFrame implements ActionListener{
 		p_LecResult = new JPanel();
 		p_LecBtn = new JPanel();
 		
-		b_Update = new JButton("수    정");
-		b_Delete = new JButton("삭    제");
+		b_LecUpdate = new JButton("수    정");
+		b_LecDelete = new JButton("삭    제");
 		
 		dtm_Lec = new DefaultTableModel(lecInfo, 0);
 		t_Lec= new JTable(dtm_Lec); 
@@ -284,8 +284,8 @@ public class AdminUI extends JFrame implements ActionListener{
         
 		p_LecResult.add(scroll_Lec);
 		
-		p_LecBtn.add(b_Update);
-		p_LecBtn.add(b_Delete);
+		p_LecBtn.add(b_LecUpdate);
+		p_LecBtn.add(b_LecDelete);
 		
 		p_LecMain.add(p_LecResult);
 		p_LecMain.add(p_LecBtn);
@@ -304,8 +304,8 @@ public class AdminUI extends JFrame implements ActionListener{
         system.getLecture(dtm_Lec);
 		
         
-		b_Update.addActionListener(this);
-		b_Delete.addActionListener(this);
+		b_LecUpdate.addActionListener(this);
+		b_LecDelete.addActionListener(this);
 	}
 	
 	/**
@@ -390,13 +390,13 @@ public class AdminUI extends JFrame implements ActionListener{
 			
 			memberManageForm();
 			
-		}else if(obj == b_Update) {
+		}else if(obj == b_MemUpdate) {
 			int row = t_Mem.getSelectedRow();
 			
 			MemberVO vo = list.get(row);
-			new AdminUpdateUI(vo.getCno(),this);
+			new AdminMemUpdateUI(vo.getCno(),this);
 			
-		}else if(obj == b_Delete) {
+		}else if(obj == b_MemDelete) {
 			
 			int row = t_Mem.getSelectedRow();
 			MemberVO vo = list.get(row);
@@ -414,11 +414,30 @@ public class AdminUI extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(null, "삭제실패");
 				}
 			}
+		}else if(obj == b_LecUpdate) {
+			int row = t_Mem.getSelectedRow();
 			
+			MemberVO vo = list.get(row);
+			new AdminMemUpdateUI(vo.getCno(),this);
 			
+		}else if(obj == b_LecDelete) {
 			
+			int row = t_Mem.getSelectedRow();
+			MemberVO vo = list.get(row);
 			
+			int delConfirm = JOptionPane.showConfirmDialog(null, "정말로 삭제하시겠습니까?");
 			
+			if(delConfirm == 0) {
+				
+				boolean result = system.getAdminDelete(vo.getCno());
+				
+				if(result) {
+					JOptionPane.showMessageDialog(null, "삭제완료");
+					setUpdateChange();
+				}else {
+					JOptionPane.showMessageDialog(null, "삭제실패");
+				}
+			}
 		}
 		
 	}

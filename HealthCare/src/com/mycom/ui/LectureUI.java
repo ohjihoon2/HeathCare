@@ -29,11 +29,11 @@ import com.mycom.vo.LectureVO;
 
 public class LectureUI implements ActionListener{	
     //field
-	MainScreenUI mainui;
-	StartUI startui;	
+	static MainScreenUI mainui;
+	static StartUI startui;	
 	LectureSystem system = new LectureSystem();
-	
-    JPanel p_gx_main,p_gx_top, p_gx_main2, p_gx_left, p_gx_table, p_gx_picture, p_picture, p_button, p_gx_right, p_gx_btn, p_gx_cno,
+	static JPanel p_gx_main;
+    JPanel p_gx_top, p_gx_main2, p_gx_left, p_gx_table, p_gx_picture, p_picture, p_button, p_gx_right, p_gx_btn, p_gx_cno,
     		p_gx_info, p_gx_cname, p_gx_gxname, p_gx_count, p_gx_validity, p_gx_blank1, p_gx_blank2;
     JLabel l_gx_cno, l_gx_info, l_gx_cname, l_gx_gxname, l_gx_count, l_gx_validity;
     JButton b_gx_regist, b_back;
@@ -187,6 +187,15 @@ public class LectureUI implements ActionListener{
         
         
         //화면에 회원정보 띄워주기
+        updateLectureInfo();
+        	
+        
+        
+    } 
+    
+  //화면에 회원정보 띄워주기
+    public void updateLectureInfo() {
+    	
         LectureSystem system = new LectureSystem();        
         LectureVO vo = system.getListVO(StartUI.vo.getCno());
         
@@ -196,10 +205,9 @@ public class LectureUI implements ActionListener{
         	jtf_gx_gxname.setText(vo.getGx_code());      	
         	jtf_gx_count.setText(String.valueOf(vo.getGx_count()));
         	jtf_gx_validity.setText(String.valueOf(vo.getGx_validity()));
-        	
         }
-        
-    } 
+    }
+
     
     
 	@Override
@@ -246,7 +254,6 @@ class RegistLecture implements ActionListener{
 			jtf_gx_cno.setText(Integer.toString(cno));
 			
 			jta_gx_list = new JTextArea(1,1);
-			jta_gx_list.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 			jl_gx_list = new JLabel("수강리스트");
 			jtf_gx_list = new JTextField(20);
 			
@@ -264,10 +271,9 @@ class RegistLecture implements ActionListener{
 			
 			
 			
-			btn_reg = new JButton("  등    록  ");
-			btn_reg.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
+			btn_reg = new JButton("  등    록  ");		
 			btn_calprice = new JButton("금액 계산 확인");
-			btn_calprice.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
+			
 			
 			Vector lecturenameList = new Vector();
 			lecturenameList.add("선택하세요");
@@ -324,15 +330,17 @@ class RegistLecture implements ActionListener{
 		public boolean redFromCheck() {
 			boolean result = false;
 			
-			if(jcb_gxname.getSelectedItem().equals("선택해주세요")) {
+			if(jcb_gxname.getSelectedItem().equals("선택하세요")) {
 				JOptionPane.showMessageDialog(null, "수강을 선택해 주세요");	
 				
-			}else if(jcb_count.getSelectedItem().equals("선택해주세요")){
+			}else if(jcb_count.getSelectedItem().equals("선택하세요")){
 				JOptionPane.showMessageDialog(null, "횟수를 선택해 주세요");
 
 			}else if(jtf_gx_totprice.getText().equals("")){
 				JOptionPane.showMessageDialog(null, "총 금액을 확인해 주세요");
-
+				
+			}else {
+				result = true;
 			}
 			
 			return result;
@@ -359,7 +367,7 @@ class RegistLecture implements ActionListener{
 				
 				}else if(gxname.equals("스피닝(103)")) {
 					gx_code = "103";
-					gx_price =12000;
+					gx_price =10000;
 
 				}		
 				
@@ -392,7 +400,7 @@ class RegistLecture implements ActionListener{
 					
 					}else if(gxname.equals("스피닝(103)")) {
 						gx_code = "103";
-						gx_price =12000;
+						gx_price =10000;
 
 					}					
 					
@@ -411,22 +419,26 @@ class RegistLecture implements ActionListener{
 					vo.setGx_totprice(Integer.parseInt(jtf_gx_totprice.getText())+StartUI.vo.getGx_price());	
 					
 					
+					//dao 생성: DB 연결 -> 등록
+					int val = JOptionPane.showConfirmDialog(null, "등록 하시겠습니까?");		
+					if(val == 0) {
+						system.update(vo);
+						JOptionPane.showMessageDialog(null, "등록 성공");
+						jf.setVisible(false);
+						LectureUI.p_gx_main.setVisible(false);
+						
+						new LectureUI(LectureUI.mainui, LectureUI.startui);
+						
+						
+					}else if(val != 0){
+						JOptionPane.showMessageDialog(null, "등록 실패");
+						jf.setVisible(false);
+					}
+					
+					
 				}
 			
-				
-				//dao 생성: DB 연결 -> 등록
-				int val = JOptionPane.showConfirmDialog(null, "등록 하시겠습니까?");		
-				if(val == 0) {
-					system.update(vo);
-					JOptionPane.showMessageDialog(null, "등록 성공");
-					jf.setVisible(false);
-					//jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); ()	
-					
-				}else if(val != 0){
-					JOptionPane.showMessageDialog(null, "등록 실패");
-					jf.setVisible(false);
-				}
-				
+		
 			}
 		}
 				
