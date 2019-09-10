@@ -43,7 +43,7 @@ public class LectureSystem {
 		
 		int val = dao.getResultUpdate(lvo);
 		if(val != 0) result = true;
-		
+		System.out.println("update : "+result);
 		return result;
 		
 	}
