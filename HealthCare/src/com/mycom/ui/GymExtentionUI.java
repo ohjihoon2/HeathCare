@@ -100,9 +100,7 @@ public class GymExtentionUI implements ActionListener {
 	
 
 		btn_extention = new JButton("연장 신청");
-		btn_extention.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 		btn_back = new JButton("돌아가기");
-		btn_back.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 		jtf_checkprice = new JTextField(30);
 		jtf_checkdate = new JTextField(30);
 				
@@ -113,7 +111,6 @@ public class GymExtentionUI implements ActionListener {
 		
 		table = new JTable(model);
 		js = new JScrollPane(table);
-		table.setBackground(Color.getHSBColor(0.85f, 0.05f, 0.95f));
 		table.getColumnModel().getColumn(4).setCellRenderer(new TableCell());
 	        //table에서 column을 불러온 뒤 셀의 속성을 설정해준다
 		table.getColumnModel().getColumn(4).setCellEditor(new TableCell());
