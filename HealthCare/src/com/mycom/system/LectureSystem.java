@@ -36,6 +36,13 @@ public class LectureSystem {
 		return list;
 	}
 	
+	//수강 등록 리스트 출력
+	public ArrayList<LectureVO> namelist() {	
+		ArrayList<LectureVO> namelist = dao.getGX_NameList();
+		
+		return namelist;
+	}
+	
 	
 	//수강 업데이트
 	public boolean update(LectureVO lvo){

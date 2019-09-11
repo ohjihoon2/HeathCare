@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.mycom.vo.LectureVO;
@@ -12,6 +13,7 @@ public class LectureDAO {
 	//field
 	Connection conn;
 	PreparedStatement pstmt;
+	Statement stmt;
 	ResultSet rs;
 	
 	//String url = "jdbc:oracle:thin:@127.0.0.1:1521";
@@ -41,6 +43,32 @@ public class LectureDAO {
 		}
 		
 	}
+	
+	/** 3단계 : Statement 객체 생성 **/
+	public void getStatement() {
+		try {
+			stmt = conn.createStatement();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public LectureVO getResultNameVO(String sql) {
+		LectureVO vo = new LectureVO();
+		
+		try {
+			rs= stmt.executeQuery(sql);
+			if(rs.next()) {
+				vo.setGx_name(rs.getString(1));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return vo;
+	}
+	
 	
 	//회원vo리스트
 	public LectureVO getResultVO(int cno) {
@@ -95,6 +123,31 @@ public class LectureDAO {
 		}
 		
 		return list;
+	}
+	
+	//수강리스트 출력
+	public ArrayList<LectureVO> getGX_NameList() {
+		ArrayList<LectureVO> namelist = new ArrayList<LectureVO>();
+		String sql="select gx_name from lecture where gx_code<>100";
+		getPreparedStatement(sql);	
+		
+		try {
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				LectureVO vo = new LectureVO();
+				
+				vo.setGx_name(rs.getString(2));
+				
+				
+				namelist.add(vo);
+			}
+			System.out.println(namelist);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return namelist;
 	}
 	
 	//data Update

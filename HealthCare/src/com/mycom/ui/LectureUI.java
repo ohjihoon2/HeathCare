@@ -44,6 +44,8 @@ public class LectureUI implements ActionListener{
     JTextField jtf_gx_cno, jtf_gx_cname, jtf_gx_gxname, jtf_gx_validity;
     static JTextField jtf_gx_count;
    
+
+    
     ImageIcon ic_gx_topimg, ic_gx_yoga, ic_gx_zumba, ic_gx_spinning, ic_gx_yoga1, ic_gx_zumba1, ic_gx_spinning1;
     JLabel ic_gx_yogaBox, ic_gx_zumbaBox, ic_gx_spinningBox, ic_gx_topimgBox;
 
@@ -221,7 +223,7 @@ public class LectureUI implements ActionListener{
         
         
         //화면에 회원정보 띄워주기
-        LectureSystem system = new LectureSystem();        
+//        LectureSystem system = new LectureSystem();        
         LectureVO vo = system.getListVO(StartUI.vo.getCno());
         
         if(vo != null) {
@@ -267,13 +269,18 @@ class RegistLecture implements ActionListener{
 		JButton btn_reg, btn_calprice;
 		JComboBox jcb_gxname, jcb_count;//->vector데이터로 들어감
 		
-		LectureSystem system;
+		LectureSystem system = new LectureSystem();
 		
-		
+	    String choice1, choice2, choice3;
 		
 		
 		//constructor
-		public RegistLecture(int cno) {			
+		public RegistLecture(int cno) {	
+			choice101();
+			choice102();
+			choice103();
+			
+			
 			jp = new JPanel(new GridLayout(6,2));
 			jl_gx_cno=new JLabel("회원번호");
 			jtf_gx_cno = new JTextField(20);
@@ -302,9 +309,9 @@ class RegistLecture implements ActionListener{
 			
 			Vector lecturenameList = new Vector();
 			lecturenameList.add("선택하세요");
-			lecturenameList.add("요가(101)");
-			lecturenameList.add("줌바(102)");
-			lecturenameList.add("스피닝(103)");
+			lecturenameList.add(choice1);
+			lecturenameList.add(choice2);
+			lecturenameList.add(choice3);
 			jcb_gxname = new JComboBox(lecturenameList);
 			
 			Vector extensionList = new Vector();
@@ -329,8 +336,7 @@ class RegistLecture implements ActionListener{
 			jf.setVisible(true);
 			
 			
-			//수강리스트 출력
-			system = new LectureSystem();			
+			//수강리스트 출력			
 			ArrayList<LectureVO> list = system.uplistVO();	
 			
 			jta_gx_list.append("수강코드\t수강명(GX)\t가격(1회당)\n");
@@ -360,7 +366,7 @@ class RegistLecture implements ActionListener{
 				
 			}else if(jcb_count.getSelectedItem().equals("선택하세요")){
 				JOptionPane.showMessageDialog(null, "횟수를 선택해 주세요");
-
+				
 			}else if(jtf_gx_totprice.getText().equals("")){
 				JOptionPane.showMessageDialog(null, "총 금액을 확인해 주세요");
 				
@@ -370,6 +376,49 @@ class RegistLecture implements ActionListener{
 			
 			return result;
 		}
+		
+		//Statement로 목록 불러오기
+		public void choice101() {
+			LectureDAO dao = new LectureDAO();
+			String sql = "select gx_name from lecture where gx_code=101";
+			dao.getStatement();
+			
+			LectureVO vo = dao.getResultNameVO(sql);
+			
+			if(vo != null) {
+				choice1 = vo.getGx_name();
+System.out.println("choice1="+choice1);				
+			}
+			
+		}
+		public void choice102() {
+			LectureDAO dao = new LectureDAO();
+			String sql = "select gx_name from lecture where gx_code=102";
+			dao.getStatement();
+			
+			LectureVO vo = dao.getResultNameVO(sql);
+			
+			if(vo != null) {
+				choice2 = vo.getGx_name();
+				System.out.println("choice2="+choice2);					
+			}
+			
+		}
+		public void choice103() {
+			LectureDAO dao = new LectureDAO();
+			String sql = "select gx_name from lecture where gx_code=103";
+			dao.getStatement();
+			
+			LectureVO vo = dao.getResultNameVO(sql);
+			
+			if(vo != null) {
+				choice3 = vo.getGx_name();
+				System.out.println("choice3="+choice3);	
+			}
+			
+		}
+		
+		
 		
 		//method
 		public void actionPerformed(ActionEvent e) {
@@ -382,15 +431,15 @@ class RegistLecture implements ActionListener{
 				String gx_code = "100";
 				
 				int gx_price =0;				
-				if(gxname.equals("요가(101)"))	{
+				if(gxname.equals(choice1))	{
 					gx_code ="101"; 
 					gx_price =10000;
 	
-				}else if(gxname.equals("줌바(102)")) {
+				}else if(gxname.equals(choice2)) {
 					gx_code = "102";
 					gx_price =10000;
 				
-				}else if(gxname.equals("스피닝(103)")) {
+				}else if(gxname.equals(choice3)) {
 					gx_code = "103";
 					gx_price =10000;
 
@@ -415,15 +464,15 @@ class RegistLecture implements ActionListener{
 
 					String gx_code = "100";
 					int gx_price =0;				
-					if(gxname.equals("요가(101)")	){
+					if(gxname.equals(choice1)){
 						gx_code ="101";
 						gx_price =10000;
 		
-					}else if(gxname.equals("줌바(102)")) {
+					}else if(gxname.equals(choice2)) {
 						gx_code = "102";
 						gx_price =10000;
 					
-					}else if(gxname.equals("스피닝(103)")) {
+					}else if(gxname.equals(choice3)) {
 						gx_code = "103";
 						gx_price =10000;
 
