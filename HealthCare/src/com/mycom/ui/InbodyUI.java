@@ -60,7 +60,7 @@ public class InbodyUI extends JFrame implements ActionListener {
 		this.startui = startui;
 
 		setLocation(400, 100);
-		icon = new ImageIcon("C:\\gg\\ht70.jpg");
+		icon = new ImageIcon("image/ht70.jpg");
 
 		p_InbMain = new JPanel() {
 			public void paintComponent(Graphics g) {
