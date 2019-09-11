@@ -88,6 +88,7 @@ public class AdminLecUpdateUI extends JFrame implements ActionListener{
 		
 		/**리스트에서 정보 가져오기**/
 		tf_RegName.setText(lvo.getGx_code());
+		tf_RegName.setEditable(false);
 		tf_RegAddress.setText(lvo.getGx_name());
 		tf_RegPhone.setText(String.valueOf(lvo.getGx_price()));
 		

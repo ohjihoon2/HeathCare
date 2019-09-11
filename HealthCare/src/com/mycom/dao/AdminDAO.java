@@ -159,7 +159,7 @@ public class AdminDAO {
 			}
 //			dtm_Adm.setRowCount(0);
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				Object data[] = { 
 					rs.getInt(1), 
 				    rs.getString(2),

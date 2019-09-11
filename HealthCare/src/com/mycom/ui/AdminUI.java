@@ -419,9 +419,7 @@ public class AdminUI extends JFrame implements ActionListener{
 				tf_MemCno.setText("");
 				tf_MemCno.requestFocus();
 				//첫행 선택
-				if (dtm_Mem.getRowCount() > 0) {
-					t_Mem.setRowSelectionInterval(0, 0);
-				}
+			
 			}
 //			
 			
