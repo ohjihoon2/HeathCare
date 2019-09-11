@@ -64,7 +64,6 @@ public class DietUI3 extends JFrame implements ActionListener {
     	ArrayList<DietSaveVO> list = system.getDietList(cno);
     	Vector<String> colList = new Vector<String>();
     	colList.add("번호");
-    	colList.add("저장번호");
     	colList.add("회원번호");
     	colList.add("이름");
     	colList.add("몸무게");
@@ -81,7 +80,6 @@ public class DietUI3 extends JFrame implements ActionListener {
 			Vector<String> v = new Vector<String>();
 			
 			v.add(String.valueOf(vo.getRNO()));
-			v.add(String.valueOf(vo.getDW_NO()));
 			v.add(String.valueOf(vo.getCNO()));
 			v.add(vo.getNAME());
 			v.add(vo.getDW_WEIGHT());

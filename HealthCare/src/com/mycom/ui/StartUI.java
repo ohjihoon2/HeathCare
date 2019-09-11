@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import com.mycom.system.LoginSystem;
 import com.mycom.vo.MemberVO;
@@ -41,8 +42,8 @@ public class StartUI extends JFrame implements ActionListener{
 	JTextField tf_LogId;
 	JButton b_LogLogin, b_LogCreate, b_Log0, b_Log1, b_Log2, b_Log3, b_Log4, b_Log5, b_Log6, b_Log7, b_Log8, b_Log9, b_LogStar, b_LogRe;
 	StringBuffer sb;
-	ImageIcon ic_gx_topimg;
-    JLabel ic_gx_yogaBox;
+	ImageIcon ic_gx_topimg,ic_gx_topimg2,ic_gx_topimg3;
+    JLabel ic_gx_yogaBox,ic_gx_yogaBox2,ic_gx_yogaBox3;
 	
 	//회원가입 Field
 	/**
@@ -54,12 +55,14 @@ public class StartUI extends JFrame implements ActionListener{
 		// 패널 초기화 
     	jf = new JFrame();
     	
-		p_LogMain = new JPanel(new GridLayout(4,1));
+		p_LogMain = new JPanel();
 		
 		p_LogChoice = new JPanel();
 		p_LogLogin = new JPanel();
 		p_LogBtn = new JPanel();
 		p_LogNum = new JPanel(); 
+		LineBorder b1 = new LineBorder(Color.BLACK,1); 
+		p_LogNum.setBorder(b1);
 		
 		rb_LogMember = new JRadioButton("회원");
 		rb_LogAdmin = new JRadioButton("관리자");
@@ -80,8 +83,7 @@ public class StartUI extends JFrame implements ActionListener{
 		b_LogLogin = new JButton("로그인");
 		b_LogCreate = new JButton("회원가입");
 
-//		p_LogMain.setLayout(null);
-
+		
 		sb = new StringBuffer();
 		
 		l_Logid = new JLabel("ID : ");
@@ -93,22 +95,54 @@ public class StartUI extends JFrame implements ActionListener{
 		group.add(rb_LogMember);
 		group.add(rb_LogAdmin);
 		
-		p_LogLogin.add(rb_LogMember);
 		rb_LogMember.setBackground(new Color(255,255,255));
-		p_LogLogin.add(rb_LogAdmin);
+	
 		rb_LogAdmin.setBackground(new Color(255,255,255));
 		ic_gx_topimg = new ImageIcon("image/logo3.jpg");
-		 ic_gx_yogaBox = new JLabel(ic_gx_topimg);        
+		ic_gx_yogaBox = new JLabel(ic_gx_topimg); 
 		
-		p_LogChoice.add(ic_gx_yogaBox);
+		ic_gx_topimg2 = new ImageIcon("image/start.png");
+		ic_gx_yogaBox2 = new JLabel(ic_gx_topimg2);
 		
-		p_LogLogin.add(l_Logid);
-		p_LogLogin.add(tf_LogId);
+		ic_gx_topimg3 = new ImageIcon("image/start2.png");
+		ic_gx_yogaBox3 = new JLabel(ic_gx_topimg3);
 		
-		p_LogNum.setLayout(new GridLayout(5,3));
-
+		ic_gx_yogaBox.setBounds(0,0,1000,90);
+		ic_gx_yogaBox2.setBounds(700,85,200,200);
+		ic_gx_yogaBox3.setBounds(0,150,300,500);
 		
-		 
+		p_LogNum.setBounds(300,120,400,420);
+		rb_LogMember.setBounds(130,10,80,20);
+		rb_LogAdmin.setBounds(210,10,80,20);
+		
+		l_Logid.setBounds(70,50,100,30);
+		tf_LogId.setBounds(100,50,200,30);
+		
+		b_Log1.setBounds(50,120,100,50);
+		b_Log2.setBounds(150,120,100,50);
+		b_Log3.setBounds(250,120,100,50);
+		b_Log4.setBounds(50,170,100,50);
+		b_Log5.setBounds(150,170,100,50);
+		b_Log6.setBounds(250,170,100,50);
+		b_Log7.setBounds(50,220,100,50);
+		b_Log8.setBounds(150,220,100,50);
+		b_Log9.setBounds(250,220,100,50);
+		b_Log0.setBounds(150,270,100,50);
+		b_LogStar.setBounds(50,270,100,50);
+		b_LogRe.setBounds(250,270,100,50);
+		b_LogLogin.setBounds(90,360,90,30);
+		b_LogCreate.setBounds(220,360,90,30);
+		
+		p_LogMain.add(ic_gx_yogaBox);
+		p_LogMain.add(ic_gx_yogaBox2);
+		p_LogMain.add(ic_gx_yogaBox3);
+		
+		
+		p_LogNum.add(l_Logid);
+		p_LogNum.add(tf_LogId);
+		p_LogNum.add(rb_LogMember);
+		p_LogNum.add(rb_LogAdmin);
+		
 		p_LogNum.add(b_Log1);
 		p_LogNum.add(b_Log2);
 		p_LogNum.add(b_Log3);
@@ -121,14 +155,14 @@ public class StartUI extends JFrame implements ActionListener{
 		p_LogNum.add(b_LogStar);
 		p_LogNum.add(b_Log0);
 		p_LogNum.add(b_LogRe);
+		p_LogNum.add(b_LogLogin);
+		p_LogNum.add(b_LogCreate);
 		
-		p_LogBtn.add(b_LogLogin);
-		p_LogBtn.add(b_LogCreate);
+		p_LogMain.add(p_LogNum);
 		
-		p_LogMain.add(p_LogChoice);		
-		p_LogMain.add(p_LogLogin);		
-		p_LogMain.add(p_LogNum);		
-		p_LogMain.add(p_LogBtn);		
+	
+		
+		
 		
 		jf.getContentPane().add(p_LogMain, BorderLayout.CENTER);
 		
@@ -137,6 +171,8 @@ public class StartUI extends JFrame implements ActionListener{
 //		p_LogNum.setBounds(200,200,350,200);
 		jf.setLocation(500	, 20);
 		
+		p_LogNum.setLayout(null);
+		p_LogMain.setLayout(null);
 		
 		p_LogChoice.setBackground(Color.WHITE);
 		p_LogLogin.setBackground(Color.WHITE);

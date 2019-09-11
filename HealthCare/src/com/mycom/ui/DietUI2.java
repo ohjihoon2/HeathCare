@@ -297,7 +297,6 @@ public class DietUI2 extends JFrame implements ActionListener {
 	    
 	    vo = dao.getResultWeight(DietUI.mvo.getCNO(),time1);
 	    
-	    l_DietDwNO.setText(Integer.toString(vo.getDW_NO()));
 	    l_Dietdate2.setText(vo.getDW_DATE());
 	    l_DietName2.setText(vo.getNAME());
 	    l_Dietsex2.setText(vo.getGENDER());
